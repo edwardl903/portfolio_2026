@@ -25,3 +25,8 @@ dist-ssr
 
 # Local documentation
 WORKFLOW.md
+
+# Image backups
+public/static/images-backup
+DEPLOYMENT_CHECKLIST.md
+IMAGE_OPTIMIZATION.md

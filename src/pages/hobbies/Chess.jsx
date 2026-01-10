@@ -33,7 +33,7 @@ function Chess() {
               <div className="chess-photos-grid">
                 {/* Boston College Tournament */}
                 <div className="chess-photo-card">
-                  <img src="/static/images/hobbies/chess/bc.jpg" alt="Boston College Chess Tournament" />
+                  <img src="/static/images/hobbies/chess/bc.jpg" alt="Boston College Chess Tournament" loading="lazy" />
                   <div className="photo-content">
                     <h4>Boston College Tournament</h4>
                     <p>Our team competed at Boston College in an intercollegiate chess tournament against 10 other schools across Massachusetts. Tufts secured 2nd place!</p>
@@ -42,7 +42,7 @@ function Chess() {
 
                 {/* E-Board Members */}
                 <div className="chess-photo-card">
-                  <img src="/static/images/hobbies/chess/eboard.png" alt="2025 E-Board Members" />
+                  <img src="/static/images/hobbies/chess/eboard.png" alt="2025 E-Board Members" loading="lazy" />
                   <div className="photo-content">
                     <h4>2025 E-Board Members</h4>
                     <p>My 2025 executive board members. We worked hard preparing for the club and enjoyed fun bonding activities including Boda Borg, baking contests, poker nights, squash games, and dance parties.</p>
@@ -51,7 +51,7 @@ function Chess() {
 
                 {/* Founders */}
                 <div className="chess-photo-card">
-                  <img src="/static/images/hobbies/chess/founders.png" alt="Chess Club Founders" />
+                  <img src="/static/images/hobbies/chess/founders.png" alt="Chess Club Founders" loading="lazy" />
                   <div className="photo-content">
                     <h4>Chess Club Founders</h4>
                     <p>The founding members of the chess club: me, Alex (secretary), and Sam (treasurer). We've been working together since the club's inception.</p>
@@ -60,7 +60,7 @@ function Chess() {
 
                 {/* Weekly Meetings */}
                 <div className="chess-photo-card meeting-photo">
-                  <img src="/static/images/hobbies/chess/meeting1.jpg" alt="Chess Club Weekly Meeting" />
+                  <img src="/static/images/hobbies/chess/meeting1.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
                   <div className="photo-content">
                     <h4>Weekly Chess Club Meetings</h4>
                     <p>Our weekly chess club meetings where we socialize, enjoy food, and play chess together.</p>
@@ -68,7 +68,7 @@ function Chess() {
                 </div>
 
                 <div className="chess-photo-card meeting-photo">
-                  <img src="/static/images/hobbies/chess/meeting2.jpg" alt="Chess Club Weekly Meeting" />
+                  <img src="/static/images/hobbies/chess/meeting2.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
                   <div className="photo-content">
                     <h4>Chess Club Community</h4>
                     <p>More highlights from our weekly meetings - building friendships and improving our chess skills together.</p>

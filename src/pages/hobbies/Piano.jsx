@@ -89,7 +89,7 @@ function Piano() {
                 <div className="video-card">
                   <div className="video-thumbnail">
                     <div className="thumbnail-container">
-                      <img src="/static/images/hobbies/piano/justin-piano-duet.jpg" alt="Justin Qiao and Edward Lai Piano & Viola Duet" className="video-thumbnail-img" />
+                      <img src="/static/images/hobbies/piano/justin-piano-duet.jpg" alt="Justin Qiao and Edward Lai Piano & Viola Duet" className="video-thumbnail-img" loading="lazy" />
                       <div className="play-overlay">
                         <a href="https://www.youtube.com/watch?v=Hbk1MypXwY0" target="_blank" rel="noopener noreferrer" className="watch-button">
                           <i className="fab fa-youtube"></i>

@@ -4,7 +4,7 @@ function ChessLytics() {
       <div className="container">
         <div className="project-header">
           <div className="project-image">
-            <img src="/static/images/projects/chesslytics/chesslytics-project.jpg" alt="ChessLytics" />
+            <img src="/static/images/projects/chesslytics/chesslytics-project.jpg" alt="ChessLytics" loading="lazy" />
           </div>
           <div className="project-info">
             <h1>ChessLytics</h1>
