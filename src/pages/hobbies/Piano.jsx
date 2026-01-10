@@ -19,7 +19,17 @@ function Piano() {
 
             <p>Looking back, I'm glad I gave it another shot. It taught me that it's okay to walk away from something and come back to it later, and that persistence usually pays off even when things don't start out great.</p>
             
-            <p><a href="#performances" className="btn btn-primary">View My Piano Performances <i className="fas fa-arrow-down"></i></a></p>
+            <p><a 
+              href="#performances" 
+              className="btn btn-primary"
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById('performances');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
+            >View My Piano Performances <i className="fas fa-arrow-down"></i></a></p>
           </div>
 
           {/* YouTube Performances Section */}
@@ -79,7 +89,7 @@ function Piano() {
                 <div className="video-card">
                   <div className="video-thumbnail">
                     <div className="thumbnail-container">
-                      <img src="/static/images/justin-piano-duet.jpg" alt="Justin Qiao and Edward Lai Piano & Viola Duet" className="video-thumbnail-img" />
+                      <img src="/static/images/hobbies/piano/justin-piano-duet.jpg" alt="Justin Qiao and Edward Lai Piano & Viola Duet" className="video-thumbnail-img" />
                       <div className="play-overlay">
                         <a href="https://www.youtube.com/watch?v=Hbk1MypXwY0" target="_blank" rel="noopener noreferrer" className="watch-button">
                           <i className="fab fa-youtube"></i>

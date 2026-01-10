@@ -13,7 +13,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/chesslytics">
-                <img src="/static/images/chesslytics-project.jpg" alt="ChessLytics" />
+                <img src="/static/images/projects/chesslytics/chesslytics-project.jpg" alt="ChessLytics" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>ChessLytics</h3>
@@ -32,7 +32,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/chesslytics-azure">
-                <img src="/static/images/chesslytics-azure.jpg" alt="ChessLytics Azure Analytics" />
+                <img src="/static/images/projects/chesslytics/chesslytics-azure.jpg" alt="ChessLytics Azure Analytics" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>ChessLytics Azure Analytics</h3>
@@ -50,7 +50,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/spotifriend">
-                <img src="/static/images/spotifriend-project.jpg" alt="SpotiFriend" />
+                <img src="/static/images/projects/spotifriend/spotifriend-project.jpg" alt="SpotiFriend" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>SpotiFriend</h3>
@@ -68,7 +68,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/nlp-pipeline">
-                <img src="/static/images/nlp-pipeline-project.jpg" alt="NLP Pipeline" />
+                <img src="/static/images/projects/nlp-pipeline/nlp-pipeline-project.jpg" alt="NLP Pipeline" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>Reading Level Classifier</h3>
@@ -86,7 +86,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/movie-recommendations">
-                <img src="/static/images/movie-recommendations-project.jpg" alt="Movie Recommendations" />
+                <img src="/static/images/projects/movie-recommendations/movie-recommendations-project.jpg" alt="Movie Recommendations" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>MovieLens Recommender</h3>
@@ -104,7 +104,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/etl-tools">
-                <img src="/static/images/pison-technology.jpg" alt="Pison Technology ETL Tools" />
+                <img src="/static/images/projects/etl-tools/pison-technology.jpg" alt="Pison Technology ETL Tools" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>Pison Technology ETL Tools</h3>
@@ -122,7 +122,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/etl-tools">
-                <img src="/static/images/etl-tools-project.jpg" alt="Fidelity PB Optimize User Behavior Analysis" />
+                <img src="/static/images/projects/etl-tools/etl-tools-project.jpg" alt="Fidelity PB Optimize User Behavior Analysis" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>Fidelity PB Optimize User Behavior Analysis</h3>
@@ -140,7 +140,7 @@ function Projects() {
           <div className="project-card-overlay">
             <div className="project-image-cover">
               <Link to="/projects/eeg-research">
-                <img src="/static/images/research-lab-project.jpg" alt="EEG Research Lab" />
+                <img src="/static/images/projects/eeg-research/research-lab-project.jpg" alt="EEG Research Lab" />
                 <div className="project-overlay">
                   <div className="overlay-content">
                     <h3>EEG Research Lab</h3>
