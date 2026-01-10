@@ -23,11 +23,11 @@ function About() {
             </div>
             <div className="about-photos">
               <div className="photo-card">
-                <img src="/static/images/about/edward-portrait.jpg" alt="Edward Lai" className="main-photo" />
+                <img src="/static/images/about/edward-portrait.jpg" alt="Edward Lai" className="main-photo" loading="lazy" />
                 <p className="photo-caption">Edward Lai</p>
               </div>
               <div className="photo-card">
-                <img src="/static/images/about/charlie-dog.jpg" alt="Charlie the Dog" className="pet-photo" />
+                <img src="/static/images/about/charlie-dog.jpg" alt="Charlie the Dog" className="pet-photo" loading="lazy" />
                 <p className="photo-caption">Charlie 🐕</p>
               </div>
             </div>
@@ -35,7 +35,7 @@ function About() {
           
           <div className="adventure-cards">
             <div className="adventure-card">
-              <img src="/static/images/about/family-photo.jpg" alt="The Lai Family" />
+              <img src="/static/images/about/family-photo.jpg" alt="The Lai Family" loading="lazy" />
               <div className="adventure-content">
                 <h4>The Lai Family</h4>
                 <p>My twin brother and I graduating from Tufts University! I'm the one on the left. My older brother and older sister are on the right, and my parents are on the left.</p>
@@ -43,7 +43,7 @@ function About() {
             </div>
             
             <div className="adventure-card">
-              <img src="/static/images/about/graduation-friends.jpg" alt="Graduation with Friends" />
+              <img src="/static/images/about/graduation-friends.jpg" alt="Graduation with Friends" loading="lazy" />
               <div className="adventure-content">
                 <h4>Friends</h4>
                 <p>My friends and I graduating from Tufts! Celebrated four amazing years of learning, growth, and unforgettable memories together.</p>
@@ -53,7 +53,7 @@ function About() {
           
           <div className="adventure-cards">
             <div className="adventure-card">
-              <img src="/static/images/about/mount-washington.jpg" alt="Mount Washington Climb" />
+              <img src="/static/images/about/mount-washington.jpg" alt="Mount Washington Climb" loading="lazy" />
               <div className="adventure-content">
                 <h4>Mount Washington, NH</h4>
                 <p>My favorite hike! Started the day at 6:00 AM, 3-hour drive there, 4-hour hike up and 4-hour hike down, 3-hour drive back. Climbed elevation of 6,300 feet!</p>
@@ -61,7 +61,7 @@ function About() {
             </div>
             
             <div className="adventure-card">
-              <img src="/static/images/about/killington-snowboarding.jpg" alt="Snowboarding at Killington" />
+              <img src="/static/images/about/killington-snowboarding.jpg" alt="Snowboarding at Killington" loading="lazy" />
               <div className="adventure-content">
                 <h4>Mount Killington, VT</h4>
                 <p>Snowboarding at Killington "The Beast of the East"! Spent a week snowboarding with friends and conquered a bunch of blues and blacks.</p>
@@ -69,7 +69,7 @@ function About() {
             </div>
             
             <div className="adventure-card">
-              <img src="/static/images/about/sunday-river.JPG" alt="White Cap Peak, ME" />
+              <img src="/static/images/about/sunday-river.JPG" alt="White Cap Peak, ME" loading="lazy" />
               <div className="adventure-content">
                 <h4>Mount White Cap, ME</h4>
                 <p>Went on a snowboarding trip to Sunday River in Maine! Spent the weekend exploring the mountain's diverse terrain and enjoying the beautiful New England winter scenery.</p>

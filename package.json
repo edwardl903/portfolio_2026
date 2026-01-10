@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && echo 'Build complete. Deploy the dist folder to GitHub Pages or Vercel.'"
+    "deploy": "npm run build && echo 'Build complete. Deploy the dist folder to GitHub Pages or Vercel.'",
+    "optimize-images": "node scripts/optimize-images.js"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -24,6 +25,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "sharp": "^0.34.5",
     "vite": "^7.2.4"
   }
 }
