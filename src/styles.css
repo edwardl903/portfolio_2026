@@ -28,7 +28,6 @@ iframe, embed[type="application/pdf"], object[type="application/pdf"] {
     box-shadow: 
         0 0 15px rgba(200, 200, 200, 0.8),
         inset 0 0 5px rgba(255, 255, 255, 0.3);
-    /* animation: */ cursorPulse 2s ease-in-out infinite;
 }
 
 @keyframes cursorPulse {
@@ -55,7 +54,6 @@ iframe, embed[type="application/pdf"], object[type="application/pdf"] {
     pointer-events: none;
     z-index: 9998;
     transition: all 0.4s ease;
- 10px rgba(200, 200, 200, 0.4);
 }
 
 .cursor-trail-2 {
@@ -67,7 +65,6 @@ iframe, embed[type="application/pdf"], object[type="application/pdf"] {
     pointer-events: none;
     z-index: 9997;
     transition: all 0.6s ease;
- 8px rgba(180, 180, 180, 0.3);
 }
 
 .cursor-trail-3 {
@@ -79,7 +76,6 @@ iframe, embed[type="application/pdf"], object[type="application/pdf"] {
     pointer-events: none;
     z-index: 9996;
     transition: all 0.8s ease;
- 6px rgba(160, 160, 160, 0.2);
 }
 
 .click-ripple {
@@ -88,7 +84,6 @@ iframe, embed[type="application/pdf"], object[type="application/pdf"] {
     border-radius: 50%;
     pointer-events: none;
     z-index: 9997;
-    /* animation: */ rippleEffect 0.8s ease-out forwards;
 }
 
 @keyframes rippleEffect {
@@ -238,7 +233,6 @@ body::before {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(-50%);
     border-radius: 2px;
- 10px rgba(200, 200, 200, 0.5);
 }
 
 .nav-menu a::after {
@@ -262,7 +256,6 @@ body::before {
 
 .nav-menu a:hover {
     color: #ffffff;
- 0 0 12px rgba(180, 180, 180, 0.6);
     transform: translateY(-3px);
     border-color: rgba(200, 200, 200, 0.3);
     box-shadow: 
@@ -277,7 +270,6 @@ body::before {
 .nav-menu a.active {
     color: #ffffff;
     font-weight: 600;
- 0 0 15px rgba(180, 180, 180, 0.8);
     background: rgba(200, 200, 200, 0.1);
     border-color: rgba(200, 200, 200, 0.4);
     box-shadow: 
@@ -334,7 +326,6 @@ body::before {
     margin: 4px 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 2px;
- 8px rgba(200, 200, 200, 0.4);
 }
 
 .hamburger.active span:nth-child(1) {
@@ -387,7 +378,6 @@ body::before {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform: translateX(-50%);
     border-radius: 2px;
- 10px rgba(200, 200, 200, 0.5);
 }
 
 .dropdown-toggle::after {
@@ -412,7 +402,6 @@ body::before {
 
 .dropdown:hover .dropdown-toggle {
     color: #ffffff;
- 0 0 12px rgba(180, 180, 180, 0.6);
     transform: translateY(-3px);
     border-color: rgba(200, 200, 200, 0.3);
     box-shadow: 
@@ -499,7 +488,6 @@ body::before {
 .dropdown-menu a:hover {
     background: rgba(200, 200, 200, 0.1);
     color: #ffffff;
- 0 0 12px rgba(180, 180, 180, 0.6);
     transform: translateX(8px);
     border-color: rgba(200, 200, 200, 0.3);
     box-shadow: 
@@ -525,7 +513,6 @@ body::before {
     color: #ffffff;
     font-size: 2.5rem;
     margin-bottom: 1rem;
- 0 0 20px rgba(200, 200, 200, 0.3);
 }
 
 .section-intro {
@@ -557,7 +544,6 @@ body::before {
     display: flex;
     align-items: center;
     gap: 1rem;
- 0 0 15px rgba(200, 200, 200, 0.3);
 }
 
 .performance-category h3 i {
@@ -689,7 +675,7 @@ body::before {
     gap: 0.5rem;
     padding: 1rem 2rem;
     background: rgba(255, 255, 255, 0.95);
-    color: #ffffff;
+    color: #0a0a0a;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
@@ -701,6 +687,7 @@ body::before {
 
 .watch-button:hover {
     background: #ffffff;
+    color: #0a0a0a;
     transform: scale(1.05);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
@@ -719,7 +706,6 @@ body::before {
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     font-weight: 600;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .video-info p {
@@ -764,7 +750,6 @@ body::before {
     color: #ffffff;
     font-size: 1.5rem;
     margin-bottom: 1rem;
- 0 0 15px rgba(200, 200, 200, 0.3);
 }
 
 .video-instructions p {
@@ -857,9 +842,7 @@ body::before {
     font-size: 4rem;
     font-weight: 900;
     color: #ffffff;
- 0 0 20px rgba(200, 200, 200, 0.5);
     margin-bottom: 1rem;
-    /* animation: */ glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
@@ -891,9 +874,7 @@ body::before {
     font-size: 1.3rem;
     font-weight: 600;
     color: #ffffff;
- 0 0 10px rgba(200, 200, 200, 0.3);
     border-right: 3px solid #ffffff;
-    /* animation: */ blink 1s infinite;
     white-space: nowrap;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -921,13 +902,11 @@ body::before {
 
 .btn-primary {
     background: linear-gradient(45deg, #ffffff, #c0c0c0);
-    color: #fff;
- 20px rgba(200, 200, 200, 0.3);
+    color: #0a0a0a;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
- 30px rgba(200, 200, 200, 0.5);
 }
 
 .btn-secondary {
@@ -938,7 +917,7 @@ body::before {
 
 .btn-secondary:hover {
     background: #ffffff;
-    color: #fff;
+    color: #0a0a0a;
 }
 
 .hero-image img {
@@ -946,8 +925,6 @@ body::before {
     height: 300px;
     border-radius: 50%;
     border: 3px solid #ffffff;
- 30px rgba(200, 200, 200, 0.3);
-    /* animation: */ float 6s ease-in-out infinite;
     object-fit: cover;
     object-position: center;
 }
@@ -974,7 +951,6 @@ section h2 {
     text-align: center;
     margin-bottom: 3rem;
     color: #ffffff;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 /* About Section */
@@ -1050,7 +1026,6 @@ section h2 {
 .hobby-link-inline:hover {
     color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
- 0 0 5px rgba(200, 200, 200, 0.3);
 }
 
 /* External links in about section */
@@ -1065,7 +1040,6 @@ section h2 {
 .about-text a:hover {
     color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
- 0 0 5px rgba(200, 200, 200, 0.3);
 }
 
 /* Personal Motto Section */
@@ -1088,7 +1062,6 @@ section h2 {
     right: 0;
     height: 2px;
     background: linear-gradient(90deg, transparent, #ffffff, transparent);
-    /* animation: */ mottoGlow 3s ease-in-out infinite;
 }
 
 @keyframes mottoGlow {
@@ -1109,7 +1082,6 @@ section h2 {
     color: #ffffff;
     margin-bottom: 1rem;
     line-height: 1.5;
- 0 0 10px rgba(200, 200, 200, 0.3);
     font-style: italic;
 }
 
@@ -1250,7 +1222,6 @@ section h2 {
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     font-weight: 600;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .adventure-content p {
@@ -1354,7 +1325,6 @@ section h2 {
 
 .project-link:hover {
     color: #c0c0c0;
- 0 0 5px rgba(200, 200, 200, 0.5);
 }
 
 /* Projects Header */
@@ -1370,7 +1340,6 @@ section h2 {
     color: #ffffff;
     margin-bottom: 1rem;
     line-height: 1.2;
- 0 0 30px rgba(200, 200, 200, 0.3);
 }
 
 .projects-subtitle {
@@ -1476,7 +1445,6 @@ section h2 {
     margin-bottom: 1.5rem;
     font-size: 2.2rem;
     font-weight: 700;
- 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .overlay-content p {
@@ -1484,7 +1452,6 @@ section h2 {
     margin-bottom: 2rem;
     font-size: 1.1rem;
     line-height: 1.7;
- 0 1px 5px rgba(0, 0, 0, 0.3);
 }
 
 .overlay-content .project-tech {
@@ -1492,7 +1459,6 @@ section h2 {
     font-size: 1rem;
     margin-bottom: 2rem;
     font-weight: 500;
- 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .overlay-content .project-links {
@@ -1534,7 +1500,7 @@ section h2 {
     align-items: center;
     gap: 0.5rem;
     background: #ffffff;
-    color: white;
+    color: #0a0a0a;
     text-decoration: none;
     padding: 1rem 2rem;
     border-radius: 12px;
@@ -1716,7 +1682,6 @@ section h2 {
     font-size: 4rem;
     color: #4ade80;
     margin-bottom: 30px;
-    /* animation: */ bounceIn 0.8s ease-out;
 }
 
 .success-content h1 {
@@ -1876,7 +1841,6 @@ section h2 {
 .form-group textarea:focus {
     outline: none;
     border-color: #ffffff;
- 0 3px rgba(200, 200, 200, 0.2);
     background: rgba(255, 255, 255, 0.15);
 }
 
@@ -1903,7 +1867,7 @@ section h2 {
 
 .submit-btn {
     background: linear-gradient(45deg, #ffffff, #c0c0c0);
-    color: #ffffff;
+    color: #0a0a0a;
     border: none;
     border-radius: 8px;
     padding: 14px 28px;
@@ -2121,7 +2085,6 @@ section h2 {
     .nav-menu a.active {
         background: rgba(200, 200, 200, 0.3);
         border-color: #e0e0e0;
- 20px rgba(180, 180, 180, 0.4);
     }
     
     .hamburger {
@@ -2306,7 +2269,6 @@ section h2 {
     font-size: 4rem;
     color: #ffffff;
     margin-bottom: 1rem;
- 0 0 20px rgba(200, 200, 200, 0.5);
 }
 
 .hobby-header h1 {
@@ -2314,7 +2276,6 @@ section h2 {
     font-size: 3rem;
     color: #ffffff;
     margin-bottom: 0.5rem;
- 0 0 15px rgba(200, 200, 200, 0.3);
 }
 
 .hobby-subtitle {
@@ -2405,7 +2366,6 @@ section h2 {
 .chess-link:hover {
     color: #ffffff;
     border-bottom-color: #e0e0e0;
- 0 0 8px rgba(200, 200, 200, 0.4);
 }
 
 /* Chess Game Section */
@@ -2440,7 +2400,7 @@ section h2 {
     align-items: center;
     gap: 1rem;
     background: #ffffff;
-    color: white;
+    color: #0a0a0a;
     text-decoration: none;
     padding: 1.5rem 2.5rem;
     border-radius: 12px;
@@ -2455,7 +2415,6 @@ section h2 {
     transform: translateY(-4px) scale(1.05);
     box-shadow: 0 15px 35px rgba(200, 200, 200, 0.4);
     background: linear-gradient(135deg, #e0e0e0, #c0c0c0);
- 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .chess-game-button i {
@@ -2479,7 +2438,6 @@ section h2 {
     color: #ffffff;
     font-size: 1.3rem;
     margin-bottom: 1rem;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .game-info p {
@@ -2501,7 +2459,6 @@ section h2 {
     color: #ffffff;
     font-size: 2rem;
     margin-bottom: 1rem;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .chess-openings-section p {
@@ -2519,7 +2476,6 @@ section h2 {
     color: #ffffff;
     font-size: 2rem;
     margin-bottom: 1rem;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .chess-club-section p {
@@ -2585,7 +2541,6 @@ section h2 {
     margin-bottom: 0.8rem;
     font-size: 1.2rem;
     font-weight: 600;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .photo-content p {
@@ -2636,7 +2591,6 @@ section h2 {
     color: #ffffff;
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .chess-game-card p {
@@ -2771,7 +2725,6 @@ section h2 {
     display: flex;
     align-items: center;
     gap: 0.8rem;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .genre-card h4 i {
@@ -2864,7 +2817,6 @@ section h2 {
 /* Dropdown hover/active states */
 .dropdown-toggle:hover, .dropdown:hover > .dropdown-toggle {
     color: #ffffff;
- 0 0 8px rgba(180, 180, 180, 0.4);
     transform: translateY(-2px);
 }
 
@@ -3145,7 +3097,7 @@ section h2 {
 .placeholder-content h3 {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #0a0a0a;
     margin-bottom: 1rem;
     font-family: 'Orbitron', monospace;
     background: #ffffff;
@@ -3775,7 +3727,6 @@ section h2 {
         linear-gradient(rgba(0, 123, 255, 0.1) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0, 123, 255, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
-    /* animation: */ gridMove 20s linear infinite;
 }
 
 .background-animation .particles {
@@ -3787,7 +3738,6 @@ section h2 {
     background: 
         radial-gradient(circle at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(0, 123, 255, 0.1) 0%, transparent 50%);
-    /* animation: */ backgroundShift 20s ease-in-out infinite;
 }
 
 /* Architecture Diagram Styles */
@@ -3966,7 +3916,6 @@ section h2 {
 
 .flow-arrow i {
     font-size: 2rem;
-    /* animation: */ pulse 2s ease-in-out infinite;
 }
 
 .flow-arrow span {
@@ -4024,7 +3973,7 @@ section h2 {
 
 .step-number {
     background: #ffffff;
-    color: white;
+    color: #0a0a0a;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -4167,7 +4116,7 @@ section h2 {
     justify-content: center;
     margin-bottom: 1rem;
     font-size: 1.5rem;
-    color: white;
+    color: #0a0a0a;
     box-shadow: 0 5px 15px rgba(200, 200, 200, 0.4);
     transition: all 0.3s ease;
 }
@@ -4182,7 +4131,6 @@ section h2 {
     font-weight: 600;
     color: #ffffff;
     margin-bottom: 0.5rem;
- 0 0 10px rgba(200, 200, 200, 0.3);
 }
 
 .step-content p {
@@ -4199,7 +4147,6 @@ section h2 {
     font-size: 1.5rem;
     color: #ffffff;
     margin: 0 0.5rem;
-    /* animation: */ arrowPulse 2s ease-in-out infinite;
 }
 
 @keyframes arrowPulse {
