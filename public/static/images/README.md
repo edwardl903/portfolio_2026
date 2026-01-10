@@ -1,40 +1,112 @@
 # Portfolio Images
 
-This folder contains placeholder files for all images used in your portfolio website.
+This folder contains all images used in the portfolio website, organized by page/section.
 
-## 📁 Image Placeholders
+## 📁 Folder Structure
 
-### Profile Images
-- **`profile-picture.jpg`** - Your main profile photo for the hero section (300x300px recommended)
+### `home/`
+Profile and hero section images:
+- `profile-picture.jpg` - Main profile photo for the hero section (300x300px recommended)
 
-### Project Images (400x250px recommended)
-- **`chesslytics-project.jpg`** - Screenshot or logo for ChessLytics project
-- **`spotifriend-project.jpg`** - Screenshot or logo for SpotiFriend project  
-- **`etl-tools-project.jpg`** - Screenshot or diagram for ETL Automation Tools
-- **`research-lab-project.jpg`** - Screenshot or image for EEG Research Analysis
+### `about/`
+Personal photos and adventure images:
+- `edward-portrait.jpg` - Main portrait photo
+- `charlie-dog.jpg` - Pet photo
+- `family-photo.jpg` - Family photo
+- `graduation-friends.jpg` - Graduation with friends
+- `mount-washington.jpg` - Mount Washington hike
+- `killington-snowboarding.jpg` - Snowboarding at Killington
+- `sunday-river.JPG` - Sunday River snowboarding
 
-### Hobby Images (150x150px recommended)
-- **`chess-hobby.jpg`** - Chess-related image (board, pieces, or you playing)
-- **`piano-hobby.jpg`** - Piano or music-related image
-- **`skateboarding-hobby.jpg`** - Skateboarding image or skateboard
-- **`volleyball-hobby.jpg`** - Volleyball or sports-related image
+### `projects/`
+Project-related images organized by project:
 
-## 🎯 How to Replace Placeholders
+#### `chesslytics/`
+- `chesslytics-project.jpg` - Main project image
+- `chesslytics-azure.jpg` - Azure Analytics project image
+- `chesslytics-diagram.png` - Architecture diagram
+- `chesslytics-initial-diagram.png` - Initial architecture diagram
+- `chesslytics-azure-pipeline.png` - Azure pipeline diagram
 
-1. **Replace the placeholder files** with your actual images
-2. **Keep the same filenames** so the website works correctly
-3. **Use JPG or PNG format** for best compatibility
-4. **Optimize images** for web (compress if needed)
+#### `spotifriend/`
+- `spotifriend-project.jpg` - Main project image
+
+#### `nlp-pipeline/`
+- `nlp-pipeline-project.jpg` - Main project image
+- `nlp-pipeline-project.pdf` - Project PDF document
+
+#### `movie-recommendations/`
+- `movie-recommendations-project.jpg` - Main project image
+- `movie-embedding-clusters.jpg` - Embedding clusters visualization
+- `movie-recommendation-project.pdf` - Project PDF document
+
+#### `etl-tools/`
+- `etl-tools-project.jpg` - Fidelity PB Optimize project image
+- `pison-technology.jpg` - Pison Technology project image
+
+#### `eeg-research/`
+- `research-lab-project.jpg` - Research lab project image
+
+#### `charts/`
+Shared chart and visualization images used across projects:
+- `confusion-matrix.jpg` - Confusion matrix chart
+- `hyperparameters-tuning.jpg` - Hyperparameter tuning visualization
+- `logistic-regression.jpg` - Logistic regression visualization
+- `rf-confusion-matrix.jpg` - Random forest confusion matrix
+- `rf-random-search.jpg` - Random forest random search results
+- `sample-dashboard.png` - Sample dashboard
+- `tv-rmse-diff-alpha.jpg` - Time series RMSE with different alpha
+- `tv-rmse-same-alpha.jpg` - Time series RMSE with same alpha
+
+### `hobbies/`
+Hobby-related images organized by hobby:
+
+#### `chess/`
+- `chess-hobby.jpg` - Chess hobby image
+- `bc.jpg` - Boston College tournament photo
+- `eboard.png` - Executive board members photo
+- `founders.png` - Chess club founders photo
+- `meeting1.jpg` - Weekly meeting photo 1
+- `meeting2.jpg` - Weekly meeting photo 2
+
+#### `piano/`
+- `piano-hobby.jpg` - Piano hobby image
+- `justin-piano-duet.jpg` - Piano duet performance photo
+
+#### `volleyball/`
+- `volleyball-hobby.jpg` - Volleyball hobby image
+
+#### `skateboarding/`
+- `skateboarding-hobby.jpg` - Skateboarding hobby image
+
+### `resume/`
+Resume documents:
+- `EdwardLai_DataEnthusiast_Resume2025.pdf` - Resume PDF
+
+### `shared/`
+Shared assets used across multiple pages:
+- `backup.png` - Backup/utility image
+- `databricks.png` - Databricks logo/icon
+
+## 🔗 Image Paths in Code
+
+All images are referenced using the `/static/images/` prefix. For example:
+- `/static/images/home/profile-picture.jpg`
+- `/static/images/about/edward-portrait.jpg`
+- `/static/images/projects/chesslytics/chesslytics-project.jpg`
+- `/static/images/hobbies/chess/bc.jpg`
+- `/static/images/resume/EdwardLai_DataEnthusiast_Resume2025.pdf`
 
 ## 📐 Recommended Image Sizes
 
 - **Profile Picture**: 300x300px (square)
 - **Project Images**: 400x250px (landscape)
 - **Hobby Images**: 150x150px (square)
+- **About Photos**: Varies based on layout
 
-## 🔗 Current Image Sources
+## 💡 Best Practices
 
-The website currently uses placeholder URLs from placeholder.com. Once you replace these files, you'll need to update the HTML to use local paths like:
-- `static/images/profile-picture.jpg`
-- `static/images/chesslytics-project.jpg`
-- etc. 
+1. **Keep filenames consistent** - Use kebab-case for all image filenames
+2. **Optimize for web** - Compress images to reduce file size while maintaining quality
+3. **Use appropriate formats** - JPG for photos, PNG for graphics/logos with transparency
+4. **Maintain folder structure** - Add new images to the appropriate folder based on where they're used
