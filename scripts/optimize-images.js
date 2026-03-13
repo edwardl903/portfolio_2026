@@ -185,13 +185,16 @@ async function main() {
   for (const inputPath of imageFiles) {
     const relativePath = path.relative(IMAGES_DIR, inputPath);
     const backupPath = path.join(BACKUP_DIR, relativePath);
-    const outputPath = inputPath; // Overwrite original
+    // Write to a temp file first, then replace original to avoid sharp overwrite issues
+    const tempPath = inputPath + '.opt';
 
     console.log(`Optimizing: ${relativePath}...`);
 
-    const result = await optimizeImage(inputPath, outputPath, backupPath);
+    const result = await optimizeImage(inputPath, tempPath, backupPath);
 
     if (result.success) {
+      // Replace original file with optimized version
+      await fs.rename(tempPath, inputPath);
       totalInputSize += result.inputSize;
       totalOutputSize += result.outputSize;
       console.log(`  ✓ ${result.inputSize.toFixed(1)}KB → ${result.outputSize.toFixed(1)}KB (${result.savings}% reduction)`);
