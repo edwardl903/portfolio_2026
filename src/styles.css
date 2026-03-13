@@ -5,14 +5,16 @@
     box-sizing: border-box;
 }
 
-/* Hide default cursor */
-* {
-    cursor: none !important;
-}
+/* Hide default cursor on desktop (fine pointer devices) */
+@media (pointer: fine) {
+    * {
+        cursor: none !important;
+    }
 
-/* Show default cursor for iframes and PDF viewers */
-iframe, embed[type="application/pdf"], object[type="application/pdf"] {
-    cursor: auto !important;
+    /* Show default cursor for iframes and PDF viewers */
+    iframe, embed[type="application/pdf"], object[type="application/pdf"] {
+        cursor: auto !important;
+    }
 }
 
 /* Custom cursor effects */

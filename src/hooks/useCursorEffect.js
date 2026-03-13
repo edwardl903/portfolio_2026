@@ -2,6 +2,10 @@ import { useEffect } from 'react'
 
 export function useCursorEffect() {
   useEffect(() => {
+    // Disable custom cursor on touch / coarse pointer devices (mobile & tablets)
+    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+      return;
+    }
     // Create main cursor
     const cursor = document.createElement('div')
     cursor.className = 'custom-cursor'
