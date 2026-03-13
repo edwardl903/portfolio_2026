@@ -6,6 +6,7 @@ This portfolio is a **client-rendered React SPA** built on top of Vite. There is
 
 - **Entry point**: `src/main.jsx`
   - Mounts React into `#root`
+  - Imports base styles from `src/styles/base.css` and the main theme from `src/styles.css`
   - Wraps the app in `HashRouter` (or `BrowserRouter` if configured)
 - **Application shell**: `src/App.jsx`
   - Declares all routes via `<Routes>` / `<Route>`
