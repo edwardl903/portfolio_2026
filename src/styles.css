@@ -464,6 +464,13 @@ body::before {
     transform: translateX(-50%) translateY(0);
 }
 
+/* Also show dropdown when React Router sets an 'active' class */
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
 .dropdown-menu li {
     list-style: none;
 }
@@ -952,6 +959,154 @@ section h2 {
     text-align: center;
     margin-bottom: 3rem;
     color: #ffffff;
+}
+
+/* Global mobile layout adjustments */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 1rem;
+    }
+
+    /* Show hamburger, hide desktop menu by default */
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem 1.5rem 2rem 1.5rem;
+        background: linear-gradient(180deg, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0.95) 100%);
+        border-top: 1px solid rgba(200, 200, 200, 0.2);
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+    }
+
+    .nav-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .nav-menu li {
+        width: 100%;
+    }
+
+    .nav-menu a {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border-radius: 8px;
+        background: transparent;
+        border: 1px solid transparent;
+    }
+
+    .nav-menu a::before,
+    .nav-menu a::after {
+        display: none;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* Hobbies dropdown behaves like a simple nested list on mobile */
+    .nav-menu > .dropdown {
+        width: 100%;
+    }
+
+    .dropdown-toggle {
+        width: 100%;
+        justify-content: space-between;
+        padding: 0.9rem 1rem;
+        background: transparent;
+        border: 1px solid transparent;
+    }
+
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0.25rem 0 0.5rem 0;
+        box-shadow: none;
+        min-width: 0;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .dropdown-menu::before {
+        display: none;
+    }
+
+    .dropdown-menu a {
+        margin: 0.1rem 0 0.1rem 0.5rem;
+        padding: 0.7rem 1rem;
+        width: auto;
+        background: transparent;
+        border-radius: 6px;
+    }
+
+    .dropdown-menu a:hover {
+        transform: none;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: none;
+    }
+
+    /* Hero: stack content vertically on mobile */
+    .hero {
+        padding: 90px 1.5rem 3rem 1.5rem;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        text-align: center;
+    }
+
+    .hero-text {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-image {
+        display: flex;
+        justify-content: center;
+    }
+
+    .hero-image img {
+        width: 220px;
+        height: 220px;
+    }
+
+    section {
+        padding: 6rem 1.5rem 3.5rem 1.5rem;
+    }
+
+    .adventure-cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* About Section */

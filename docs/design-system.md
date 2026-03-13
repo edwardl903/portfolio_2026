@@ -76,14 +76,21 @@ Guidelines:
 
 - **Navbar**
   - Fixed to top, dark transparent background with subtle border
-  - Desktop: horizontal menu with dropdown for “Hobbies”
-  - Mobile: hamburger menu toggling a vertical menu
-  - Active link: slightly emphasized via color and background state
+  - Desktop:
+    - Horizontal menu aligned with logo
+    - “Hobbies” implemented as a dropdown with a small caret
+    - Hover states use subtle movement and background, not heavy glow
+  - Mobile:
+    - Hamburger icon on the right
+    - Tapping opens a full‑width vertical nav sheet under the navbar
+    - Items are stacked, full‑width, with generous tap targets
+    - “Hobbies” expands inline, showing its submenu links as an indented list
+  - Active link: slightly emphasized via background and border, consistent across desktop/mobile
 
 - **Scrolling**
   - Global scroll animations via `useScrollAnimations` (fade-in + visible classes on sections)
   - Smooth scrolling for internal anchors (e.g., Piano page performances link)
-  - Sections use `scroll-margin-top` to avoid being hidden by the navbar
+  - Sections and important anchors use `scroll-margin-top` to avoid being hidden by the navbar
 
 ### 6. Interaction Patterns
 
