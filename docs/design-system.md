@@ -84,7 +84,7 @@ Guidelines:
     - Hamburger icon on the right
     - Tapping opens a full‑width vertical nav sheet under the navbar
     - Items are stacked, full‑width, with generous tap targets
-    - “Hobbies” expands inline, showing its submenu links as an indented list
+    - “Hobbies” row shows a nested submenu that is controlled by React state (tap to expand/collapse, no hover reliance)
   - Active link: slightly emphasized via background and border, consistent across desktop/mobile
 
 - **Scrolling**

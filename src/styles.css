@@ -1048,8 +1048,12 @@ section h2 {
         padding: 0.25rem 0 0.5rem 0;
         box-shadow: none;
         min-width: 0;
-        opacity: 1;
-        visibility: visible;
+        /* controlled via React's .active class on mobile */
+        display: none;
+    }
+
+    .dropdown-menu.active {
+        display: block;
     }
 
     .dropdown-menu::before {
@@ -1108,6 +1112,24 @@ section h2 {
 
     .adventure-cards {
         grid-template-columns: 1fr;
+    }
+
+    /* Hobbies detail pages: tighten spacing on mobile */
+    .hobby-detail {
+        padding-top: 90px;
+    }
+
+    .hobby-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .hobby-icon {
+        font-size: 3rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .hobby-description {
+        padding: 1.75rem 1.5rem;
     }
 }
 
