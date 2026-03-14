@@ -3,7 +3,7 @@ import Layout from './components/Layout'
 import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
-import Resume from './pages/Resume'
+// import Resume from './pages/Resume' // hidden for now – uncomment to show
 import Contact from './pages/Contact'
 import ContactSuccess from './pages/ContactSuccess'
 import Piano from './pages/hobbies/Piano'
@@ -26,7 +26,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
-        <Route path="/resume" element={<Resume />} />
+        {/* Resume hidden for now – uncomment to show: <Route path="/resume" element={<Resume />} /> */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact-success" element={<ContactSuccess />} />
         <Route path="/hobbies/piano" element={<Piano />} />

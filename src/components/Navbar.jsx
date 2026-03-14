@@ -36,7 +36,7 @@ function Navbar() {
           <li><Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
           <li><Link to="/about" className={isActive('/about') ? 'active' : ''}>About</Link></li>
           <li><Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
-          <li><Link to="/resume" className={isActive('/resume') ? 'active' : ''}>Resume</Link></li>
+          {/* Resume hidden for now – uncomment to show: <li><Link to="/resume" className={isActive('/resume') ? 'active' : ''}>Resume</Link></li> */}
           <li className="dropdown">
             <a 
               href="#" 
