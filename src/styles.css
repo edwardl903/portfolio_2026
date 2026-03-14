@@ -1374,6 +1374,25 @@ section h2 {
     image-rendering: crisp-edges;
 }
 
+/* Fix image stored rotated 90deg (e.g. Killington photo) */
+.adventure-card .img-rotate-ccw-wrapper {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.adventure-card img.img-rotate-ccw {
+    transform: rotate(90deg) scaleY(1.4);
+    transform-origin: center center;
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    object-position: center;
+}
+
 .adventure-content {
     padding: 1.5rem;
     flex-grow: 1;
@@ -2292,6 +2311,10 @@ section h2 {
     }
     
     .adventure-card img {
+        height: 200px;
+    }
+
+    .adventure-card .img-rotate-ccw-wrapper {
         height: 200px;
     }
     

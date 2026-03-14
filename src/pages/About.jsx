@@ -10,7 +10,7 @@ function About() {
             <div className="about-text">
               <p>Hi, I'm Edward Lai! I'm a data engineer and data analyst passionate about transforming complex data into actionable insights. I thrive on solving challenging problems across diverse domains and love staying current with the latest technologies. Whether it's building ETL pipelines, creating dashboards, or developing machine learning models, I enjoy every aspect of working with data.</p>
                           
-              <p>Most recently, I worked as a Data Analyst at <a href="https://www.fidelity.com" target="_blank" rel="noopener noreferrer">Fidelity Investments</a>. Prior to that, I was a Data Operations Intern at <a href="https://pison.com" target="_blank" rel="noopener noreferrer">Pison Technology</a>, and I gained valuable research experience at both the <a href="https://hci.cs.tufts.edu" target="_blank" rel="noopener noreferrer">Tufts HCI Lab</a> and <a href="https://sites.tufts.edu/idea/" target="_blank" rel="noopener noreferrer">Tufts IDEA Lab</a>.</p>
+              <p>I currently work as a Data Analyst at <a href="https://www.curaleaf.com" target="_blank" rel="noopener noreferrer">Curaleaf Holdings Inc.</a> Previously, I was a Data Analyst at <a href="https://www.fidelity.com" target="_blank" rel="noopener noreferrer">Fidelity Investments</a>, a Data Operations Intern at <a href="https://pison.com" target="_blank" rel="noopener noreferrer">Pison Technology</a>, and I gained research experience at the <a href="https://hci.cs.tufts.edu" target="_blank" rel="noopener noreferrer">Tufts HCI Lab</a> and <a href="https://sites.tufts.edu/idea/" target="_blank" rel="noopener noreferrer">Tufts IDEA Lab</a>.</p>
                           
               <p>I grew up in the suburbs north of Boston with my family of 6 and our dog Charlie. Fun fact: I have a twin brother! When I'm not coding, you'll likely find me playing pickleball or exploring one of my many hobbies. I'm passionate about staying active and learning new skills. Some of my favorite activities include <Link to="/hobbies/piano" className="hobby-link-inline">Piano</Link>, <Link to="/hobbies/chess" className="hobby-link-inline">Chess</Link>, <Link to="/hobbies/volleyball" className="hobby-link-inline">Volleyball</Link>, <Link to="/hobbies/skateboarding" className="hobby-link-inline">Skateboarding</Link>, snowboarding, rock climbing, hiking, biking, squash, badminton, word and board games, and going to the gym.</p>
                           
@@ -61,7 +61,9 @@ function About() {
             </div>
             
             <div className="adventure-card">
-              <img src="/static/images/about/killington-snowboarding.jpg" alt="Snowboarding at Killington" loading="lazy" />
+              <div className="img-rotate-ccw-wrapper">
+                <img src="/static/images/about/killington-snowboarding.jpg" alt="Snowboarding at Killington" className="img-rotate-ccw" loading="lazy" />
+              </div>
               <div className="adventure-content">
                 <h4>Mount Killington, VT</h4>
                 <p>Snowboarding at Killington "The Beast of the East"! Spent a week snowboarding with friends and conquered a bunch of blues and blacks.</p>
