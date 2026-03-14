@@ -33,7 +33,7 @@ Guideline: **Never use white text on white/light backgrounds.** When a container
 
 ### 3. Typography
 
-- **Base font**: `'Roboto', sans-serif`
+- **Current theme**: Inter (one font for body and headings; clean and professional).
 - **Headings**
   - `h1` (hero title): large, bold, used sparingly (e.g., name on Home, page titles)
   - `h2`: section titles (e.g., “About Me”, “Projects”, “Resume”)
@@ -42,6 +42,18 @@ Guideline: **Never use white text on white/light backgrounds.** When a container
   - Font size: ~`1rem`–`1.1rem`
   - Line height: `1.6–1.7` for readability
   - Use `<p>` for paragraphs; avoid long walls of text by breaking into logical chunks
+
+#### Font theme options (switch in `src/styles/base.css` and `index.html`)
+
+| Option | Body / UI | Headings | Feel |
+|--------|-----------|----------|------|
+| **A. Inter** (current) | Inter | Inter | Clean, neutral, very readable. Good default. |
+| **B. DM Sans** | DM Sans | DM Sans | Softer, slightly rounded; friendly and approachable. |
+| **C. Source Serif + Inter** | Source Serif Pro | Inter | Editorial: serif body, sans headings. Good for long reading. |
+| **D. Outfit** | Outfit | Outfit | Geometric, modern, one family. Distinct but not loud. |
+| **E. System fonts** | system-ui | system-ui | No Google Fonts; fast load, native OS look. |
+
+To switch: update `:root { --font-sans: ...; --font-heading: ...; }` in `base.css` and change the Google Fonts `<link>` in `index.html` to load the chosen family (e.g. `family=DM+Sans:wght@400;500;700` for Option B).
 
 ### 4. Components
 
