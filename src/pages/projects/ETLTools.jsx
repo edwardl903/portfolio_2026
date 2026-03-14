@@ -39,72 +39,27 @@ function ETLTools() {
           <div className="project-section">
             <h2>Overview</h2>
             <p>
-              At Fidelity Investments, I led a comprehensive user behavior analysis for the PB Optimize platform—a
-              tool for institutional investors. The platform already offered powerful features, but the team needed a
-              clear picture of how clients were actually using it in order to prioritize the right improvements.
-              <em> Due to NDA restrictions, specific details about the analysis and findings are limited.</em>
+              At Fidelity I led user behavior analysis for the PB Optimize platform so the team could prioritize
+              improvements based on real usage. <em>NDA limits how much I can share about findings.</em>
             </p>
           </div>
 
           <div className="project-section">
-            <p>
-              I started by analyzing usage analytics to identify which features were getting the most traffic and where
-              users were dropping off. I also partnered closely with the Customer Success team to understand the client
-              perspective—what pain points they saw in conversations with users and what features clients found
-              essential vs. confusing or unnecessary.
-            </p>
-            <p>
-              From there, I experimented with multiple visualization tools. I built dashboards in both Google Looker and
-              Power BI and supplemented them with custom visualizations in Python and Excel to drill into more nuanced
-              behavior patterns.
-            </p>
-          </div>
-
-          <div className="project-section">
-            <p>
-              The main deliverable was a set of interactive dashboards that showed how users were navigating the
-              platform end-to-end. These dashboards combined:
-            </p>
+            <h2>What I Did</h2>
             <ul>
-              <li>High-level KPIs like overall platform engagement and session counts</li>
-              <li>Feature-level usage metrics highlighting the most and least used capabilities</li>
-              <li>Drop-off points along key user journeys</li>
-              <li>Segmentation by user type, tenure, and other attributes</li>
+              <li>Analyzed usage analytics and drop-off points; partnered with Customer Success to align with client feedback</li>
+              <li>Built dashboards in Looker and Power BI, plus custom views in Python and Excel</li>
+              <li>Delivered interactive dashboards: engagement KPIs, feature-level usage, user journey drop-offs, segmentation by type and tenure</li>
+              <li>Created flow diagrams in Figma for common user paths</li>
+              <li>Combined tracking logs, engagement metrics, and performance data (e.g. page load) to analyze sessions, feature co-usage, and time patterns</li>
             </ul>
-            <p>
-              I also produced visual flow diagrams in Figma that mapped the most common user paths through PB Optimize.
-              These flows helped the product team quickly see where users were getting stuck and where the experience
-              was working well.
-            </p>
           </div>
 
           <div className="project-section">
+            <h2>Outcome</h2>
             <p>
-              On the technical side, I combined data from multiple sources, including user tracking logs, engagement
-              metrics, and performance data like page load times. I analyzed patterns such as:
-            </p>
-            <ul>
-              <li>Session frequency and duration across different user segments</li>
-              <li>Feature co-usage (which tools were often used together)</li>
-              <li>Time-of-day and day-of-week usage patterns</li>
-              <li>Device and environment breakdowns</li>
-            </ul>
-            <p>
-              The resulting dashboards covered everything from total sessions and user demographics to detailed page
-              interactivity and navigation flows.
-            </p>
-          </div>
-
-          <div className="project-section">
-            <p>
-              This project helped shift the team from intuition-driven decisions to data-informed prioritization. Instead
-              of guessing which features to invest in, product managers and stakeholders could clearly see which
-              workflows were creating value and which ones were causing friction.
-            </p>
-            <p>
-              The analysis also helped distinguish between features that looked impressive in demos and those that
-              clients actually relied on day-to-day. Customer Success used these insights to tailor their conversations
-              with clients and advocate for changes backed by concrete data rather than anecdotes.
+              The work gave product and stakeholders a clear view of which workflows added value and where users
+              struggled, and helped Customer Success use data instead of anecdotes in client conversations.
             </p>
           </div>
         </div>
