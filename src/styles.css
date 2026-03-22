@@ -173,71 +173,7 @@ body::before {
     border-bottom-color: var(--accent);
 }
 
-/* Mobile menu button */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    padding: 0.8rem;
-    border-radius: 12px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid transparent;
-    backdrop-filter: blur(10px);
-    position: relative;
-    z-index: 2;
-}
-
-.hamburger::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(200, 200, 200, 0.1), rgba(180, 180, 180, 0.05));
-    border-radius: 12px;
-    opacity: 0;
-    transition: all 0.4s ease;
-    z-index: -1;
-}
-
-.hamburger:hover {
-    background: rgba(200, 200, 200, 0.1);
-    border-color: rgba(200, 200, 200, 0.3);
-    box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.2),
-        0 0 0 1px rgba(200, 200, 200, 0.2);
-    transform: translateY(-2px);
-}
-
-.hamburger:hover::before {
-    opacity: 1;
-}
-
-.hamburger span {
-    width: 28px;
-    height: 2px;
-    background: var(--text-primary);
-    margin: 4px 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 2px;
-}
-
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-    background: var(--text-primary);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-    transform: translateX(-20px);
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(8px, -8px);
-    background: var(--text-primary);
-}
+/* Hamburger — styles fully handled in mobile media query below */
 
 /* Dropdown Menu */
 .dropdown {
@@ -852,162 +788,196 @@ section h2 {
     line-height: 1.2;
 }
 
-/* ── Mobile nav — single source of truth ─────────────────────── */
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV — complete, self-contained, no conflicts
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Hamburger: hidden on desktop */
+.hamburger {
+    display: none;
+}
+
+/* Mobile overlay: hidden everywhere by default */
+.mob-overlay,
+.mob-backdrop,
+.mob-inner,
+.mob-link,
+.mob-section,
+.mob-label {
+    display: none;
+}
+
 @media (max-width: 768px) {
+
+    /* ── Navbar adjustments ──────────────────────────────────── */
     .nav-container {
         padding: 0 1rem;
+    }
+
+    /* Hide desktop menu entirely */
+    .nav-menu {
+        display: none !important;
     }
 
     /* Show hamburger button */
     .hamburger {
         display: flex;
-    }
-
-    /* Full-screen drawer, hidden by default */
-    .nav-menu {
-        position: fixed;
-        top: 62px;
-        left: 0;
-        right: 0;
-        bottom: 0;
         flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: 0.75rem 1rem 2rem;
-        background: var(--bg-surface);
-        border-top: 1px solid var(--border-color);
-        box-shadow: var(--shadow-md);
-        overflow-y: auto;
-        /* hidden state */
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transform: translateY(-6px);
-        transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
-        z-index: 999;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        padding: 0;
+        position: relative;
+        z-index: 10001; /* always above overlay */
     }
 
-    .nav-menu.active {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-        transform: translateY(0);
-    }
-
-    .nav-menu li {
-        width: 100%;
-    }
-
-    /* All top-level nav links */
-    .nav-menu > li > a {
+    .hamburger span {
         display: block;
+        width: 24px;
+        height: 2px;
+        background: var(--text-primary);
+        border-radius: 2px;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+        transform-origin: center;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* ── Full-screen overlay ─────────────────────────────────── */
+    .mob-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        padding: 0.85rem 0.75rem;
-        font-size: 1rem;
+        height: 100%;
+        /* Overlay itself is transparent — backdrop + inner handle visuals */
+        z-index: 9000;
+        pointer-events: none;
+        /* No transform — avoids iOS fixed-position bugs */
+        visibility: hidden;
+        transition: visibility 0s linear 0.25s;
+    }
+
+    .mob-overlay.open {
+        pointer-events: auto;
+        visibility: visible;
+        transition: visibility 0s linear 0s;
+    }
+
+    /* Semi-transparent backdrop behind the drawer */
+    .mob-backdrop {
+        display: block;
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .mob-overlay.open .mob-backdrop {
+        opacity: 1;
+    }
+
+    /* Slide-in drawer panel */
+    .mob-inner {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 85%;
+        max-width: 320px;
+        height: 100%;
+        background: var(--bg-surface);
+        padding: 80px 1.25rem 2rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+        transform: translateX(-100%);
+        transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .mob-overlay.open .mob-inner {
+        transform: translateX(0);
+    }
+
+    /* ── Nav links ───────────────────────────────────────────── */
+    .mob-link {
+        display: block;
+        padding: 0.9rem 0.75rem;
+        font-size: 1.05rem;
         font-weight: 400;
         color: var(--text-secondary);
+        text-decoration: none;
         border-radius: 8px;
-        border-bottom: none;
-        background: transparent;
         transition: background 0.15s ease, color 0.15s ease;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    .nav-menu > li > a:hover {
+    .mob-link:active,
+    .mob-link:hover {
         background: var(--bg-subtle);
         color: var(--text-primary);
     }
 
-    .nav-menu > li > a.active {
+    .mob-link.active {
         background: var(--accent-light);
         color: var(--accent);
         font-weight: 500;
     }
 
-    .nav-menu a::before,
-    .nav-menu a::after {
-        display: none;
+    /* ── Hobbies section ─────────────────────────────────────── */
+    .mob-section {
+        display: block;
+        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        border-top: 1px solid var(--border-color);
     }
 
-    /* ── Hobbies dropdown on mobile ──────────────────────────── */
-    /* Always expanded, no hover toggle, no chevron */
-    .nav-menu > .dropdown {
+    .mob-label {
         display: block;
-        width: 100%;
-        position: static;
-    }
-
-    .dropdown-toggle {
-        display: block;
-        width: 100%;
-        padding: 0.75rem 0.75rem 0.3rem;
-        font-size: 0.68rem;
+        padding: 0.5rem 0.75rem 0.25rem;
+        font-size: 0.65rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.12em;
         color: var(--text-muted);
-        border-bottom: none;
-        cursor: default;
         user-select: none;
-        border-top: 1px solid var(--border-color);
-        margin-top: 0.25rem;
     }
 
-    .dropdown-toggle i {
-        display: none;
-    }
-
-    .dropdown-toggle.active {
-        color: var(--accent);
-        border-bottom: none;
-    }
-
-    /* Flat list — always visible, no absolute positioning */
-    .dropdown-menu {
-        position: static !important;
-        transform: none !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        background: transparent;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        padding: 0 0 0.5rem;
-        min-width: 0;
-        pointer-events: auto;
-    }
-
-    .dropdown-menu::before {
-        display: none;
-    }
-
-    .dropdown-menu li {
-        width: 100%;
-    }
-
-    .dropdown-menu a {
-        display: block;
-        width: 100%;
-        padding: 0.85rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        color: var(--text-secondary);
-        border-radius: 8px;
-        background: transparent;
-        transition: background 0.15s ease, color 0.15s ease;
-    }
-
-    .dropdown-menu a:hover,
-    .dropdown-menu a.active {
-        background: var(--accent-light);
+    .mob-label.active {
         color: var(--accent);
     }
 
-    /* Reset first/last border-radius overrides */
-    .dropdown-menu li:first-child a,
-    .dropdown-menu li:last-child a {
-        border-radius: 8px;
+    /* Indented hobby sub-links */
+    .mob-link.sub {
+        padding-left: 1.25rem;
+        font-size: 0.98rem;
     }
 
+}
+
+/* ── Mobile layout (non-nav) ────────────────────────────────── */
+@media (max-width: 768px) {
     /* Hero: stack on mobile — photo first, text below */
     .hero {
         padding: 80px 1.25rem 3rem 1.25rem;
