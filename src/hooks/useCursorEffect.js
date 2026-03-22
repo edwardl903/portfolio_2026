@@ -2,125 +2,125 @@ import { useEffect } from 'react'
 
 export function useCursorEffect() {
   useEffect(() => {
-    // Disable custom cursor on touch / coarse pointer devices (mobile & tablets)
-    if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
-      return;
+    if (window.matchMedia?.('(pointer: coarse)').matches) return
+
+    // ── Helpers ───────────────────────────────────────────────────
+    function make(cls) {
+      const d = document.createElement('div')
+      d.className = cls
+      document.body.appendChild(d)
+      return d
     }
-    // Create main cursor
-    const cursor = document.createElement('div')
-    cursor.className = 'custom-cursor'
-    document.body.appendChild(cursor)
-    
-    // Create cursor trails
-    const trail1 = document.createElement('div')
-    trail1.className = 'cursor-trail'
-    document.body.appendChild(trail1)
-    
-    const trail2 = document.createElement('div')
-    trail2.className = 'cursor-trail-2'
-    document.body.appendChild(trail2)
-    
-    const trail3 = document.createElement('div')
-    trail3.className = 'cursor-trail-3'
-    document.body.appendChild(trail3)
-    
-    let mouseX = 0, mouseY = 0
-    let cursorX = 0, cursorY = 0
-    let trail1X = 0, trail1Y = 0
-    let trail2X = 0, trail2Y = 0
-    let trail3X = 0, trail3Y = 0
-    let isOverIframe = false
-    
-    const handleMouseMove = (e) => {
-      mouseX = e.clientX
-      mouseY = e.clientY
+
+    // ── Elements ──────────────────────────────────────────────────
+    const dot  = make('cur-dot')   // white circle w/ accent border — snaps
+    const ring = make('cur-ring')  // larger ring — lerps behind cursor
+
+    const TRAIL_N = 30
+    const trail = Array.from({ length: TRAIL_N }, () => ({ e: make('cur-trail') }))
+
+    // ── Position history (osu!-style: actual past coordinates) ─────
+    // Each animation frame pushes the current mouse position in,
+    // so fast movement = spread trail, slow movement = bunched trail.
+    const histLen = TRAIL_N + 1
+    const hist    = Array.from({ length: histLen }, () => ({ x: -300, y: -300 }))
+
+    // ── State ─────────────────────────────────────────────────────
+    let mx = -300, my = -300
+    let rx = -300, ry = -300
+    let hidden   = false
+    let hovering = false
+    let dotScale  = 1
+    let ringScale = 1
+
+    // ── Events ────────────────────────────────────────────────────
+    const onMove = (e) => { mx = e.clientX; my = e.clientY }
+
+    const onDown = () => spawnRipple(mx, my)
+
+    function spawnRipple(x, y) {
+      const r = document.createElement('div')
+      r.className = 'cur-ripple'
+      r.style.left = x + 'px'
+      r.style.top  = y + 'px'
+      document.body.appendChild(r)
+      r.addEventListener('animationend', () => r.remove(), { once: true })
     }
-    
-    document.addEventListener('mousemove', handleMouseMove)
-    
-    const handleIframeEnter = () => {
-      isOverIframe = true
-      cursor.style.display = 'none'
-      trail1.style.display = 'none'
-      trail2.style.display = 'none'
-      trail3.style.display = 'none'
-      document.body.style.cursor = 'auto'
+
+    // ── Hover ─────────────────────────────────────────────────────
+    function bindHover() {
+      document.querySelectorAll(
+        'a, button, input, textarea, select, [role="button"], .lb-trigger, .btn, .project-card-v2'
+      ).forEach(el => {
+        el.addEventListener('mouseenter', () => { hovering = true  })
+        el.addEventListener('mouseleave', () => { hovering = false })
+      })
     }
-    
-    const handleIframeLeave = () => {
-      isOverIframe = false
-      cursor.style.display = 'block'
-      trail1.style.display = 'block'
-      trail2.style.display = 'block'
-      trail3.style.display = 'block'
-      document.body.style.cursor = 'none'
+
+    // ── Iframe hide ───────────────────────────────────────────────
+    function setVisible(show) {
+      hidden = !show
+      const v = show ? '' : '0'
+      dot.style.opacity  = v
+      ring.style.opacity = v
+      trail.forEach(t => { t.e.style.opacity = v })
     }
-    
-    // Handle iframes and PDF viewers
-    const iframes = document.querySelectorAll('iframe, embed[type="application/pdf"], object[type="application/pdf"]')
-    iframes.forEach(el => {
-      el.addEventListener('mouseenter', handleIframeEnter)
-      el.addEventListener('mouseleave', handleIframeLeave)
+
+    document.querySelectorAll('iframe, embed, object').forEach(f => {
+      f.addEventListener('mouseenter', () => setVisible(false))
+      f.addEventListener('mouseleave', () => setVisible(true))
     })
-    
-    const animateCursor = () => {
-      if (!isOverIframe) {
-        cursorX = mouseX
-        cursorY = mouseY
-        
-        trail1X += (mouseX - trail1X) * 0.08
-        trail1Y += (mouseY - trail1Y) * 0.08
-        
-        trail2X += (mouseX - trail2X) * 0.05
-        trail2Y += (mouseY - trail2Y) * 0.05
-        
-        trail3X += (mouseX - trail3X) * 0.03
-        trail3Y += (mouseY - trail3Y) * 0.03
-        
-        cursor.style.left = cursorX - 8 + 'px'
-        cursor.style.top = cursorY - 8 + 'px'
-        
-        trail1.style.left = trail1X - 3 + 'px'
-        trail1.style.top = trail1Y - 3 + 'px'
-        
-        trail2.style.left = trail2X - 2 + 'px'
-        trail2.style.top = trail2Y - 2 + 'px'
-        
-        trail3.style.left = trail3X - 1.5 + 'px'
-        trail3.style.top = trail3Y - 1.5 + 'px'
+
+    // ── Animation loop ────────────────────────────────────────────
+    const RING_LERP = 0.16
+
+    const tick = () => {
+      if (!hidden) {
+        // Smooth scale on hover
+        const tDot  = hovering ? 1.5 : 1
+        const tRing = hovering ? 1.7 : 1
+        dotScale  += (tDot  - dotScale)  * 0.14
+        ringScale += (tRing - ringScale) * 0.14
+
+        // Dot snaps exactly to the mouse
+        dot.style.transform =
+          `translate(${mx}px,${my}px) translate(-50%,-50%) scale(${dotScale.toFixed(3)})`
+
+        // Ring lerps
+        rx += (mx - rx) * RING_LERP
+        ry += (my - ry) * RING_LERP
+        ring.style.transform =
+          `translate(${rx}px,${ry}px) translate(-50%,-50%) scale(${ringScale.toFixed(3)})`
+
+        // Push current position into history (circular-ish via unshift+pop)
+        hist.unshift({ x: mx, y: my })
+        if (hist.length > histLen) hist.pop()
+
+        // Trail: each dot sits at a past cursor coordinate
+        trail.forEach((t, i) => {
+          const p     = hist[i + 1]   // i+1 so index 0 stays under the dot
+          const ratio = 1 - i / TRAIL_N   // 1 → 0 as i increases
+          t.e.style.transform =
+            `translate(${p.x}px,${p.y}px) translate(-50%,-50%) scale(${ratio.toFixed(3)})`
+          t.e.style.opacity = (0.6 * ratio).toFixed(3)
+        })
       }
-      
-      requestAnimationFrame(animateCursor)
+
+      requestAnimationFrame(tick)
     }
-    
-    animateCursor()
-    
-    // Interactive elements hover effects
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .btn')
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        if (!isOverIframe) {
-          cursor.style.transform = 'scale(1.5)'
-        }
-      })
-      el.addEventListener('mouseleave', () => {
-        if (!isOverIframe) {
-          cursor.style.transform = 'scale(1)'
-        }
-      })
-    })
-    
+
+    // ── Boot ──────────────────────────────────────────────────────
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mousedown', onDown)
+    bindHover()
+    tick()
+
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove)
-      iframes.forEach(el => {
-        el.removeEventListener('mouseenter', handleIframeEnter)
-        el.removeEventListener('mouseleave', handleIframeLeave)
-      })
-      cursor.remove()
-      trail1.remove()
-      trail2.remove()
-      trail3.remove()
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mousedown', onDown)
+      dot.remove()
+      ring.remove()
+      trail.forEach(t => t.e.remove())
     }
   }, [])
 }
-

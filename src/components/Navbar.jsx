@@ -4,14 +4,10 @@ import { Link, useLocation } from 'react-router-dom'
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -22,11 +18,13 @@ function Navbar() {
   }, [location.pathname])
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
-    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : 'auto'
+    const next = !isMobileMenuOpen
+    setIsMobileMenuOpen(next)
+    document.body.style.overflow = next ? 'hidden' : 'auto'
   }
 
   const isActive = (path) => location.pathname === path
+  const isHobbyActive = location.pathname.startsWith('/hobbies')
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
@@ -36,28 +34,21 @@ function Navbar() {
           <li><Link to="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
           <li><Link to="/about" className={isActive('/about') ? 'active' : ''}>About</Link></li>
           <li><Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
-          {/* Resume hidden for now – uncomment to show: <li><Link to="/resume" className={isActive('/resume') ? 'active' : ''}>Resume</Link></li> */}
           <li className="dropdown">
-            <a 
-              href="#" 
-              className="dropdown-toggle"
-              onClick={(e) => {
-                e.preventDefault()
-                setIsDropdownOpen(!isDropdownOpen)
-              }}
-            >
+            {/* Label only — not a link, not clickable */}
+            <span className={`dropdown-toggle ${isHobbyActive ? 'active' : ''}`}>
               Hobbies <i className="fas fa-chevron-down"></i>
-            </a>
-            <ul className={`dropdown-menu ${isDropdownOpen ? 'active' : ''}`}>
-              <li><Link to="/hobbies/piano">Piano</Link></li>
-              <li><Link to="/hobbies/chess">Chess</Link></li>
-              <li><Link to="/hobbies/volleyball">Volleyball</Link></li>
-              <li><Link to="/hobbies/skateboarding">Skateboarding</Link></li>
+            </span>
+            <ul className="dropdown-menu">
+              <li><Link to="/hobbies/piano" className={isActive('/hobbies/piano') ? 'active' : ''}>Piano</Link></li>
+              <li><Link to="/hobbies/chess" className={isActive('/hobbies/chess') ? 'active' : ''}>Chess</Link></li>
+              <li><Link to="/hobbies/volleyball" className={isActive('/hobbies/volleyball') ? 'active' : ''}>Volleyball</Link></li>
+              <li><Link to="/hobbies/skateboarding" className={isActive('/hobbies/skateboarding') ? 'active' : ''}>Skateboarding</Link></li>
             </ul>
           </li>
           <li><Link to="/contact" className={isActive('/contact') ? 'active' : ''}>Contact</Link></li>
         </ul>
-        <div 
+        <div
           className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}
           onClick={toggleMobileMenu}
         >
