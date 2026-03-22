@@ -6,16 +6,19 @@ function Home() {
       <div className="hero-container">
         <div className="hero-content">
           <div className="hero-text">
-            <h1 className="hero-title">Edward Lai</h1>
-            <h2 className="hero-subtitle">Data Engineer & Data Analyst</h2>
-            <p>Tufts University Graduate | Computer Science & Human Factors Engineering | Building scalable data solutions and turning insights into meaningful action</p>
+            <p className="hero-eyebrow">Data Analyst</p>
+            <h1 className="hero-title">Edward<br />Lai</h1>
+            <p className="hero-tagline">Tufts University &middot; Computer Science &amp; Human Factors</p>
+            <p className="hero-bio">I turn raw data into clear answers through dashboards, SQL, and analysis that helps teams make better decisions. Currently at <strong>Curaleaf Holdings</strong>.</p>
             <div className="hero-buttons">
               <Link to="/projects" className="btn btn-primary">View Projects</Link>
-              <Link to="/contact" className="btn btn-secondary">Get In Touch</Link>
+              <Link to="/about" className="btn btn-secondary">About Me</Link>
             </div>
           </div>
           <div className="hero-image">
-            <img src="/static/images/home/profile-picture.jpg" alt="Edward Lai" />
+            <div className="hero-photo-card">
+              <img src="/static/images/home/profile-picture.jpg" alt="Edward Lai" />
+            </div>
           </div>
         </div>
       </div>

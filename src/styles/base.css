@@ -5,17 +5,37 @@
   box-sizing: border-box;
 }
 
-/* Font theme: change these to switch typography (see docs/design-system.md for options) */
+/* Auto-correct EXIF orientation on all images */
+img {
+  image-orientation: from-image;
+}
+
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Playfair Display', Georgia, serif;
   --font-mono: 'ui-monospace', 'SF Mono', 'Consolas', monospace;
+
+  /* Accent */
+  --accent: #C4894F;
+  --accent-dark: #a06b36;
+  --accent-light: rgba(196, 137, 79, 0.15);
+
+  /* Light theme tokens */
+  --bg: #f9f7f4;
+  --bg-surface: #ffffff;
+  --bg-subtle: #f2f0ec;
+  --text-primary: #1c1c1c;
+  --text-secondary: #555555;
+  --text-muted: #909090;
+  --border-color: rgba(0, 0, 0, 0.09);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 8px 28px rgba(0, 0, 0, 0.06);
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: #0a0a0a;
-  color: #ffffff;
+  background-color: var(--bg);
+  color: var(--text-primary);
   overflow-x: hidden;
   min-height: 100vh;
 }
@@ -23,4 +43,3 @@ body {
 #root {
   min-height: 100vh;
 }
-
