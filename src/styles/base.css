@@ -32,12 +32,16 @@ img {
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 8px 28px rgba(0, 0, 0, 0.06);
 }
 
+html {
+  overflow-x: hidden; /* prevent horizontal scroll at root level */
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg);
   color: var(--text-primary);
-  overflow-x: hidden;
   min-height: 100vh;
+  /* Do NOT set overflow-x: hidden here — it breaks position:fixed on iOS */
 }
 
 #root {
