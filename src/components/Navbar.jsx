@@ -47,7 +47,9 @@ function Navbar() {
       {/* ── Fixed top bar ── */}
       <nav className={`navbar${isScrolled ? ' scrolled' : ''}`}>
         <div className="nav-container">
-          <Link to="/" className="nav-logo" onClick={closeMenu}>EL</Link>
+          <Link to="/" className="nav-logo" onClick={closeMenu}>
+            <img src="/static/images/shared/el-logo.png" alt="EL" />
+          </Link>
 
           {/* Desktop horizontal menu — hidden on mobile via CSS */}
           <ul className="nav-menu">

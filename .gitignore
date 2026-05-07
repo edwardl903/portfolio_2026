@@ -30,3 +30,11 @@ WORKFLOW.md
 public/static/images-backup
 DEPLOYMENT_CHECKLIST.md
 IMAGE_OPTIMIZATION.md
+
+# Design source files (large binaries — exported assets live in public/static)
+*.psd
+*.ai
+*.sketch
+8957C0BC-DB16-4B4B-9EBF-E8B67A599D87-removebg-preview copy.png
+.vercel
+.env*.local
