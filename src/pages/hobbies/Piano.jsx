@@ -10,14 +10,12 @@ function Piano() {
 
         <div className="hobby-content">
           <div className="hobby-description">
-            <h2>My Musical Journey</h2>
-            <p>I started piano when I was 7, but quit after a couple of years thinking I just wasn't good at it. At 13, I decided to try again and started taking lessons. Having a good teacher made all the difference - I actually started enjoying the process and rediscovered my interest in music.</p>
-            
-            <p>I performed at a few retirement homes, which was nerve-wracking but turned out to be a good experience. It helped me get more comfortable playing in front of people and showed me that sometimes the obstacles we think are there aren't as big as they seem.</p>
+            <h2>Piano</h2>
+            <p>I started at 7, quit after two years, then picked it back up at 13. Having a teacher who actually made it fun changed everything.</p>
 
-            <p>Now I play a mix of things - classical pieces, jazz, pop songs, movie soundtracks, and some oriental music. I also like to improvise and come up with my own stuff sometimes. It's become a way for me to relax and express myself.</p>
+            <p>I played a few retirement home gigs, which were nerve-wracking but good practice for getting comfortable in front of people. These days I play a mix of classical, jazz, anime/game OSTs, and whatever I feel like. I also mess around with improvising sometimes.</p>
 
-            <p>Looking back, I'm glad I gave it another shot. It taught me that it's okay to walk away from something and come back to it later, and that persistence usually pays off even when things don't start out great.</p>
+            <p>Below are some performances from over the years, mostly stuff I filmed because I liked how it turned out.</p>
             
             <p><a 
               href="#performances" 
@@ -35,12 +33,12 @@ function Piano() {
           {/* YouTube Performances Section */}
           <div className="performances-section" id="performances">
             <h2>Piano Performances</h2>
-            <p className="section-intro">Here are some of my piano performances organized by different aspects of my musical journey.</p>
+            <p className="section-intro">Organized loosely by type.</p>
             
             {/* Duet with Friends Section */}
             <div className="performance-category">
               <h3><i className="fas fa-users"></i> Duet with Friends</h3>
-              <p className="category-description">Collaborative performances with friends and fellow musicians.</p>
+              <p className="category-description">Playing with other people is always more fun than playing alone.</p>
               
               <div className="videos-grid">
                 {/* Tufts CSA Formal - Yellow */}
@@ -176,7 +174,7 @@ function Piano() {
             {/* Favorite Pieces Section */}
             <div className="performance-category">
               <h3><i className="fas fa-heart"></i> Favorite Pieces</h3>
-              <p className="category-description">Personal favorites that I love to play and perform.</p>
+              <p className="category-description">Pieces I keep coming back to.</p>
               
               <div className="videos-grid">
                 {/* Merry-Go-Round Of Life */}
@@ -268,7 +266,7 @@ function Piano() {
             {/* Classical Pieces Section */}
             <div className="performance-category">
               <h3><i className="fas fa-music"></i> Classical Pieces</h3>
-              <p className="category-description">Traditional classical repertoire and masterpieces.</p>
+              <p className="category-description">Classical pieces I worked on over the years.</p>
               
               <div className="videos-grid">
                 {/* Chopin Revolutionary Etude */}

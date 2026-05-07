@@ -123,18 +123,22 @@ body::before {
 }
 
 .nav-logo {
-    font-family: var(--font-heading);
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text-primary);
+    display: flex;
+    align-items: center;
     transition: opacity 0.2s ease;
     cursor: pointer;
     position: relative;
     z-index: 2;
 }
 
+.nav-logo img {
+    height: 40px;
+    width: auto;
+    display: block;
+}
+
 .nav-logo:hover {
-    opacity: 0.8;
+    opacity: 0.75;
 }
 
 .nav-menu {
@@ -154,8 +158,9 @@ body::before {
     letter-spacing: 0.3px;
     padding: 0.4rem 0.2rem;
     position: relative;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     border-bottom: 2px solid transparent;
+    border-radius: 6px;
 }
 
 .nav-menu a::before,
@@ -164,7 +169,11 @@ body::before {
 }
 
 .nav-menu a:hover {
-    color: var(--text-primary);
+    color: var(--accent-dark);
+    background: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-bottom-color: var(--accent);
 }
 
 .nav-menu a.active {
@@ -193,7 +202,8 @@ body::before {
     letter-spacing: 0.3px;
     padding: 0.4rem 0.2rem;
     border-bottom: 2px solid transparent;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 6px;
 }
 
 .dropdown-toggle i {
@@ -203,7 +213,11 @@ body::before {
 }
 
 .dropdown:hover .dropdown-toggle {
-    color: var(--text-primary);
+    color: var(--accent-dark);
+    background: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-bottom-color: var(--accent);
 }
 
 .dropdown:hover .dropdown-toggle i {
@@ -282,8 +296,6 @@ body::before {
     color: var(--text-primary);
     font-size: 2rem;
     margin-bottom: 0.5rem;
-    padding-left: 1rem;
-    border-left: 3px solid var(--accent);
 }
 
 .section-intro {
@@ -370,6 +382,13 @@ body::before {
     height: 0;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     overflow: hidden;
+}
+
+/* Portrait variant for YouTube Shorts (9:16) */
+.video-thumbnail.portrait {
+    max-width: 340px;
+    padding-bottom: 0;
+    height: 560px;
 }
 
 .video-thumbnail iframe {
@@ -726,6 +745,7 @@ body::before {
     overflow: hidden;
     box-shadow: var(--shadow-md), 0 20px 60px rgba(0, 0, 0, 0.1);
     position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hero-photo-card img {
@@ -734,6 +754,16 @@ body::before {
     object-fit: cover;
     object-position: center 15%;
     display: block;
+    transition: transform 0.35s ease;
+}
+
+.hero-photo-card:hover {
+    transform: scale(1.035);
+    box-shadow: var(--shadow-md), 0 34px 84px rgba(0, 0, 0, 0.16);
+}
+
+.hero-photo-card:hover img {
+    transform: scale(1.06);
 }
 
 /* Subtle amber accent line on photo card */
@@ -774,6 +804,7 @@ section {
 .container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 2rem;
 }
 
 section h2 {
@@ -783,8 +814,6 @@ section h2 {
     text-align: left;
     margin-bottom: 2.5rem;
     color: var(--text-primary);
-    padding-left: 1rem;
-    border-left: 3px solid var(--accent);
     line-height: 1.2;
 }
 
@@ -1025,6 +1054,11 @@ section h2 {
         grid-template-columns: 1fr;
     }
 
+    /* Tighten container padding on mobile */
+    .container {
+        padding: 0 1.25rem;
+    }
+
     /* Hobbies detail pages: tighten spacing on mobile */
     .hobby-detail {
         padding-top: 90px;
@@ -1040,7 +1074,14 @@ section h2 {
     }
 
     .hobby-description {
-        padding: 1.75rem 1.5rem;
+        padding: 0 0 1.5rem 0;
+    }
+
+    /* Project detail: stack image + info vertically */
+    .project-header {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
     }
 }
 
@@ -1584,8 +1625,6 @@ section h2 {
     color: var(--text-primary);
     margin-bottom: 0.5rem;
     line-height: 1.2;
-    padding-left: 1rem;
-    border-left: 3px solid var(--accent);
 }
 
 .projects-subtitle {
@@ -2396,10 +2435,6 @@ section h2 {
         padding: 0 1rem;
     }
     
-    .nav-logo {
-        font-size: 1.5rem;
-    }
-    
     /* Contact Page Responsive */
     .contact-content {
         grid-template-columns: 1fr;
@@ -2463,7 +2498,7 @@ section h2 {
 
 /* Hobby Detail Pages */
 .hobby-detail {
-    padding-top: 120px;
+    padding: 120px 0 80px;
     min-height: 100vh;
 }
 
@@ -2524,7 +2559,8 @@ section h2 {
     border-radius: 0;
     padding: 0 0 2rem 0;
     border: none;
-    max-width: 680px;
+    max-width: 720px;
+    margin: 0 auto;       /* center within the container */
 }
 
 .hobby-description h2 {
@@ -2532,8 +2568,6 @@ section h2 {
     font-size: 1.75rem;
     margin-bottom: 1.25rem;
     font-family: var(--font-heading);
-    padding-left: 1rem;
-    border-left: 3px solid var(--accent);
 }
 
 .hobby-description h3 {
@@ -2733,13 +2767,18 @@ section h2 {
     transition: transform 0.3s ease;
 }
 
-.chess-photo-card:hover img {
-    transform: scale(1.04);
-}
+/* img zoom removed — lightbox provides the click-to-expand affordance */
 
 /* Meeting photos work together to fill the row */
 .chess-photo-card.meeting-photo {
     grid-column: span 1;
+}
+
+/* Wrapper div around only the image inside chess-photo-card — needed for lb-trigger overlay */
+.chess-photo-img-wrap {
+    display: block;
+    overflow: hidden;
+    line-height: 0;
 }
 
 .photo-content {
@@ -2760,18 +2799,72 @@ section h2 {
     font-size: 0.875rem;
 }
 
+/* Giant Chess Board section */
+.chess-giant-board {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.chess-giant-board h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.chess-giant-layout {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.chess-giant-info p {
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    font-size: 0.975rem;
+}
+
+.chess-shorts-card {
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.chess-shorts-card .video-thumbnail.portrait {
+    max-width: 220px;
+    height: 390px;
+}
+
 @media (max-width: 768px) {
     .chess-photos-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     .chess-photo-card img {
         height: 200px;
     }
-    
+
     .photo-content {
         padding: 1rem;
+    }
+
+    .chess-giant-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .chess-shorts-card {
+        width: 100%;
+        max-width: 260px;
+        margin: 0 auto;
+    }
+
+    .chess-shorts-card .video-thumbnail.portrait {
+        max-width: 260px;
+        height: 463px;
     }
 }
 
@@ -2994,7 +3087,7 @@ section h2 {
 
 /* Project Detail Pages */
 .project-detail {
-    padding: 120px 0 60px;
+    padding: 120px 0 80px;
     min-height: 100vh;
 }
 
@@ -3004,12 +3097,15 @@ section h2 {
     gap: 40px;
     margin-bottom: 60px;
     align-items: start;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .project-image {
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 .project-image img {
@@ -3078,8 +3174,9 @@ section h2 {
 }
 
 .project-content {
-    max-width: 800px;
-    padding-bottom: 120px; /* Space for fixed navigation */
+    max-width: 780px;
+    margin: 0 auto;         /* center the text body within the container */
+    padding-bottom: 60px;
 }
 
 .project-section {
@@ -3907,72 +4004,59 @@ section h2 {
 .architecture-diagram {
     margin: 3rem 0;
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(200, 200, 200, 0.1) 0%, rgba(180, 180, 180, 0.05) 100%);
-    border: 1px solid rgba(200, 200, 200, 0.2);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
 }
 
 .architecture-diagram h3 {
-    color: #ffffff;
-    font-size: 1.8rem;
-    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1.4rem;
+    font-weight: 600;
     margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    text-align: center;
-    justify-content: center;
+    font-family: var(--font-heading);
 }
 
-    .architecture-diagram h3 i {
-        font-size: 2rem;
-        background: #ffffff;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
+.diagram-image-container {
+    text-align: center;
+    margin: 2rem 0;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
 
-    .diagram-image-container {
-        text-align: center;
-        margin: 2rem 0;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(200, 200, 200, 0.2);
-        border-radius: 16px;
-        padding: 2rem;
-        backdrop-filter: blur(10px);
-    }
+.architecture-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease;
+}
 
-    .architecture-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 12px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease;
-    }
+.architecture-image:hover {
+    transform: scale(1.02);
+}
 
-    .architecture-image:hover {
-        transform: scale(1.02);
-    }
+.diagram-caption {
+    margin-top: 1.25rem;
+    padding: 0.875rem 1rem;
+    background: var(--bg-surface);
+    border-radius: 6px;
+    border-left: 3px solid var(--accent);
+}
 
-    .diagram-caption {
-        margin-top: 1.5rem;
-        padding: 1rem;
-        background: rgba(200, 200, 200, 0.1);
-        border-radius: 8px;
-        border-left: 4px solid #ffffff;
-    }
+.diagram-caption p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin: 0;
+}
 
-    .diagram-caption p {
-        color: #e5e7eb;
-        font-size: 1rem;
-        line-height: 1.6;
-        margin: 0;
-    }
-
-    .diagram-caption strong {
-        color: #ffffff;
-    }
+.diagram-caption strong {
+    color: var(--text-primary);
+}
 
 .diagram-container {
     display: flex;
@@ -3985,79 +4069,76 @@ section h2 {
 
 .cloud-section {
     flex: 1;
-    min-width: 300px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(200, 200, 200, 0.2);
-    border-radius: 16px;
-    padding: 2rem;
-    transition: all 0.4s ease;
-    backdrop-filter: blur(10px);
+    min-width: 280px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .cloud-section:hover {
-    transform: translateY(-5px);
-    border-color: rgba(200, 200, 200, 0.4);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 .cloud-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(200, 200, 200, 0.2);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .cloud-header i {
-    font-size: 2rem;
-    color: #ffffff;
+    font-size: 1.75rem;
+    color: var(--accent);
 }
 
 .cloud-header h4 {
-    color: #ffffff;
-    font-size: 1.4rem;
-    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
     margin: 0;
 }
 
 .service-stack {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .service-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(200, 200, 200, 0.15);
-    border-radius: 12px;
-    padding: 1.2rem;
-    transition: all 0.3s ease;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.875rem 1rem;
+    transition: background 0.15s ease;
 }
 
 .service-item:hover {
-    background: rgba(200, 200, 200, 0.1);
-    border-color: rgba(200, 200, 200, 0.3);
-    transform: translateX(5px);
+    background: var(--accent-light);
 }
 
 .service-item i {
-    color: #ffffff;
-    font-size: 1.2rem;
-    margin-right: 0.8rem;
+    color: var(--accent);
+    font-size: 1rem;
+    margin-right: 0.6rem;
 }
 
 .service-item span {
-    color: #ffffff;
+    color: var(--text-primary);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .service-detail {
-    color: #d1d5db;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    margin-left: 2rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.35rem;
+    margin-left: 1.6rem;
     line-height: 1.4;
 }
 
@@ -4065,24 +4146,25 @@ section h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 150px;
+    min-width: 80px;
 }
 
 .flow-arrow {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    color: #ffffff;
+    gap: 0.4rem;
+    color: var(--text-muted);
     font-weight: 600;
 }
 
 .flow-arrow i {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    color: var(--accent);
 }
 
 .flow-arrow span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-align: center;
 }
 
@@ -4093,109 +4175,112 @@ section h2 {
 
 .architecture-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
 }
 
 .detail-section {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(200, 200, 200, 0.15);
-    border-radius: 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
 }
 
-.detail-section h4 {
-    color: #ffffff;
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
+.detail-section h3 {
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.6rem;
 }
 
-.detail-section h4 i {
-    font-size: 1.5rem;
+.detail-section h3 i {
+    color: var(--accent);
+    font-size: 1rem;
 }
 
 .pipeline-steps {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .step {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 10px;
-    border: 1px solid rgba(200, 200, 200, 0.1);
+    padding: 0.875rem 1rem;
+    background: var(--bg-subtle);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .step-number {
-    background: #ffffff;
-    color: #0a0a0a;
-    width: 30px;
-    height: 30px;
+    background: var(--accent);
+    color: #ffffff;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     flex-shrink: 0;
 }
 
 .step-content {
-    color: #e5e7eb;
+    color: var(--text-secondary);
     line-height: 1.5;
+    font-size: 0.9rem;
 }
 
 .step-content strong {
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .benefits-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.875rem;
 }
 
 .benefit-item {
     text-align: center;
-    padding: 1.2rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 12px;
-    border: 1px solid rgba(200, 200, 200, 0.1);
-    transition: all 0.3s ease;
+    padding: 1.1rem 0.875rem;
+    background: var(--bg-subtle);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .benefit-item:hover {
-    transform: translateY(-3px);
-    border-color: rgba(200, 200, 200, 0.3);
-    background: rgba(200, 200, 200, 0.05);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    border-color: rgba(196, 137, 79, 0.3);
 }
 
 .benefit-item i {
-    color: #ffffff;
-    font-size: 1.8rem;
-    margin-bottom: 0.8rem;
+    color: var(--accent);
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
     display: block;
 }
 
 .benefit-item span {
-    color: #ffffff;
+    color: var(--text-primary);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.875rem;
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
 }
 
 .benefit-item p {
-    color: #d1d5db;
-    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
     line-height: 1.4;
     margin: 0;
 }
@@ -4323,43 +4408,37 @@ section h2 {
     }
 }
 
-.architecture-details {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
 .detail-item {
-    background: rgba(10, 10, 10, 0.6);
-    padding: 1.5rem;
+    background: var(--bg-surface);
+    padding: 1.25rem;
     border-radius: 10px;
-    border: 1px solid rgba(200, 200, 200, 0.2);
-    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .detail-item:hover {
-    transform: translateY(-3px);
-    border-color: rgba(200, 200, 200, 0.5);
-    box-shadow: 0 8px 25px rgba(200, 200, 200, 0.2);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .detail-item h4 {
-    font-size: 1.1rem;
-    color: #ffffff;
+    font-size: 1rem;
+    color: var(--text-primary);
     margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 600;
 }
 
 .detail-item h4 i {
-    color: #ffffff;
+    color: var(--accent);
 }
 
 .detail-item p {
-    color: #cccccc;
-    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
     line-height: 1.5;
 }
 

@@ -1,137 +1,152 @@
-## Design System
+# Design System
 
 This document captures the core visual and interaction rules for the portfolio. It is intentionally lightweight but opinionated, so changes stay consistent as the site evolves.
 
-### 1. Layout & Spacing
+---
+
+## 1. Layout & Spacing
 
 - **Layout grid**
-  - Max content width: `1200px` via `.container`
-  - Global section padding: `8rem 2rem 5rem 2rem` (top, sides, bottom)
+  - Max content width: `1200px` via `.container` (`max-width: 1200px; margin: 0 auto; padding: 0 2rem`)
+  - Detail page content (project body, hobby description): `max-width: 780px; margin: 0 auto` — centered reading column
+  - Global section padding (desktop): `8rem 2rem 5rem 2rem`
+  - Global section padding (mobile): `6rem 1.5rem 3.5rem 1.5rem`
   - Sections use `scroll-margin-top: 120px` to account for the fixed navbar
 - **Spacing**
   - Primary vertical rhythm: `1.5rem`–`3rem` between major blocks
   - Card padding: `1rem`–`2rem` depending on density
 
-### 2. Color System
+---
 
-The site uses a **dark theme with neutral accents** (purple/glowy effects have been removed/simplified).
+## 2. Color System
 
-- **Base**
-  - Background: `#0a0a0a` (body), with subtle variations to `#1a1a1a` in some sections
-  - Text (primary): `#ffffff`
-  - Text (muted): `#cccccc` or `#aaaaaa`
-- **Surfaces**
-  - Cards / panels: `rgba(255, 255, 255, 0.03–0.05)` with a subtle border
-  - Borders: `rgba(200, 200, 200, 0.2–0.3)`
-- **Accents**
-  - Buttons on dark background:
-    - Primary: `#ffffff` (text: `#0a0a0a`)
-    - Secondary: transparent with white border, white on hover
-  - Links: inherit text color; emphasis via hover opacity and subtle transforms
+The site uses a **warm light theme** with an amber accent.
 
-Guideline: **Never use white text on white/light backgrounds.** When a container has a white/light background, use dark text (`#0a0a0a`).
+### CSS Variables (defined in `src/styles/base.css`)
 
-### 3. Typography
+| Token | Value | Usage |
+|---|---|---|
+| `--bg` | `#f9f7f4` | Page background |
+| `--bg-surface` | `#ffffff` | Cards, panels, navbar |
+| `--bg-subtle` | `#f2f0ec` | Hover states, subtle fills |
+| `--text-primary` | `#1c1c1c` | Headings, strong text |
+| `--text-secondary` | `#555555` | Body text |
+| `--text-muted` | `#909090` | Captions, labels, metadata |
+| `--border-color` | `rgba(0,0,0,0.09)` | Dividers, card borders |
+| `--accent` | `#C4894F` | Amber — active states, highlights, CTAs |
+| `--accent-dark` | `#a06b36` | Accent hover states |
+| `--accent-light` | `rgba(196,137,79,0.15)` | Soft amber fills (tags, active nav items) |
+| `--shadow-sm` | subtle | Card resting shadow |
+| `--shadow-md` | moderate | Dropdown, elevated surface shadow |
 
-- **Current theme**: Inter (one font for body and headings; clean and professional).
-- **Headings**
-  - `h1` (hero title): large, bold, used sparingly (e.g., name on Home, page titles)
-  - `h2`: section titles (e.g., “About Me”, “Projects”, “Resume”)
-  - `h3` / `h4`: subsection titles inside cards, project sections, and hobby sections
-- **Body text**
-  - Font size: ~`1rem`–`1.1rem`
-  - Line height: `1.6–1.7` for readability
-  - Use `<p>` for paragraphs; avoid long walls of text by breaking into logical chunks
+### Rules
+- **Never** use white text on a white/light background.
+- Active nav links, section headings, and tags all use `--accent` (amber).
+- Section `h2` headings are clean left-aligned text (no decorative accent bar).
 
-#### Font theme options (switch in `src/styles/base.css` and `index.html`)
+---
+
+## 3. Typography
+
+### Current Theme: Playfair Display + Inter
+- `--font-heading`: `'Playfair Display'` — used for `h1`, `h2`, `h3`, hero title, logo
+- `--font-sans`: `'Inter'` — used for body copy, nav links, labels, buttons
+- `--font-mono`: `ui-monospace / SF Mono / Consolas` — used for code/tech references
+
+### Scale
+- `h1` (hero): `clamp(3rem, 7vw, 5.5rem)`, `font-weight: 700`, `line-height: 1.05`
+- `h2` (section): `~2.25rem`, `font-weight: 700`
+- `h3`: `~1.4rem`
+- Body: `1rem`–`1.05rem`, `line-height: 1.7–1.8`
+- Muted/caption: `0.8rem`–`0.875rem`
+
+### Font Theme Options (switch in `src/styles/base.css` and `index.html`)
 
 | Option | Body / UI | Headings | Feel |
 |--------|-----------|----------|------|
-| **A. Inter** (current) | Inter | Inter | Clean, neutral, very readable. Good default. |
-| **B. DM Sans** | DM Sans | DM Sans | Softer, slightly rounded; friendly and approachable. |
-| **C. Source Serif + Inter** | Source Serif Pro | Inter | Editorial: serif body, sans headings. Good for long reading. |
-| **D. Outfit** | Outfit | Outfit | Geometric, modern, one family. Distinct but not loud. |
-| **E. System fonts** | system-ui | system-ui | No Google Fonts; fast load, native OS look. |
+| **A. Playfair + Inter** (current) | Inter | Playfair Display | Editorial, warm, professional |
+| **B. DM Sans** | DM Sans | DM Sans | Softer, friendly |
+| **C. Source Serif + Inter** | Inter | Source Serif Pro | Long-form reading |
+| **D. Outfit** | Outfit | Outfit | Geometric, modern |
+| **E. System fonts** | system-ui | system-ui | Fast load, native OS |
 
-To switch: update `:root { --font-sans: ...; --font-heading: ...; }` in `base.css` and change the Google Fonts `<link>` in `index.html` to load the chosen family (e.g. `family=DM+Sans:wght@400;500;700` for Option B).
+---
 
-### 4. Components
+## 4. Components
 
-#### Buttons
+### Buttons (`.btn`)
+- **Primary (`.btn-primary`)**: amber background (`var(--accent)`), white text. Hover darkens to `var(--accent-dark)`.
+- **Secondary (`.btn-secondary`)**: transparent background, `rgba(255,255,255,0.25)` border on dark, `var(--accent)` text/border on hover.
+- Text: short and action-oriented ("View Projects", "About Me", "Send Message")
+- One primary button per section max
 
-- **Primary button (`.btn.btn-primary`)**
-  - Background: white or light gradient
-  - Text: dark (`#0a0a0a`)
-  - Shape: slightly rounded corners
-  - Hover: slight opacity change or small translateY (no heavy shadows)
+### Cards
+- Used for: project cards, photo cards, video/performance cards, chess highlights
+- Shared traits: `background: var(--bg-surface)`, `border: 1px solid var(--border-color)`, rounded corners, `var(--shadow-sm)`
+- Clear hierarchy: image → title → supporting text → links/metadata
 
-- **Secondary button (`.btn.btn-secondary`)**
-  - Transparent background, white text, white border
-  - Hover: white background, dark text
+### Tags (`.tech-tag`, `.project-tag`)
+- `background: var(--accent-light)`, `color: var(--accent-dark)`
+- `border: 1px solid rgba(196,137,79,0.25)`, `border-radius: 4px`
+- `font-size: ~0.72rem`, `font-weight: 600`
 
-Guidelines:
-- Keep button text short and action-oriented (e.g., “View Projects”, “Send Message”).
-- Don’t overuse primary buttons—usually one primary action per section.
+### Section Headings (`section h2`)
+- `font-family: var(--font-heading)`
+- `text-align: left`
+- no decorative left border or forced left padding
+- `font-size: 2.25rem` (desktop), scales down on mobile
 
-#### Cards
+---
 
-- Used for:
-  - Project cards
-  - Photo cards
-  - Performance/video cards
-  - Chess club / hobby highlights
-- Shared traits:
-  - Soft borders, subtle background tint
-  - Clear hierarchy: image → title → supporting text → metadata/links
+## 5. Navigation
 
-### 5. Navigation & Scrolling
+### Desktop Navbar
+- Fixed to top, `background: rgba(249,247,244,0.97)`, `backdrop-filter: blur(12px)`, `border-bottom: 1px solid var(--border-color)`
+- `z-index: 1000`
+- Horizontal link row; "Hobbies" is a **hover-only dropdown** (label is `<span>`, not a link — not clickable)
+- Active link: `color: var(--accent)`, `border-bottom: 2px solid var(--accent)`
 
-- **Navbar**
-  - Fixed to top, dark transparent background with subtle border
-  - Desktop:
-    - Horizontal menu aligned with logo
-    - “Hobbies” implemented as a dropdown with a small caret
-    - Hover states use subtle movement and background, not heavy glow
-  - Mobile:
-    - Hamburger icon on the right
-    - Tapping opens a full‑width vertical nav sheet under the navbar
-    - Items are stacked, full‑width, with generous tap targets
-    - “Hobbies” row shows a nested submenu that is controlled by React state (tap to expand/collapse, no hover reliance)
-  - Active link: slightly emphasized via background and border, consistent across desktop/mobile
+### Mobile Navbar (≤ 768px)
+- Hamburger `<button>` (right side of nav bar), `z-index: 10001`
+- Tapping opens a **slide-in drawer** from the left (85% width, max 320px)
+- Implemented as `.mob-overlay` — a completely separate DOM element from the desktop `<ul class="nav-menu">` to avoid CSS conflicts
+- "Hobbies" always expands as a flat labelled sub-list (no toggle needed)
+- Backdrop click closes the menu
+- Scroll locked on both `html` and `body` when open (iOS-safe)
 
-- **Scrolling**
-  - Global scroll animations via `useScrollAnimations` (fade-in + visible classes on sections)
-  - Smooth scrolling for internal anchors (e.g., Piano page performances link)
-  - Sections and important anchors use `scroll-margin-top` to avoid being hidden by the navbar
+### Scrolling
+- Global scroll fade-in via `useScrollAnimations` (IntersectionObserver on `section` elements)
+- Smooth scrolling for internal anchors (e.g., Piano performances link)
+- `scroll-margin-top: 120px` on sections and key anchors
 
-### 6. Interaction Patterns
+---
 
-- **Hover**
-  - Buttons: small movement and/or background change
-  - Links/icons: subtle opacity or color change (no extreme glow)
-  - Cards: optional slight lift on hover for clickable cards
+## 6. Interaction Patterns
 
-- **Cursor**
-  - Custom cursor with trailing elements (via `useCursorEffect`)
-  - Cursor hides automatically over iframes/PDFs to avoid conflicts
-  - Cursor slightly enlarges over interactive elements (`a`, `button`, `.btn`, form controls)
+- **Hover**: subtle background / color change; occasional `translateY(-2px)` on cards
+- **Cursor**: custom osu!-inspired cursor (desktop/fine-pointer only)
+  - White dot with amber border snaps to mouse
+  - Amber ring lerps behind cursor
+  - 30-particle history-based trail (fast movement = long trail)
+  - Click ripple: amber ring expands outward
+  - Disabled entirely on touch/coarse-pointer devices (mobile/tablet)
 
-### 7. Media & Assets
+---
 
-- **Images**
-  - Organized by usage (`home/`, `about/`, `projects/*`, `hobbies/*`, `resume/`, `shared/`)
-  - Use `loading="lazy"` for non-critical images (implemented on project, about, and hobby photos)
-  - Prefer compressed JPG/PNG (or WebP if added later) to keep page weight low
+## 7. Media & Assets
 
-- **Embeds**
-  - YouTube iframes use consistent `iframe` styling and responsive containers
+- **Images**: `public/static/images/` organized by page (`home/`, `about/`, `projects/*`, `hobbies/*`, `resume/`, `shared/`)
+- Use `loading="lazy"` on all non-hero images
+- Compress with `npm run optimize-images` (sharp-based script)
+- `image-orientation: from-image` applied globally in `base.css` to handle EXIF rotation
 
-### 8. Accessibility & Content
+---
 
-- Always set meaningful `alt` text on images
-- Use headings in a logical hierarchy (H1 → H2 → H3…)
-- Avoid relying solely on color for meaning; use text and icons where appropriate
-- Ensure forms have labels and clear error messages (already implemented on Contact page)
+## 8. Accessibility & Content
 
-This design system is intentionally minimal but should guide future additions so that new components look and feel consistent with the current portfolio.
-
+- Meaningful `alt` text on all images
+- Logical heading hierarchy (H1 → H2 → H3)
+- No em dashes — they sound AI-generated. Use commas or parentheses
+- No emojis in copy
+- Contact form has labels and clear error states
+- Avoid long walls of text; break into logical short paragraphs
