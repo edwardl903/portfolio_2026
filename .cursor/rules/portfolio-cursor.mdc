@@ -1,0 +1,18 @@
+---
+description: Portfolio repo Cursor conventions and doc pointers
+alwaysApply: true
+---
+
+# portfolio_2026 — AI context
+
+Before editing: read `docs/cursor-workflow.md`, then the relevant doc from `docs/` (design-system, content-structure, architecture, project-overview).
+
+Human-oriented Cursor tips: `docs/cursor-best-practices.md`.
+
+While editing this repo:
+
+- Prefer CSS variables from `src/styles/base.css`; no `overflow-x: hidden` on `body`.
+- After substantive changes: run `npm run build`; append one line to Recent Changes in `cursor-workflow.md`.
+- No em dashes in user-facing copy; keep tone direct, not “AI brochure” tone.
+
+Keep rules in `.cursor/rules/` short; put detail in `docs/`.

@@ -1,31 +1,43 @@
+import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+
 function SpotiFriend() {
   return (
     <section className="project-detail">
       <div className="container">
         <div className="project-header">
           <div className="project-image">
-            <img
+            <ClickableExpandableImage
               src="/static/images/projects/spotifriend/spotifriend-project.jpg"
-              alt="SpotiFriend"
-              loading="lazy"
-            />
+              alt="SpotiFriend Spotify pipeline"
+              caption="SpotiFriend"
+            >
+              <img
+                src="/static/images/projects/spotifriend/spotifriend-project.jpg"
+                alt="SpotiFriend Spotify pipeline"
+                loading="lazy"
+              />
+            </ClickableExpandableImage>
           </div>
           <div className="project-info">
             <h1>SpotiFriend</h1>
             <p className="project-description">
-              Automated data pipeline extracting Spotify listening data with AWS cloud infrastructure, real-time
-              analytics, and personalized music insights using modern data engineering practices.
+              I wanted my Spotify history in a place I could query with SQL instead of only inside the app. SpotiFriend is
+              a small personal pipeline: pull listening data with the Web API (PKCE), land partitioned JSONL in S3, let
+              Glue catalog it, run Athena when I am curious, and lean on QuickSight when I want charts without another
+              side project frontend. No flashy product site, just scheduled ETL and a data lake shaped around my own
+              account.
             </p>
             <div className="project-tech">
               <span className="tech-tag">Python</span>
-              <span className="tech-tag">Spotify API</span>
+              <span className="tech-tag">Spotify Web API</span>
+              <span className="tech-tag">PKCE</span>
               <span className="tech-tag">AWS S3</span>
               <span className="tech-tag">AWS Lambda</span>
               <span className="tech-tag">AWS Glue</span>
               <span className="tech-tag">Amazon Athena</span>
               <span className="tech-tag">Amazon QuickSight</span>
               <span className="tech-tag">EventBridge</span>
-              <span className="tech-tag">Pandas</span>
+              <span className="tech-tag">pandas</span>
               <span className="tech-tag">Boto3</span>
             </div>
             <div className="project-links">
@@ -35,10 +47,7 @@ function SpotiFriend() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <i className="fab fa-github" /> View Code
-              </a>
-              <a href="#" className="project-link" target="_blank" rel="noopener noreferrer">
-                <i className="fas fa-external-link-alt" /> Live Demo
+                <i className="fab fa-github" /> Code
               </a>
             </div>
           </div>
@@ -46,139 +55,44 @@ function SpotiFriend() {
 
         <div className="project-content">
           <div className="project-section">
-            <h2>Overview</h2>
+            <h2>What it actually does</h2>
             <p>
-              SpotiFriend is an automated pipeline that pulls my Spotify listening data via the API, processes it on AWS,
-              and surfaces trends in QuickSight. I built it to see how my taste changes over time and to practice
-              serverless ETL and cloud storage.
+              On a schedule, a Python job authenticates with Spotify, grabs the slices I care about (top tracks, recently
+              played, playlists, that kind of thing), and writes append friendly files into S3. Partitions keep the object
+              list sane as the history grows into tens of thousands of track rows. Glue stays the boring source of truth
+              for schemas so Athena stops being guesswork, and QuickSight sits on top when I want visuals without wiring
+              another Flask app.
             </p>
           </div>
 
           <div className="project-section">
-            <h2>What I Built</h2>
+            <h2>How the pieces fit</h2>
+            <p>
+              Lambda runs the extraction and light transforms, EventBridge is the alarm clock, S3 is the lake, Glue is the
+              catalog, Athena is the ad hoc SQL layer, QuickSight is the BI exit ramp. Spotipy plus boto3 in practice, with
+              pandas when I need to reshape before land. Order of operations is dull on purpose: Spotify API, then Python
+              on Lambda, then S3 partitions, then Glue so Athena sees stable columns, then whatever chart or query I want
+              that week.
+            </p>
+            <p>
+              EventBridge fires the Lambda on a cadence so I never rely on remembering to run a script. PKCE keeps the
+              OAuth refresh story tolerable without hosting a full auth service. Serverless billing matches how often I
+              actually need fresh pulls, bursts instead of an always on box.
+            </p>
             <ul>
-              <li>Python ETL using the Spotify Web API (PKCE) for top tracks, recently played, and playlists</li>
-              <li>S3 for partitioned JSONL storage; Lambda and Glue for processing and catalog</li>
-              <li>EventBridge for scheduled runs; Athena for SQL; QuickSight for dashboards</li>
+              <li>OAuth with PKCE so the refresh story stays sane for a long running personal integration.</li>
+              <li>Partitioned JSONL in S3 so time range queries stay cheap and predictable.</li>
+              <li>Glue crawler and tables so downstream SQL sees stable column names even when Spotify tweaks payloads.</li>
             </ul>
           </div>
 
-          <div className="project-section story-section">
-            <h2>System Architecture</h2>
-
-            <div className="architecture-diagram">
-              <h3>
-                <i className="fas fa-project-diagram" /> AWS Data Pipeline Architecture
-              </h3>
-              <div className="architecture-flow">
-                <div className="flow-step">
-                  <div className="step-icon">
-                    <i className="fab fa-spotify" />
-                  </div>
-                  <div className="step-content">
-                    <h4>Data Sources</h4>
-                    <p>Spotify Web API</p>
-                    <p>User Authentication (PKCE)</p>
-                  </div>
-                </div>
-
-                <div className="flow-arrow">
-                  <i className="fas fa-arrow-right" />
-                </div>
-
-                <div className="flow-step">
-                  <div className="step-icon">
-                    <i className="fab fa-python" />
-                  </div>
-                  <div className="step-content">
-                    <h4>Data Extraction</h4>
-                    <p>Python ETL Script</p>
-                    <p>Spotipy Library</p>
-                  </div>
-                </div>
-
-                <div className="flow-arrow">
-                  <i className="fas fa-arrow-right" />
-                </div>
-
-                <div className="flow-step">
-                  <div className="step-icon">
-                    <i className="fab fa-aws" />
-                  </div>
-                  <div className="step-content">
-                    <h4>Cloud Processing</h4>
-                    <p>AWS Lambda (Serverless)</p>
-                    <p>Data Transformation</p>
-                  </div>
-                </div>
-
-                <div className="flow-arrow">
-                  <i className="fas fa-arrow-right" />
-                </div>
-
-                <div className="flow-step">
-                  <div className="step-icon">
-                    <i className="fas fa-database" />
-                  </div>
-                  <div className="step-content">
-                    <h4>Data Storage</h4>
-                    <p>AWS S3 Data Lake</p>
-                    <p>Partitioned JSONL Format</p>
-                  </div>
-                </div>
-
-                <div className="flow-arrow">
-                  <i className="fas fa-arrow-right" />
-                </div>
-
-                <div className="flow-step">
-                  <div className="step-icon">
-                    <i className="fas fa-search" />
-                  </div>
-                  <div className="step-content">
-                    <h4>Data Catalog</h4>
-                    <p>AWS Glue</p>
-                    <p>Schema Management</p>
-                  </div>
-                </div>
-
-                <div className="flow-arrow">
-                  <i className="fas fa-arrow-right" />
-                </div>
-
-                <div className="flow-step">
-                  <div className="step-icon">
-                    <i className="fas fa-chart-bar" />
-                  </div>
-                  <div className="step-content">
-                    <h4>Analytics</h4>
-                    <p>Amazon Athena (SQL)</p>
-                    <p>Amazon QuickSight</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="architecture-details">
-                <div className="detail-item">
-                  <h4>
-                    <i className="fas fa-clock" /> Automation
-                  </h4>
-                  <p>EventBridge scheduler triggers daily data collection runs.</p>
-                </div>
-                <div className="detail-item">
-                  <h4>
-                    <i className="fas fa-shield-alt" /> Security
-                  </h4>
-                  <p>PKCE authentication ensures secure API access.</p>
-                </div>
-                <div className="detail-item">
-                  <h4>
-                    <i className="fas fa-expand-arrows-alt" /> Scalability
-                  </h4>
-                  <p>Serverless architecture scales automatically with demand.</p>
-                </div>
-              </div>
-            </div>
+          <div className="project-section">
+            <h2>What stuck</h2>
+            <p>
+              The interesting part was not the chart types, it was getting partitions and Glue tables boring enough that
+              Athena queries stayed fast six months later. Personal pipelines still deserve the same hygiene as prod ones,
+              just smaller blast radius when I break something.
+            </p>
           </div>
         </div>
       </div>
@@ -187,4 +101,3 @@ function SpotiFriend() {
 }
 
 export default SpotiFriend
-

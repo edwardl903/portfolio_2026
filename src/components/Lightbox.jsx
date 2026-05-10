@@ -1,6 +1,8 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 
 function Lightbox({ src, alt, caption, onClose }) {
+  const closeBtnRef = useRef(null)
+
   const handleKey = useCallback((e) => {
     if (e.key === 'Escape') onClose()
   }, [onClose])
@@ -8,6 +10,7 @@ function Lightbox({ src, alt, caption, onClose }) {
   useEffect(() => {
     document.addEventListener('keydown', handleKey)
     document.body.style.overflow = 'hidden'
+    closeBtnRef.current?.focus()
     return () => {
       document.removeEventListener('keydown', handleKey)
       document.body.style.overflow = ''
@@ -16,7 +19,7 @@ function Lightbox({ src, alt, caption, onClose }) {
 
   return (
     <div className="lightbox-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-label={alt}>
-      <button className="lightbox-close" onClick={onClose} aria-label="Close image">
+      <button ref={closeBtnRef} type="button" className="lightbox-close" onClick={onClose} aria-label="Close image">
         <i className="fas fa-times"></i>
       </button>
       <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>

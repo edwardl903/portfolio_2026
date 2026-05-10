@@ -1,14 +1,22 @@
+import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+
 function EEGResearch() {
   return (
     <section className="project-detail">
       <div className="container">
         <div className="project-header">
           <div className="project-image">
-            <img
+            <ClickableExpandableImage
               src="/static/images/projects/eeg-research/research-lab-project.jpg"
               alt="EEG research lab"
-              loading="lazy"
-            />
+              caption="EEG research lab"
+            >
+              <img
+                src="/static/images/projects/eeg-research/research-lab-project.jpg"
+                alt="EEG research lab"
+                loading="lazy"
+              />
+            </ClickableExpandableImage>
           </div>
           <div className="project-info">
             <h1>EEG Research Analysis</h1>

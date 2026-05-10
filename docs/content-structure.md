@@ -12,7 +12,7 @@ How content is organized across pages, components, and static assets.
 - Tagline: "Tufts University · Computer Science & Human Factors"
 - Bio: data analytics-focused paragraph, mentions Curaleaf Holdings
 - CTAs: "View Projects" → `/projects`, "About Me" → `/about`
-- Hero image: `/static/images/home/profile-picture.jpg` (tall photo card, `object-position: center 15%`)
+- Hero image: `/static/images/home/profile-picture.jpg` (tall photo card, `object-position: center 15%`). Click or keyboard (Enter/Space) opens `Lightbox` full screen via `ClickableExpandableImage`
 
 ### About (`About.jsx`)
 - Work history paragraph (Curaleaf → Fidelity → Pison → Tufts HCI/IDEA Labs)
@@ -24,19 +24,23 @@ How content is organized across pages, components, and static assets.
 
 ### Projects (`Projects.jsx`)
 - Title: "Data Projects"
-- Subtitle: one-line intro
+- Subtitle: casual intro line under the title
 - Project cards grid (3 col desktop → 2 tablet → 1 mobile) using `.project-card-v2`
 - Each card: image, tags, title, description, GitHub/live/demo links
+- Long-form ChessLytics notes for yourself or the agent: `docs/projects/chesslytics.md` (not rendered on the site; listing copy lives in `Projects.jsx`)
 
 ### Project Detail Pages (`src/pages/projects/`)
+Hero thumbnails and other large figures use `ClickableExpandableImage` (same lightbox pattern as About) where a full-screen read helps UX.
+
 | File | Route | Status |
 |---|---|---|
-| `ChessLytics.jsx` | `/projects/chesslytics` | Full content + architecture diagrams |
+| `ChessLytics.jsx` | `/projects/chesslytics` | Flask writeup, screenshot gallery (`chesslytics-ui-home.png`, `chesslytics-year-wrapped.png`, `chesslytics-game-highlights.png`, `chesslytics-looker-dashboard.png`), GCP + hybrid diagrams, roadmap (`docs/projects/chesslytics.md`) |
 | `ChessLyticsAzure.jsx` | `/projects/chesslytics-azure` | Full content |
-| `SpotiFriend.jsx` | `/projects/spotifriend` | Full content |
-| `NLPipeline.jsx` | `/projects/nlp-pipeline` | Full content |
-| `MovieRecommendations.jsx` | `/projects/movie-recommendations` | Full content |
-| `ETLTools.jsx` | `/projects/etl-tools` | Full content |
+| `SpotiFriend.jsx` | `/projects/spotifriend` | Casual writeup; prose + bullets only (no architecture diagram); code on `spotify-etl` |
+| `NLPipeline.jsx` | `/projects/nlp-pipeline` | Hero + PDF + tuning plots (`nlp-lr-mean-cv-auroc-vs-c.png`, `nlp-rf-auroc-vs-max-depth.png`) in `nlp-pipeline/`; confusion matrices in shared `projects/charts/` |
+| `MovieRecommendations.jsx` | `/projects/movie-recommendations` | Hero + PDF; plots `movielens-training-vs-validation-rmse.png`, `movielens-validation-mae-vs-trial-randomized-search.png`; `movie-embedding-clusters.jpg` |
+| `ETLTools.jsx` | `/projects/etl-tools` | Pison Data Ops: merges, staging QA, BigQuery, Looker Studio, Jupyter, APIs; hero `pison-technology.jpg`; optional official marketing stills `pison-official-*.png|jpg` (sourced from pison.com, credited in page) |
+| `Fidelity.jsx` | `/projects/fidelity` | PB Optimize analytics; hero `etl-tools-project.jpg` (shared `etl-tools/` assets) |
 | `EEGResearch.jsx` | `/projects/eeg-research` | Full content |
 
 Layout: `.project-detail > .container > .project-header` (image + info, max 900px centered) + `.project-content` (text body, max 780px centered)

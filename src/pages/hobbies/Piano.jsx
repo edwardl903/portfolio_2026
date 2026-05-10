@@ -33,12 +33,12 @@ function Piano() {
           {/* YouTube Performances Section */}
           <div className="performances-section" id="performances">
             <h2>Piano Performances</h2>
-            <p className="section-intro">Organized loosely by type.</p>
+            <p className="section-intro">Duets first, then solos from shows or pop, then classical I studied for lessons.</p>
             
             {/* Duet with Friends Section */}
             <div className="performance-category">
               <h3><i className="fas fa-users"></i> Duet with Friends</h3>
-              <p className="category-description">Playing with other people is always more fun than playing alone.</p>
+              <p className="category-description">With friends from school or family. Harder to schedule, more fun than playing alone.</p>
               
               <div className="videos-grid">
                 {/* Tufts CSA Formal - Yellow */}
@@ -46,15 +46,18 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/ESv27FFFxkU" 
-                      title="Yellow - Coldplay (Tufts CSA Formal)"
+                      title="Yellow (Katherine Ho version) - Tufts CSA formal with Roan and Eric"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Yellow - Coldplay (Katherine Ho Version)</h4>
-                    <p>Performed at the Tufts Chinese Student Association Formal with my housemates Roan and Eric on vocals. We only had two practice sessions before the performance.</p>
+                    <h4>Yellow - Coldplay (Katherine Ho version)</h4>
+                    <p>
+                      Tufts CSA formal. Roan and Eric sang, I played piano. It is the Katherine Ho version from Crazy Rich
+                      Asians, not the original Coldplay track. We had two practices before the show.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Trio</span>
                       <span className="duration">CSA Formal</span>
@@ -67,7 +70,7 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/XlFLukgERCU" 
-                      title="Light - Wave to Earth (Vietnamese Coffee Shop)"
+                      title="Light - Wave to Earth, Tufts Vietnamese Student Culture Club coffee shop"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
@@ -75,7 +78,11 @@ function Piano() {
                   </div>
                   <div className="video-info">
                     <h4>Light - Wave to Earth</h4>
-                    <p>Performed at the Tufts Vietnamese Student Culture Club Coffee Shop with my friend Gawon on vocals. The theme was "Light" so this song fit well. I also used LED lights that sync with piano keys through Bluetooth MIDI using a GitHub repo I found.</p>
+                    <p>
+                      Tufts Vietnamese Student Culture Club coffee shop night. Gawon sang. The event was called Light so
+                      we used this song. I also hooked up LEDs on the keys over Bluetooth MIDI using code I found on
+                      GitHub, mostly because I wanted to see if it would work.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Duet</span>
                       <span className="duration">Coffee Shop</span>
@@ -97,8 +104,11 @@ function Piano() {
                     </div>
                   </div>
                   <div className="video-info">
-                    <h4>Gurenge - LiSA (Piano & Viola)</h4>
-                    <p>Collaborative performance with my friend Justin on viola. We played on the same high school volleyball team and decided to try a music collaboration.</p>
+                    <h4>Gurenge - LiSA (piano and viola)</h4>
+                    <p>
+                      Demon Slayer opening with Justin on viola. We met through high school volleyball. Full video is on
+                      YouTube if you use the thumbnail link above.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Duet</span>
                       <span className="duration">Full Video</span>
@@ -111,15 +121,15 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/MKek29hEIrY" 
-                      title="Gotta Catch 'Em All - Pokemon Theme"
+                      title="Gotta Catch &apos;Em All - Pokemon theme with Kate"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Gotta Catch 'Em All - Pokemon Theme</h4>
-                    <p>Collaboration with my friend Kate playing the Pokemon theme song.</p>
+                    <h4>Gotta Catch &apos;Em All - Pokemon Theme</h4>
+                    <p>Short with Kate on the Pokemon theme.</p>
                     <div className="video-meta">
                       <span className="difficulty">Duet</span>
                       <span className="duration">YouTube Shorts</span>
@@ -132,15 +142,15 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/cq2GTBF19hE" 
-                      title="Piano Collaboration with Emai"
+                      title="Driver&apos;s License - piano duet with Emai"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Driver's License - Olivia Rodrigo [Piano Duet]</h4>
-                    <p>Piano duet with my sister Emai - we don't get to play together often.</p>
+                    <h4>Driver&apos;s License - Olivia Rodrigo (piano duet)</h4>
+                    <p>Four hands with my sister Emai. We recorded a short because that was all we had time to learn.</p>
                     <div className="video-meta">
                       <span className="difficulty">Duet</span>
                       <span className="duration">YouTube Shorts</span>
@@ -153,15 +163,18 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/5ukPpMSdI8k" 
-                      title="Comethru - Jeremy Zucker [Piano Duet]"
+                      title="Comethru - Jeremy Zucker, piano duet with Rebecca"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Comethru - Jeremy Zucker [Piano Duet]</h4>
-                    <p>Piano duet with my friend Rebecca. We practiced during COVID with masks on, which made rehearsals interesting.</p>
+                    <h4>Comethru - Jeremy Zucker (piano duet)</h4>
+                    <p>
+                      With Rebecca. We rehearsed during COVID with masks on so it was harder to hear each other clearly.
+                      Same clip as the YouTube Short.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Duet</span>
                       <span className="duration">YouTube Shorts</span>
@@ -174,7 +187,7 @@ function Piano() {
             {/* Favorite Pieces Section */}
             <div className="performance-category">
               <h3><i className="fas fa-heart"></i> Favorite Pieces</h3>
-              <p className="category-description">Pieces I keep coming back to.</p>
+              <p className="category-description">Anime, games, and pop songs I learned mostly for fun.</p>
               
               <div className="videos-grid">
                 {/* Merry-Go-Round Of Life */}
@@ -182,15 +195,18 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/V_uyAVF7G6g" 
-                      title="Merry-Go-Round Of Life - Joe Hisaishi"
+                      title="Merry-Go-Round of Life - Howl&apos;s Moving Castle (Joe Hisaishi, Kyle Landry arrangement)"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Merry-Go-Round Of Life - Joe Hisaishi</h4>
-                    <p>From the Studio Ghibli movie Howl's Moving Castle. This is Kyle Landry's arrangement.</p>
+                    <h4>Merry-Go-Round of Life - Joe Hisaishi</h4>
+                    <p>
+                      From Howl&apos;s Moving Castle. Kyle Landry&apos;s arrangement. Recorded as a short like the other
+                      ones in this section.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Advanced</span>
                       <span className="duration">YouTube Shorts</span>
@@ -203,15 +219,15 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/5v-TmCWWivM" 
-                      title="Snowhalation - Love Live! OST"
+                      title="Snow Halation - Love Live! School idol project"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Snow Halation - Love Live! OST</h4>
-                    <p>This piece has a nice winter feel to it.</p>
+                    <h4>Snow Halation - Love Live! School idol project</h4>
+                    <p>Love Live song. I like how it sounds on piano in winter.</p>
                     <div className="video-meta">
                       <span className="difficulty">Intermediate</span>
                       <span className="duration">YouTube Shorts</span>
@@ -224,15 +240,18 @@ function Piano() {
                   <div className="video-thumbnail">
                     <iframe 
                       src="https://www.youtube.com/embed/_4woMFijPyw" 
-                      title="Hacking to the Gate - Ito Kanako"
+                      title="Hacking to the Gate - Steins;Gate opening (Kanako Ito)"
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen>
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Hacking to the Gate - Ito Kanako</h4>
-                    <p>From the Steins;Gate soundtrack. I added some glitch effects to match the show's time travel theme.</p>
+                    <h4>Hacking to the Gate - Kanako Ito</h4>
+                    <p>
+                      Steins;Gate opening. The glitchy jumps in the video are from editing afterward, not something I did
+                      live at the keyboard.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Advanced</span>
                       <span className="duration">YouTube Shorts</span>
@@ -253,7 +272,7 @@ function Piano() {
                   </div>
                   <div className="video-info">
                     <h4>Loser - Kenshi Yonezu</h4>
-                    <p>Kenshi Yonezu is a well-known Japanese artist. This is a jazzy piano arrangement of his song.</p>
+                    <p>Jazzy piano version of a Kenshi Yonezu song I already listened to a lot.</p>
                     <div className="video-meta">
                       <span className="difficulty">Intermediate-Advanced</span>
                       <span className="duration">Full Video</span>
@@ -266,7 +285,7 @@ function Piano() {
             {/* Classical Pieces Section */}
             <div className="performance-category">
               <h3><i className="fas fa-music"></i> Classical Pieces</h3>
-              <p className="category-description">Classical pieces I worked on over the years.</p>
+              <p className="category-description">Pieces from lessons and a couple competitions.</p>
               
               <div className="videos-grid">
                 {/* Chopin Revolutionary Etude */}
@@ -281,8 +300,11 @@ function Piano() {
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Chopin - Revolutionary Etude Op. 10 No. 12</h4>
-                    <p>I worked on this piece in spring 2020. It's one of the hardest pieces I've learned and I still have room for improvement, but it's my favorite Chopin piece.</p>
+                    <h4>Chopin - Revolutionary Etude, Op. 10 No. 12</h4>
+                    <p>
+                      I worked on this in spring 2020. It is still messy in places when I watch it back, but it was my
+                      favorite Chopin etude at the time.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Advanced</span>
                       <span className="duration">3:01</span>
@@ -302,8 +324,11 @@ function Piano() {
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Brahms - Rhapsody in G Minor, Op.79, No.2</h4>
-                    <p>I don't normally play Brahms, but this piece has a lot of staccatos which makes it interesting.</p>
+                    <h4>Brahms - Rhapsody in G minor, Op. 79 No. 2</h4>
+                    <p>
+                      I do not play much Brahms usually. I picked this one because of the fast staccato sections and the
+                      way the phrases repeat.
+                    </p>
                     <div className="video-meta">
                       <span className="difficulty">Advanced</span>
                       <span className="duration">Full Video</span>
@@ -323,8 +348,8 @@ function Piano() {
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Beethoven - Moonlight Sonata (3rd Movement)</h4>
-                    <p>Performed this in a small competition in 2017 - my first competition.</p>
+                    <h4>Beethoven - Moonlight Sonata, third movement</h4>
+                    <p>Small competition in 2017. First time I played in front of judges.</p>
                     <div className="video-meta">
                       <span className="difficulty">Advanced</span>
                       <span className="duration">Competition</span>
@@ -344,8 +369,8 @@ function Piano() {
                     </iframe>
                   </div>
                   <div className="video-info">
-                    <h4>Rachmaninoff - Prelude in C Sharp Minor Op. 3 No. 2</h4>
-                    <p>This piece is dramatic and has a gloomy feel to it.</p>
+                    <h4>Rachmaninoff - Prelude in C-sharp minor, Op. 3 No. 2</h4>
+                    <p>Slow piece with a lot of low notes. I learned it because I liked how heavy it sounds.</p>
                     <div className="video-meta">
                       <span className="difficulty">Advanced</span>
                       <span className="duration">Full Video</span>

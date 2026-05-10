@@ -139,6 +139,7 @@ The site uses a **warm light theme** with an amber accent.
 - Use `loading="lazy"` on all non-hero images
 - Compress with `npm run optimize-images` (sharp-based script)
 - `image-orientation: from-image` applied globally in `base.css` to handle EXIF rotation
+- **Enlargeable photos**: Home hero and project detail images use `ClickableExpandableImage` (`role="button"`, `aria-label`, focus ring, expand affordance on hover) plus shared `Lightbox` (backdrop click + close button + Escape)
 
 ---
 
