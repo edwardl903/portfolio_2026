@@ -60,10 +60,11 @@ Each hobby page pattern:
 | `Skateboarding.jsx` | `/hobbies/skateboarding` | Narrative + photos |
 
 ### Contact (`Contact.jsx`)
-- Validated form: name, email, subject, message
-- Formspree POST integration
-- On success → `/contact-success`
-- Contact info panel + social links
+- Validated form: name, email, message (Formspree POST); `noValidate` with client validation, inline field errors, server error banner (no `alert`)
+- On success → `/contact-success` (`ContactSuccess.jsx`: light-theme card, primary + secondary actions)
+
+### Contact success (`ContactSuccess.jsx`)
+- Post-submit confirmation; links home and back to contact form
 
 ### Resume (`Resume.jsx`) — **currently hidden**
 - Re-enable in `src/App.jsx` (uncomment route) and `src/components/Navbar.jsx` (uncomment link)

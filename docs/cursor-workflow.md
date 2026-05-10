@@ -72,6 +72,8 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-05-10 | Layout: `layout-shell` + `layout-main` flex column for sticky footer; contact success page fills main and centers card |
+| 2026-05-10 | Contact + ContactSuccess: form UX (inline server error, field error styling, a11y), success page matches light theme; removed legacy glass success CSS |
 | 2026-05-10 | Footer: dropped duplicate page links; copyright + social only |
 | 2026-05-10 | Footer: removed cliché tagline; added footer nav + social links, responsive layout |
 | 2026-05-10 | Piano performances: flattened copy so blurbs read more plain / less “AI polish” |

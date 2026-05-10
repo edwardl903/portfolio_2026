@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
@@ -20,8 +20,10 @@ function Layout({ children }) {
     <>
       <Background />
       <Navbar />
-      <main>{children}</main>
-      <Footer />
+      <div className="layout-shell">
+        <main className="layout-main">{children}</main>
+        <Footer />
+      </div>
     </>
   )
 }

@@ -9,13 +9,15 @@ Client-rendered React SPA built on Vite. No backend — all server-side concerns
 ```
 index.html
   └─ src/main.jsx         ← mounts React, imports base.css + styles.css
-       └─ <BrowserRouter>
+       └─ <HashRouter>
             └─ <App>      ← declares all routes
                  └─ <Layout>
                       ├─ <Background />
                       ├─ <Navbar />
-                      ├─ <Routes> (page components)
-                      └─ <Footer />
+                      └─ <div class="layout-shell">
+                           ├─ <main class="layout-main">
+                           │    └─ <Routes> (page components)
+                           └─ <Footer />
 ```
 
 ## Entry Points
@@ -31,7 +33,7 @@ index.html
 
 ## Routing
 
-Defined in `src/App.jsx` using React Router DOM (BrowserRouter):
+Defined in `src/App.jsx` using React Router DOM (`HashRouter` for GitHub Pages):
 
 | Path | Component |
 |---|---|
