@@ -63,7 +63,7 @@ Defined in `src/App.jsx` using React Router DOM (BrowserRouter):
 | `Navbar` | Fixed top bar; desktop hover dropdown for Hobbies; mobile slide-in drawer (`mob-overlay`) |
 | `Layout` | Shell that wraps all pages; manages scroll-to-top, cursor, scroll animations |
 | `Background` | Decorative particle layer (z-index: -1) |
-| `Footer` | Simple site footer |
+| `Footer` | Copyright year, GitHub / LinkedIn / email icons (no duplicate nav) |
 | `Lightbox` | Full-screen image overlay; Escape to close; focus moves to close control when open |
 | `ClickableExpandableImage` | Reusable `lb-trigger` wrapper + `Lightbox`; used on Home hero photo and project detail images |
 
