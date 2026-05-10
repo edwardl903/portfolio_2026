@@ -72,6 +72,8 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-05-10 | Footer: dropped duplicate page links; copyright + social only |
+| 2026-05-10 | Footer: removed cliché tagline; added footer nav + social links, responsive layout |
 | 2026-05-10 | Piano performances: flattened copy so blurbs read more plain / less “AI polish” |
 | 2026-05-10 | Piano hobby page: revised performance blurbs, category intros, and iframe titles for clearer voice |
 | 2026-05-10 | SpotiFriend: removed architecture flow diagram; folded schedule/auth/scale into prose |

@@ -161,7 +161,7 @@ function Contact() {
                   <a href="https://github.com/edwardl903" title="GitHub" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-github"></i>
                   </a>
-                  <a href="https://www.linkedin.com/in/edward-lai" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.linkedin.com/in/edward-lai-504b6328b/" title="LinkedIn" target="_blank" rel="noopener noreferrer">
                     <i className="fab fa-linkedin"></i>
                   </a>
                   <a href="https://www.chesslytics.xyz" title="ChessLytics" target="_blank" rel="noopener noreferrer">

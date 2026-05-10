@@ -3995,7 +3995,7 @@ section h2 {
 .footer {
     background: var(--bg-surface);
     border-top: 1px solid var(--border-color);
-    padding: 2rem 0;
+    padding: 1.75rem 0;
     margin-top: 4rem;
 }
 
@@ -4003,13 +4003,46 @@ section h2 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
-    text-align: center;
 }
 
-.footer p {
+.footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem 1.5rem;
+}
+
+.footer-copy {
     color: var(--text-muted);
     font-size: 0.875rem;
     margin: 0;
+    font-family: var(--font-sans);
+}
+
+.footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.footer-social a {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: color 0.15s ease;
+}
+
+.footer-social a:hover {
+    color: var(--accent-primary);
+}
+
+@media (max-width: 640px) {
+    .footer-inner {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 /* Background Animation Styles */
