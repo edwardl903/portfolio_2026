@@ -1,14 +1,22 @@
+import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+
 function ChessLyticsAzure() {
   return (
     <section className="project-detail">
       <div className="container">
         <div className="project-header">
           <div className="project-image">
-            <img
+            <ClickableExpandableImage
               src="/static/images/projects/chesslytics/chesslytics-azure.jpg"
               alt="ChessLytics Azure Analytics"
-              loading="lazy"
-            />
+              caption="ChessLytics Azure Analytics"
+            >
+              <img
+                src="/static/images/projects/chesslytics/chesslytics-azure.jpg"
+                alt="ChessLytics Azure Analytics"
+                loading="lazy"
+              />
+            </ClickableExpandableImage>
           </div>
           <div className="project-info">
             <h1>ChessLytics Azure Analytics</h1>
@@ -70,18 +78,18 @@ function ChessLyticsAzure() {
                 </p>
               </div>
               <div className="pipeline-image">
-                <img
+                <ClickableExpandableImage
                   src="/static/images/projects/chesslytics/chesslytics-azure-pipeline.png"
                   alt="ChessLytics Azure pipeline architecture"
-                  loading="lazy"
-                  style={{
-                    maxWidth: '300px',
-                    width: '100%',
-                    height: 'auto',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                  }}
-                />
+                  caption="Azure pipeline architecture"
+                  className="project-pipeline-thumb"
+                >
+                  <img
+                    src="/static/images/projects/chesslytics/chesslytics-azure-pipeline.png"
+                    alt="ChessLytics Azure pipeline architecture"
+                    loading="lazy"
+                  />
+                </ClickableExpandableImage>
               </div>
             </div>
           </div>

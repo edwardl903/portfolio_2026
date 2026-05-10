@@ -776,6 +776,7 @@ body::before {
     height: 4px;
     background: var(--accent);
     border-radius: 20px 20px 0 0;
+    z-index: 4;
 }
 
 @keyframes glow {
@@ -3108,6 +3109,11 @@ section h2 {
     box-shadow: var(--shadow-md);
 }
 
+.project-image > .lb-trigger {
+    display: block;
+    width: 100%;
+}
+
 .project-image img {
     width: 100%;
     height: auto;
@@ -3173,6 +3179,16 @@ section h2 {
     transform: translateY(-1px);
 }
 
+.project-pipeline-thumb img {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    display: block;
+    margin: 0 auto;
+}
+
 .project-content {
     max-width: 780px;
     margin: 0 auto;         /* center the text body within the container */
@@ -3190,6 +3206,36 @@ section h2 {
     font-weight: 700;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 8px;
+}
+
+.chesslytics-gallery,
+.project-figure-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 1.25rem;
+}
+
+.chesslytics-gallery-item h3,
+.project-figure-item h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+    font-family: var(--font-sans);
+}
+
+.chesslytics-gallery-item .diagram-image-container,
+.project-figure-item .diagram-image-container {
+    margin: 0;
+}
+
+@media (min-width: 768px) {
+    .chesslytics-gallery,
+    .project-figure-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.75rem 1.5rem;
+    }
 }
 
 .project-section p {
@@ -4549,6 +4595,16 @@ section h2 {
     position: relative;
 }
 
+.lb-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.diagram-image-container .lb-trigger {
+    display: block;
+    width: 100%;
+}
+
 /* Dim overlay on hover */
 .lb-trigger::before {
     content: '';
@@ -4589,6 +4645,10 @@ section h2 {
 .lb-trigger:hover .lb-expand-icon {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
+}
+
+.hero-photo-card.lb-trigger .lb-expand-icon {
+    z-index: 5;
 }
 
 /* Portrait stack wrappers need position:relative for the overlay */

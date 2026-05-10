@@ -16,6 +16,7 @@ import SpotiFriend from './pages/projects/SpotiFriend'
 import NLPipeline from './pages/projects/NLPipeline'
 import MovieRecommendations from './pages/projects/MovieRecommendations'
 import ETLTools from './pages/projects/ETLTools'
+import Fidelity from './pages/projects/Fidelity'
 import EEGResearch from './pages/projects/EEGResearch'
 import './styles.css'
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/projects/nlp-pipeline" element={<NLPipeline />} />
         <Route path="/projects/movie-recommendations" element={<MovieRecommendations />} />
         <Route path="/projects/etl-tools" element={<ETLTools />} />
+        <Route path="/projects/fidelity" element={<Fidelity />} />
         <Route path="/projects/eeg-research" element={<EEGResearch />} />
       </Routes>
     </Layout>

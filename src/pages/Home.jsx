@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ClickableExpandableImage from '../components/ClickableExpandableImage'
 
 function Home() {
   return (
@@ -16,9 +17,14 @@ function Home() {
             </div>
           </div>
           <div className="hero-image">
-            <div className="hero-photo-card">
+            <ClickableExpandableImage
+              src="/static/images/home/profile-picture.jpg"
+              alt="Edward Lai"
+              caption="Edward Lai"
+              className="hero-photo-card"
+            >
               <img src="/static/images/home/profile-picture.jpg" alt="Edward Lai" />
-            </div>
+            </ClickableExpandableImage>
           </div>
         </div>
       </div>
@@ -30,4 +36,3 @@ function Home() {
 }
 
 export default Home
-

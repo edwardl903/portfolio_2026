@@ -4,8 +4,21 @@ const projects = [
   {
     id: 'chesslytics',
     title: 'ChessLytics',
-    description: 'End-to-end chess analytics platform processing 100,000+ games with personalized Year in Review reports and real-time insights.',
-    tags: ['Python', 'GCP', 'BigQuery', 'Flask'],
+    description:
+      'Self-serve chess analytics: enter a Chess.com username for stats, matplotlib charts, and a Looker embed. Most of the work went into a fast, cached Chess.com fetch and raw-first BigQuery loads so analytics can evolve without re-pulling years of API data.',
+    tags: [
+      'Python',
+      'Flask',
+      'pandas',
+      'matplotlib',
+      'BigQuery',
+      'Looker Studio',
+      'requests-cache',
+      'Chess.com API',
+      'Heroku',
+      'GCP',
+      'dbt',
+    ],
     image: '/static/images/projects/chesslytics/chesslytics-project.jpg',
     links: [
       { label: 'Live', icon: 'fas fa-external-link-alt', href: 'https://www.chesslytics.xyz' },
@@ -16,7 +29,8 @@ const projects = [
   {
     id: 'chesslytics-azure',
     title: 'ChessLytics Azure Analytics',
-    description: 'Scalable Azure-based chess analytics extension processing millions of games using Databricks, Delta Lake, and Spark SQL.',
+    description:
+      'Same chess analytics idea at bigger scale on Azure: bulk historical games through ADLS and Delta Lake, PySpark transforms, then SQL and BI on top. Complements the main app when the dataset stops fitting one laptop-sized pipeline.',
     tags: ['Azure', 'Databricks', 'PySpark', 'Delta Lake'],
     image: '/static/images/projects/chesslytics/chesslytics-azure.jpg',
     links: [],
@@ -25,8 +39,9 @@ const projects = [
   {
     id: 'spotifriend',
     title: 'SpotiFriend',
-    description: 'Cloud data pipeline analyzing Spotify listening behavior across 10,000+ tracks with real-time SQL queries and dashboards.',
-    tags: ['AWS', 'PostgreSQL', 'Python', 'ETL'],
+    description:
+      'Personal Spotify lake house: PKCE API pulls, partitioned JSONL in S3, Glue catalog, Athena SQL, QuickSight charts, EventBridge plus Lambda for scheduled ETL.',
+    tags: ['Python', 'AWS', 'Spotify API', 'S3', 'Glue', 'Athena', 'QuickSight', 'ETL'],
     image: '/static/images/projects/spotifriend/spotifriend-project.jpg',
     links: [
       { label: 'Code', icon: 'fab fa-github', href: 'https://github.com/edwardl903/spotify-etl' },
@@ -36,8 +51,9 @@ const projects = [
   {
     id: 'nlp-pipeline',
     title: 'Reading Level Classifier',
-    description: 'NLP pipeline for automatic reading-level classification of educational content using machine learning models.',
-    tags: ['Python', 'NLP', 'ML', 'scikit-learn'],
+    description:
+      'Binary reading-level labels from text: TF-IDF + logistic regression vs BERT + random forest, with CV sweeps and confusion matrices.',
+    tags: ['Python', 'scikit-learn', 'TF-IDF', 'BERT', 'Random Forest', 'NLP'],
     image: '/static/images/projects/nlp-pipeline/nlp-pipeline-project.jpg',
     links: [],
     to: '/projects/nlp-pipeline',
@@ -45,8 +61,9 @@ const projects = [
   {
     id: 'movie-recommendations',
     title: 'MovieLens Recommender',
-    description: 'Recommendation system using collaborative filtering on millions of user ratings to generate personalized movie suggestions.',
-    tags: ['Python', 'Machine Learning', 'Spark'],
+    description:
+      'MovieLens ratings: matrix factorization (RMSE curves, embeddings) then Surprise SVD++ with RandomizedSearchCV and leaderboard MAE.',
+    tags: ['Python', 'Surprise', 'SVD++', 'Matrix factorization', 'MAE', 'RMSE'],
     image: '/static/images/projects/movie-recommendations/movie-recommendations-project.jpg',
     links: [
       { label: 'Code', icon: 'fab fa-github', href: 'https://github.com/edwardl903/MovieLensRecommender' },
@@ -56,8 +73,9 @@ const projects = [
   {
     id: 'etl-tools',
     title: 'Pison Technology ETL',
-    description: 'Built ETL tools and automation scripts for Boston startup Pison Technology, improving data integration and reducing manual work.',
-    tags: ['Python', 'ETL', 'APIs', 'Automation'],
+    description:
+      'Data ops at a sensor heavy wearable startup: Python merges, staging QA for releases, BigQuery reporting pipes, and Looker Studio dashboards for test scores and improvement across users.',
+    tags: ['Python', 'BigQuery', 'Looker Studio', 'Jupyter', 'ETL', 'APIs'],
     image: '/static/images/projects/etl-tools/pison-technology.jpg',
     links: [],
     to: '/projects/etl-tools',
@@ -69,7 +87,7 @@ const projects = [
     tags: ['SQL', 'Python', 'Tableau', 'Analytics'],
     image: '/static/images/projects/etl-tools/etl-tools-project.jpg',
     links: [],
-    to: '/projects/etl-tools',
+    to: '/projects/fidelity',
   },
   {
     id: 'eeg-research',
@@ -88,7 +106,7 @@ function Projects() {
       <div className="container">
         <div className="projects-header">
           <h1 className="projects-title">Data Projects</h1>
-          <p className="projects-subtitle">A selection of work across analytics, engineering, and research. Feel free to ask me anything.</p>
+          <p className="projects-subtitle">Analytics, pipelines, and side projects I actually shipped. Open a card for the full story, or ask me about one.</p>
         </div>
 
         <div className="projects-grid">
