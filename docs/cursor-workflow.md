@@ -72,6 +72,7 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-05-10 | `Layout.jsx`: `dataLayer` push `portfolio_route_change` on route change for GTM / GA4 SPA page views |
 | 2026-05-10 | Layout: `layout-shell` + `layout-main` flex column for sticky footer; contact success page fills main and centers card |
 | 2026-05-10 | Contact + ContactSuccess: form UX (inline server error, field error styling, a11y), success page matches light theme; removed legacy glass success CSS |
 | 2026-05-10 | Footer: dropped duplicate page links; copyright + social only |
