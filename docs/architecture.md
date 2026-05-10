@@ -27,7 +27,7 @@ index.html
 | `index.html` | Shell HTML, loads Google Fonts (Playfair Display + Inter) |
 | `src/main.jsx` | Mounts React into `#root`, imports `base.css` then `styles.css` |
 | `src/App.jsx` | All route declarations |
-| `src/components/Layout.jsx` | Shared shell; triggers scroll-to-top and global hooks |
+| `src/components/Layout.jsx` | Shared shell; scroll-to-top; `dataLayer` push `portfolio_route_change` for GTM/GA4 SPA routes; global hooks |
 
 ---
 

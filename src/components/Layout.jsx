@@ -13,6 +13,16 @@ function Layout({ children }) {
     window.scrollTo(0, 0)
   }, [location.pathname])
 
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || []
+    window.dataLayer.push({
+      event: 'portfolio_route_change',
+      page_path: location.pathname + location.search,
+      page_location: window.location.href,
+      page_title: document.title,
+    })
+  }, [location.pathname, location.search, location.hash])
+
   useCursorEffect()
   useScrollAnimations()
 
