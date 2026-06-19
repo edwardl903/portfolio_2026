@@ -4,10 +4,9 @@
     iframe, embed, object { cursor: auto !important; }
 }
 
-/* ── Shared base for all cursor layers ───────────────────────── */
+/* ── Custom cursor: dot + ring only ─────────────────────────── */
 .cur-dot,
-.cur-ring,
-.cur-trail {
+.cur-ring {
     position: fixed;
     top: 0;
     left: 0;
@@ -16,56 +15,22 @@
     will-change: transform, opacity;
 }
 
-/* ── Inner dot: white circle w/ amber border, snaps to mouse ─── */
+/* ── Inner dot: snaps to mouse ───────────────────────────────── */
 .cur-dot {
-    width: 14px;
-    height: 14px;
-    background: #ffffff;
-    border: 2.5px solid var(--accent);
-    box-shadow: 0 0 8px rgba(196, 137, 79, 0.45);
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
     z-index: 10001;
 }
 
 /* ── Outer ring: lerps behind cursor ────────────────────────── */
 .cur-ring {
-    width: 32px;
-    height: 32px;
-    border: 2px solid var(--accent);
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--accent);
     background: transparent;
-    opacity: 0.45;
+    opacity: 0.5;
     z-index: 10000;
-}
-
-/* ── Trail: history-based dots — scale + opacity set by JS ───── */
-.cur-trail {
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
-    z-index: 9999;
-}
-
-/* ── Click ripple: osu! hit-circle expand ────────────────────── */
-.cur-ripple {
-    position: fixed;
-    border-radius: 50%;
-    pointer-events: none;
-    width: 18px;
-    height: 18px;
-    border: 2.5px solid var(--accent);
-    background: transparent;
-    z-index: 9998;
-    animation: osuRipple 0.5s ease-out forwards;
-}
-
-@keyframes osuRipple {
-    from {
-        opacity: 0.9;
-        transform: translate(-50%, -50%) scale(0.5);
-    }
-    to {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(4.5);
-    }
 }
 
 
