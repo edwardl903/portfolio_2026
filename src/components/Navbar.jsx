@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useTheme } from '../hooks/useTheme'
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [menuOpen,   setMenuOpen]   = useState(false)
   const location  = useLocation()
   const overlayRef = useRef(null)
+  const [theme, toggleTheme] = useTheme()
 
   // Scroll-shrink effect
   useEffect(() => {
@@ -68,6 +70,16 @@ function Navbar() {
               </ul>
             </li>
             <li><Link to="/contact"  className={isActive('/contact')  ? 'active' : ''}>Contact</Link></li>
+            <li>
+              <button
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                type="button"
+              >
+                <i className={theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'} aria-hidden="true" />
+              </button>
+            </li>
           </ul>
 
           {/* Hamburger — shown only on mobile */}
@@ -107,6 +119,16 @@ function Navbar() {
           </div>
 
           <Link to="/contact"  className={`mob-link${isActive('/contact')  ? ' active' : ''}`} onClick={closeMenu}>Contact</Link>
+
+          <button
+            className="mob-theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            type="button"
+          >
+            <i className={theme === 'light' ? 'fas fa-moon' : 'fas fa-sun'} aria-hidden="true" />
+            {theme === 'light' ? 'Dark mode' : 'Light mode'}
+          </button>
         </nav>
       </div>
     </>

@@ -24,12 +24,26 @@ img {
   --bg: #f9f7f4;
   --bg-surface: #ffffff;
   --bg-subtle: #f2f0ec;
+  --bg-nav: rgba(249, 247, 244, 0.97);
   --text-primary: #1c1c1c;
   --text-secondary: #555555;
   --text-muted: #909090;
   --border-color: rgba(0, 0, 0, 0.09);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="dark"] {
+  --bg: #1c1917;
+  --bg-surface: #242019;
+  --bg-subtle: #2e2924;
+  --bg-nav: rgba(28, 25, 23, 0.97);
+  --text-primary: #f0ece5;
+  --text-secondary: #c0bab0;
+  --text-muted: #7a756d;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 8px 28px rgba(0, 0, 0, 0.35);
 }
 
 html {

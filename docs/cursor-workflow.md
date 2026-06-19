@@ -52,9 +52,9 @@ This file governs how the AI assistant should work with this codebase.
 
 | Item | Current value |
 |---|---|
-| Theme | Warm light (`#f9f7f4` bg), `#C4894F` amber accent |
+| Theme | Warm light (`#f9f7f4` bg) + dark (`#1c1917` bg) toggled via `data-theme` on `<html>`; `#C4894F` amber accent in both |
 | Fonts | Playfair Display (headings) + Inter (body) |
-| Cursor | osu!-style: dot + ring + 30-particle trail + click ripple |
+| Cursor | Dot + ring (no trail); lerp ring, hover scale |
 | Nav (desktop) | Hover-only Hobbies dropdown, non-clickable label |
 | Nav (mobile) | Slide-in drawer (`.mob-overlay`), separate from desktop `ul.nav-menu` |
 | Resume page | Hidden; uncomment in `App.jsx` + `Navbar.jsx` to restore |
@@ -72,6 +72,8 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-06-19 | Dark/light mode: `useTheme` hook, `html[data-theme="dark"]` token overrides, toggle in desktop nav + mobile overlay; `--bg-nav` CSS var for frosted navbar |
+| 2026-06-19 | Cursor simplified: removed 30-particle trail + click ripple; dot + ring only |
 | 2026-05-10 | `Layout.jsx`: `dataLayer` push `portfolio_route_change` on route change for GTM / GA4 SPA page views |
 | 2026-05-10 | Layout: `layout-shell` + `layout-main` flex column for sticky footer; contact success page fills main and centers card |
 | 2026-05-10 | Contact + ContactSuccess: form UX (inline server error, field error styling, a11y), success page matches light theme; removed legacy glass success CSS |

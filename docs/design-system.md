@@ -20,7 +20,7 @@ This document captures the core visual and interaction rules for the portfolio. 
 
 ## 2. Color System
 
-The site uses a **warm light theme** with an amber accent.
+The site supports **light and dark modes** (toggled via the moon/sun button in the navbar). Preference is persisted in `localStorage` (`portfolio-theme`); first visit respects `prefers-color-scheme`. The `data-theme` attribute on `<html>` drives the swap.
 
 ### CSS Variables (defined in `src/styles/base.css`)
 
@@ -38,6 +38,9 @@ The site uses a **warm light theme** with an amber accent.
 | `--accent-light` | `rgba(196,137,79,0.15)` | Soft amber fills (tags, active nav items) |
 | `--shadow-sm` | subtle | Card resting shadow |
 | `--shadow-md` | moderate | Dropdown, elevated surface shadow |
+| `--bg-nav` | `rgba(249,247,244,0.97)` / dark `rgba(28,25,23,0.97)` | Frosted navbar + project navigation background |
+
+Dark mode overrides `--bg`, `--bg-surface`, `--bg-subtle`, `--bg-nav`, all text tokens, `--border-color`, and shadow tokens under `html[data-theme="dark"]`.
 
 ### Rules
 - **Never** use white text on a white/light background.
@@ -124,11 +127,9 @@ The site uses a **warm light theme** with an amber accent.
 ## 6. Interaction Patterns
 
 - **Hover**: subtle background / color change; occasional `translateY(-2px)` on cards
-- **Cursor**: custom osu!-inspired cursor (desktop/fine-pointer only)
-  - White dot with amber border snaps to mouse
-  - Amber ring lerps behind cursor
-  - 30-particle history-based trail (fast movement = long trail)
-  - Click ripple: amber ring expands outward
+- **Cursor**: custom cursor (desktop/fine-pointer only)
+  - Small solid amber dot snaps to mouse
+  - Amber ring lerps behind the dot; both scale up on interactive elements
   - Disabled entirely on touch/coarse-pointer devices (mobile/tablet)
 
 ---
