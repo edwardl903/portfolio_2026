@@ -69,7 +69,8 @@ function Navbar() {
                 <li><Link to="/hobbies/skateboarding"className={isActive('/hobbies/skateboarding')? 'active' : ''}>Skateboarding</Link></li>
               </ul>
             </li>
-            <li><Link to="/contact"  className={isActive('/contact')  ? 'active' : ''}>Contact</Link></li>
+            <li><Link to="/contact"   className={isActive('/contact')    ? 'active' : ''}>Contact</Link></li>
+            {/* Analytics hidden until ready: <li><Link to="/analytics" className={isActive('/analytics') ? 'active' : ''}>Analytics</Link></li> */}
             <li>
               <button
                 className="theme-toggle"
@@ -118,7 +119,8 @@ function Navbar() {
             <Link to="/hobbies/skateboarding"className={`mob-link sub${isActive('/hobbies/skateboarding')? ' active' : ''}`} onClick={closeMenu}>Skateboarding</Link>
           </div>
 
-          <Link to="/contact"  className={`mob-link${isActive('/contact')  ? ' active' : ''}`} onClick={closeMenu}>Contact</Link>
+          <Link to="/contact"   className={`mob-link${isActive('/contact')    ? ' active' : ''}`} onClick={closeMenu}>Contact</Link>
+          {/* Analytics hidden until ready: <Link to="/analytics" ...>Analytics</Link> */}
 
           <button
             className="mob-theme-toggle"

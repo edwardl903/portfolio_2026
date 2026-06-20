@@ -18,6 +18,7 @@ import MovieRecommendations from './pages/projects/MovieRecommendations'
 import ETLTools from './pages/projects/ETLTools'
 import Fidelity from './pages/projects/Fidelity'
 import EEGResearch from './pages/projects/EEGResearch'
+import Analytics from './pages/Analytics'
 import './styles.css'
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/projects/etl-tools" element={<ETLTools />} />
         <Route path="/projects/fidelity" element={<Fidelity />} />
         <Route path="/projects/eeg-research" element={<EEGResearch />} />
+        <Route path="/analytics" element={<Analytics />} />
       </Routes>
     </Layout>
   )
