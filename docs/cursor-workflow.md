@@ -72,6 +72,10 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-06-20 | PianoV2 is now the default /hobbies/piano route; old Piano page moved to /hobbies/piano/more with a subtle link from PianoV2 |
+| 2026-06-20 | PianoV2: removed hint text, full light+dark mode support via data-theme reactive CSS variables and MutationObserver on html element |
+| 2026-06-20 | PianoV2: stripped header text/legend, black keys now fully interactive (hover glow + video preview), removed Background particle dots globally |
+| 2026-06-20 | PianoV2: new experimental page at /hobbies/piano-v2 — interactive piano keyboard, hover-preview cards with YouTube thumbnails, fullscreen modal embed, dark atmospheric theme |
 | 2026-06-20 | ChessLytics: removed second bottom diagram; added live browser-chrome iframe embed (chesslytics.xyz) as first section |
 | 2026-06-20 | Analytics page: full redesign — date presets + custom range, % change stat cards, SVG area/line traffic chart, 6 breakdown panels, choropleth world map (react-simple-maps) |
 | 2026-06-19 | Dark/light mode: `useTheme` hook, `html[data-theme="dark"]` token overrides, toggle in desktop nav + mobile overlay; `--bg-nav` CSS var for frosted navbar |

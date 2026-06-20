@@ -7,6 +7,7 @@ import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import ContactSuccess from './pages/ContactSuccess'
 import Piano from './pages/hobbies/Piano'
+import PianoV2 from './pages/hobbies/PianoV2'
 import Chess from './pages/hobbies/Chess'
 import Volleyball from './pages/hobbies/Volleyball'
 import Skateboarding from './pages/hobbies/Skateboarding'
@@ -31,7 +32,8 @@ function App() {
         {/* Resume hidden for now – uncomment to show: <Route path="/resume" element={<Resume />} /> */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact-success" element={<ContactSuccess />} />
-        <Route path="/hobbies/piano" element={<Piano />} />
+        <Route path="/hobbies/piano" element={<PianoV2 />} />
+        <Route path="/hobbies/piano/more" element={<Piano />} />
         <Route path="/hobbies/chess" element={<Chess />} />
         <Route path="/hobbies/volleyball" element={<Volleyball />} />
         <Route path="/hobbies/skateboarding" element={<Skateboarding />} />
