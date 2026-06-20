@@ -72,6 +72,7 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-06-20 | ChessLytics: removed second bottom diagram; added live browser-chrome iframe embed (chesslytics.xyz) as first section |
 | 2026-06-20 | Analytics page: full redesign — date presets + custom range, % change stat cards, SVG area/line traffic chart, 6 breakdown panels, choropleth world map (react-simple-maps) |
 | 2026-06-19 | Dark/light mode: `useTheme` hook, `html[data-theme="dark"]` token overrides, toggle in desktop nav + mobile overlay; `--bg-nav` CSS var for frosted navbar |
 | 2026-06-19 | Cursor simplified: removed 30-particle trail + click ripple; dot + ring only |

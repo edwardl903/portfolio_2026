@@ -65,6 +65,34 @@ function ChessLytics() {
 
         <div className="project-content">
           <div className="project-section">
+            <h2>Try it live</h2>
+            <p>Type any Chess.com username and pick a year.</p>
+            <div className="project-browser-frame">
+              <div className="project-browser-bar">
+                <div className="project-browser-dots" aria-hidden="true">
+                  <span /><span /><span />
+                </div>
+                <span className="project-browser-url">chesslytics.xyz</span>
+                <a
+                  href="https://www.chesslytics.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-browser-open"
+                >
+                  <i className="fas fa-arrow-up-right-from-square" aria-hidden="true" /> Open
+                </a>
+              </div>
+              <iframe
+                src="https://www.chesslytics.xyz"
+                title="ChessLytics live app"
+                className="project-browser-iframe"
+                loading="lazy"
+                sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+              />
+            </div>
+          </div>
+
+          <div className="project-section">
             <h2>How it works</h2>
             <p>
               You open the site, type username and year, wait a second or two. Then you get the stats block, a stack of
@@ -222,29 +250,8 @@ function ChessLytics() {
             </p>
             <p>
               I wrote that up over here:{' '}
-              <Link to="/projects/chesslytics-azure">ChessLytics Azure Analytics</Link>. The diagram below is the whole
-              story in one picture, GCP app plus the Azure branch.
+              <Link to="/projects/chesslytics-azure">ChessLytics Azure Analytics</Link>.
             </p>
-            <div className="diagram-image-container">
-              <ClickableExpandableImage
-                src="/static/images/projects/chesslytics/chesslytics-diagram.png"
-                alt="ChessLytics full architecture including Azure scale path"
-                caption="GCP app plus Azure scale path"
-              >
-                <img
-                  src="/static/images/projects/chesslytics/chesslytics-diagram.png"
-                  alt="ChessLytics full architecture including Azure scale path"
-                  className="architecture-image"
-                  loading="lazy"
-                />
-              </ClickableExpandableImage>
-              <div className="diagram-caption">
-                <p>
-                  Left side is what you actually click around on. Middle is BigQuery and Looker. Off to the side is the
-                  Azure lakehouse path for when the files stop fitting in polite company.
-                </p>
-              </div>
-            </div>
           </div>
 
           <div className="project-section">
