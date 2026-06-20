@@ -72,6 +72,7 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-06-20 | PianoV2: left/right arrow key navigation between videos in modal; prev/next hover buttons on video; kbd hint in footer |
 | 2026-06-20 | PianoV2 is now the default /hobbies/piano route; old Piano page moved to /hobbies/piano/more with a subtle link from PianoV2 |
 | 2026-06-20 | PianoV2: removed hint text, full light+dark mode support via data-theme reactive CSS variables and MutationObserver on html element |
 | 2026-06-20 | PianoV2: stripped header text/legend, black keys now fully interactive (hover glow + video preview), removed Background particle dots globally |

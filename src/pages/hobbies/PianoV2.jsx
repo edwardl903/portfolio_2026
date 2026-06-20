@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const WHITE_W = 68
@@ -139,7 +139,6 @@ export default function PianoV2() {
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
   const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 })
-  const thumbErrRef = useRef({})
 
   // Apply the extra-dark bg override only when site is in dark mode
   useEffect(() => {
@@ -156,10 +155,24 @@ export default function PianoV2() {
     }
   }, [])
 
+  const navigate = (dir) => {
+    setSelected((prev) => {
+      if (!prev) return prev
+      const idx = PERFORMANCES.findIndex((p) => p.id === prev.id)
+      const next = (idx + dir + PERFORMANCES.length) % PERFORMANCES.length
+      return PERFORMANCES[next]
+    })
+  }
+
   useEffect(() => {
-    const onKeyDown = (e) => { if (e.key === 'Escape') setSelected(null) }
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape')     setSelected(null)
+      else if (e.key === 'ArrowRight') navigate(1)
+      else if (e.key === 'ArrowLeft')  navigate(-1)
+    }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -196,14 +209,10 @@ export default function PianoV2() {
     setSelected(perf)
   }
 
-  const thumbSrc = (id) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`
-
-  const thumbFallback = (e, id) => {
-    if (!thumbErrRef.current[id]) {
-      thumbErrRef.current[id] = true
-      e.target.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`
-    }
-  }
+  // mqdefault.jpg (320x180, 16:9) is guaranteed to exist for every public YouTube video.
+  // maxresdefault / hqdefault are not always generated (older or lower-res uploads return
+  // a blank placeholder instead of a 404, so onError never fires for them).
+  const thumbSrc = (id) => `https://img.youtube.com/vi/${id}/mqdefault.jpg`
 
   return (
     <div className="pv2-page">
@@ -277,7 +286,6 @@ export default function PianoV2() {
             <img
               src={thumbSrc(hovered.id)}
               alt={`${hovered.title} thumbnail`}
-              onError={(e) => thumbFallback(e, hovered.id)}
               className="pv2-preview-thumb"
               loading="lazy"
             />
@@ -323,12 +331,31 @@ export default function PianoV2() {
 
             <div className="pv2-modal-video-wrap">
               <iframe
+                key={selected.id}
                 src={`https://www.youtube.com/embed/${selected.id}?autoplay=1&rel=0&modestbranding=1`}
                 title={selected.title}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
+              <button
+                className="pv2-nav-btn pv2-nav-prev"
+                onClick={() => navigate(-1)}
+                aria-label="Previous video"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                className="pv2-nav-btn pv2-nav-next"
+                onClick={() => navigate(1)}
+                aria-label="Next video"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
             </div>
 
             <div className={`pv2-modal-footer pv2-modal-footer-${selected.category}`}>
@@ -339,7 +366,12 @@ export default function PianoV2() {
                 <h2 className="pv2-modal-title">{selected.title}</h2>
                 <p className="pv2-modal-artist">{selected.artist}</p>
               </div>
-              <p className="pv2-modal-context">{selected.context}</p>
+              <div className="pv2-modal-footer-right">
+                <p className="pv2-modal-context">{selected.context}</p>
+                <p className="pv2-modal-nav-hint" aria-hidden="true">
+                  <kbd>←</kbd><kbd>→</kbd> to navigate
+                </p>
+              </div>
             </div>
           </div>
         </div>
