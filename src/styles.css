@@ -100,6 +100,11 @@ body::before {
     height: 40px;
     width: auto;
     display: block;
+    transition: filter 0.25s ease;
+}
+
+html[data-theme="dark"] .nav-logo img {
+    filter: brightness(0) invert(1);
 }
 
 .nav-logo:hover {
