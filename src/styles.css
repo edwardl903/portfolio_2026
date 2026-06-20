@@ -1137,9 +1137,9 @@ section h2 {
 
 .portrait-main-wrap img {
     width: 100%;
-    height: 260px;
+    height: 170px;
     object-fit: cover;
-    object-position: center top;
+    object-position: center 20%;
     display: block;
 }
 
@@ -1220,7 +1220,7 @@ section h2 {
 .photo-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 240px;
+    grid-auto-rows: 300px;
     gap: 8px;
 }
 
@@ -1228,8 +1228,8 @@ section h2 {
 .pg-item.pg-wide { grid-column: span 2; }
 /* Friends: spans rows 1–2, col 3 */
 .pg-item.pg-tall { grid-row: span 2; }
-/* Sunday River: spans all 3 cols, shorter row */
-.pg-item.pg-full { grid-column: 1 / -1; grid-row: auto; height: 180px; }
+/* Sunday River: spans all 3 cols */
+.pg-item.pg-full { grid-column: 1 / -1; grid-row: auto; height: 280px; }
 
 .pg-item {
     position: relative;
@@ -1252,7 +1252,7 @@ section h2 {
 }
 
 .pg-item.pg-full img {
-    height: 180px;
+    height: 280px;
 }
 
 /* Killington image is now physically rotated — no CSS hacks needed */
@@ -1283,22 +1283,22 @@ section h2 {
     }
 
     .portrait-main-wrap img {
-        height: 160px;
+        height: 220px;
     }
 
     .portrait-pet-wrap img {
-        height: 160px;
+        height: 180px;
     }
 
     .photo-grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-auto-rows: 160px;
+        grid-auto-rows: 200px;
     }
 
     .pg-item.pg-wide { grid-column: span 2; }
     .pg-item.pg-tall { grid-row: span 1; }
-    .pg-item.pg-full { grid-column: 1 / -1; height: 140px; }
-    .pg-item.pg-full img { height: 140px; }
+    .pg-item.pg-full { grid-column: 1 / -1; height: 160px; }
+    .pg-item.pg-full img { height: 160px; }
 }
 
 .hobby-link-inline {
