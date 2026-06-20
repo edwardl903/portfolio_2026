@@ -1539,17 +1539,35 @@ section h2 {
 
 .skill-tags {
     display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.skill-group {
+    display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.skill-group-label {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    min-width: 90px;
+    flex-shrink: 0;
 }
 
 .skill-tags span {
     background: var(--bg-surface);
     color: var(--text-secondary);
-    padding: 0.35rem 0.85rem;
+    padding: 0.3rem 0.75rem;
     border-radius: 4px;
     border: 1px solid var(--border-color);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 500;
     box-shadow: var(--shadow-sm);
 }

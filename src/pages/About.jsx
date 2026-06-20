@@ -98,11 +98,27 @@ function About() {
         <div className="skills">
           <h3>Technical Skills</h3>
           <div className="skill-tags">
-            <span>Python</span><span>SQL</span><span>BigQuery</span><span>GCP</span>
-            <span>AWS</span><span>Azure</span><span>PySpark</span><span>Databricks</span>
-            <span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Flask</span>
-            <span>Node.js</span><span>Git</span><span>Tableau</span><span>Power BI</span>
-            <span>Machine Learning</span><span>ETL</span><span>Data Visualization</span>
+            <div className="skill-group">
+              <span className="skill-group-label">Data</span>
+              <span>SQL</span><span>Python</span><span>dbt</span><span>Snowflake</span>
+              <span>BigQuery</span><span>Omni</span><span>Looker</span><span>Power BI</span>
+              <span>R</span><span>Jupyter</span><span>Hex</span>
+            </div>
+            <div className="skill-group">
+              <span className="skill-group-label">Cloud</span>
+              <span>GCP</span><span>AWS</span><span>Azure</span>
+              <span>Databricks</span><span>PySpark</span>
+            </div>
+            <div className="skill-group">
+              <span className="skill-group-label">Engineering</span>
+              <span>React</span><span>HTML / CSS</span><span>Flask</span>
+              <span>PostgreSQL</span><span>MongoDB</span><span>Git</span>
+            </div>
+            <div className="skill-group">
+              <span className="skill-group-label">AI Tools</span>
+              <span>Cursor</span><span>Claude</span><span>AI Agents</span>
+              <span>GitHub Copilot</span><span>OpenAI API</span>
+            </div>
           </div>
         </div>
       </div>

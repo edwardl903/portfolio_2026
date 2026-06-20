@@ -32,11 +32,6 @@ function EEGResearch() {
               <span className="tech-tag">Machine Learning</span>
               <span className="tech-tag">EEG Processing</span>
             </div>
-            <div className="project-links">
-              <a href="#" className="project-link">
-                <i className="fas fa-external-link-alt" /> Publication
-              </a>
-            </div>
           </div>
         </div>
 
