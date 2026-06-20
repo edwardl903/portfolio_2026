@@ -31,6 +31,9 @@ public/static/images-backup
 DEPLOYMENT_CHECKLIST.md
 IMAGE_OPTIMIZATION.md
 
+# Resume PDFs (contain personal contact info — never commit)
+public/static/images/resume/
+
 # Design source files (large binaries — exported assets live in public/static)
 *.psd
 *.ai
