@@ -28,10 +28,10 @@ const projects = [
   },
   {
     id: 'chesslytics-azure',
-    title: 'ChessLytics Azure Analytics',
+    title: 'ChessLytics dbt Pipeline',
     description:
-      'Same chess analytics idea at bigger scale on Azure: bulk historical games through ADLS and Delta Lake, PySpark transforms, then SQL and BI on top. Complements the main app when the dataset stops fitting one laptop-sized pipeline.',
-    tags: ['Azure', 'Databricks', 'PySpark', 'Delta Lake'],
+      'dbt project that incrementally loads chess.com games per username into BigQuery every night. Seeds track multiple players, incremental models skip old rows, and the mart layer powers the chess analytics page on this site.',
+    tags: ['dbt', 'BigQuery', 'SQL', 'GCP', 'Incremental Models'],
     image: '/static/images/projects/chesslytics/chesslytics-azure.jpg',
     links: [],
     to: '/projects/chesslytics-azure',
