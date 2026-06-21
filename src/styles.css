@@ -5201,9 +5201,9 @@ html.pv2-dark body::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 6rem 2rem 4rem;
-    gap: 3rem;
+    justify-content: flex-start;
+    padding: 7rem 2rem 7rem;
+    gap: 2rem;
     overflow: hidden;
     color: var(--text-primary);
 }
@@ -5211,6 +5211,10 @@ html.pv2-dark body::before {
 /* ── Header ── */
 .pv2-header {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
     position: relative;
     z-index: 1;
     flex-shrink: 0;
@@ -5218,12 +5222,12 @@ html.pv2-dark body::before {
 
 .pv2-eyebrow {
     font-family: var(--font-sans);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 0.6rem;
+    margin: 0;
 }
 
 .pv2-title {
@@ -5241,25 +5245,23 @@ html.pv2-dark body::before {
     align-items: center;
     gap: 0.4rem;
     font-family: var(--font-sans);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
+    font-weight: 500;
     color: var(--text-muted);
     text-decoration: none;
-    transition: color 0.15s, gap 0.15s;
-    margin-bottom: 0.25rem;
+    transition: color 0.18s ease;
+    margin-top: 0.25rem;
 }
 
-.pv2-more-link:hover {
-    color: var(--accent);
-    gap: 0.6rem;
-}
+.pv2-more-link:hover { color: var(--accent); }
 
 .pv2-more-link i {
-    font-size: 0.72rem;
-    transition: transform 0.15s;
+    font-size: 0.7rem;
+    transition: transform 0.18s ease;
 }
 
 .pv2-more-link:hover i {
-    transform: translateX(2px);
+    transform: translateX(3px);
 }
 
 html[data-theme="dark"] .pv2-more-link {
@@ -5279,6 +5281,7 @@ html[data-theme="dark"] .pv2-more-link:hover {
     position: relative;
     z-index: 1;
     flex-shrink: 0;
+    margin-top: auto; /* push keyboard to bottom, leaving room above for preview cards */
 }
 
 /* Piano outer wrap */
@@ -5984,8 +5987,9 @@ html[data-theme="dark"] .pv2-modal-context {
 
 @media (max-width: 760px) {
     .pv2-page {
-        padding: 5rem 1rem 2rem;
+        padding: 6rem 1rem 2rem;
         gap: 1.5rem;
+        justify-content: center;
     }
 
     .pv2-piano-wrap {
@@ -5995,6 +5999,7 @@ html[data-theme="dark"] .pv2-modal-context {
 
     .pv2-stage {
         height: 126px; /* 224px * 0.56 */
+        margin-top: 0;
     }
 
     .pv2-modal {

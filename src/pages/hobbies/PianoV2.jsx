@@ -194,12 +194,16 @@ export default function PianoV2() {
   const handleKeyEnter = (perf, e) => {
     const rect = e.currentTarget.getBoundingClientRect()
     const cx = rect.left + rect.width / 2
-    const clamped = Math.min(
+    const clampedX = Math.min(
       Math.max(cx, PREVIEW_W / 2 + 16),
       window.innerWidth - PREVIEW_W / 2 - 16
     )
+    // Prevent preview from clipping behind the navbar.
+    // Preview sits above the key: translateY(-100% - 28px).
+    // Navbar ~68px + preview ~260px + gap 28px = 356px minimum y.
+    const clampedY = Math.max(rect.top, 356)
     setHovered(perf)
-    setPreviewPos({ x: clamped, y: rect.top })
+    setPreviewPos({ x: clampedX, y: clampedY })
   }
 
   const handleKeyLeave = () => setHovered(null)
