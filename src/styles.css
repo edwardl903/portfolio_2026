@@ -6277,27 +6277,32 @@ html[data-theme="dark"] .pv2-modal-context {
 }
 
 /* Rating chart */
-.cv2-chart-wrap {
-    height: 140px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: var(--bg-subtle);
+.cv2-chart-container {
+    position: relative;
+    overflow: visible;
 }
 
-.cv2-chart-svg { width: 100%; height: 100%; display: block; }
+.cv2-chart-wrap {
+    border-radius: 8px;
+    background: var(--bg-subtle);
+    overflow: visible;
+}
+
+.cv2-chart-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+}
 
 .cv2-chart-range {
     font-size: 0.71rem;
     color: var(--text-muted);
     text-align: right;
     margin: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.75rem;
 }
 
-.cv2-chart-legend {
+.cv2-chart-legend-pills {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -6320,6 +6325,54 @@ html[data-theme="dark"] .pv2-modal-context {
     background: rgba(100,180,255,0.1);
     color: rgba(100,180,255,0.9);
     border: 1px solid rgba(100,180,255,0.25);
+}
+
+/* Chart tooltip */
+.cv2-chart-tooltip {
+    position: absolute;
+    min-width: 130px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    box-shadow: var(--shadow-md);
+    pointer-events: none;
+    z-index: 50;
+    font-family: var(--font-sans);
+}
+
+.cv2-ctt-date {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+}
+
+.cv2-ctt-rating {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+}
+
+.cv2-ctt-wld {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+.cv2-ctt-w  { font-size: 0.75rem; font-weight: 700; color: #4caf50; }
+.cv2-ctt-l  { font-size: 0.75rem; font-weight: 700; color: #ef5350; }
+.cv2-ctt-d  { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); }
+
+.cv2-ctt-sub {
+    font-size: 0.71rem;
+    color: var(--text-muted);
+    line-height: 1.5;
 }
 
 /* Two-column layout */
@@ -6376,6 +6429,16 @@ html[data-theme="dark"] .pv2-modal-context {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    position: relative;
+    border-radius: 6px;
+    padding: 0.2rem 0.25rem;
+    transition: background 0.12s ease;
+    cursor: default;
+}
+
+.cv2-opening-row-hovered,
+.cv2-opening-row:hover {
+    background: var(--bg-subtle);
 }
 
 .cv2-opening-name {
@@ -6415,6 +6478,56 @@ html[data-theme="dark"] .pv2-modal-context {
     width: 20px;
     text-align: right;
     flex-shrink: 0;
+}
+
+.cv2-opening-winpct {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.cv2-opening-winpct.pos {
+    color: #4caf50;
+}
+
+/* Opening hover tooltip */
+.cv2-opening-tooltip {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 4px);
+    min-width: 180px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    box-shadow: var(--shadow-md);
+    z-index: 60;
+    pointer-events: none;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cv2-ott-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.cv2-ott-total {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.cv2-ott-rate {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
 }
 
 .cv2-opening-key {
@@ -6575,6 +6688,50 @@ html[data-theme="dark"] .pv2-modal-context {
 .cv2-game-link:hover {
     color: var(--accent);
     background: var(--accent-light);
+}
+
+/* Rating diff badge in game rows */
+.cv2-rating-diff {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    margin-left: 0.3rem;
+}
+
+.cv2-rating-diff.fav {
+    background: rgba(144, 144, 144, 0.12);
+    color: var(--text-muted);
+}
+
+.cv2-rating-diff.underdog {
+    background: rgba(76, 175, 80, 0.12);
+    color: #4caf50;
+}
+
+/* dbt last updated badge */
+.cv2-last-updated {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding: 0.5rem 0.85rem;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    align-self: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.cv2-last-updated i {
+    color: var(--accent);
+    font-size: 0.7rem;
+}
+
+.cv2-last-updated strong {
+    color: var(--text-secondary);
+    font-weight: 600;
 }
 
 /* Responsive */

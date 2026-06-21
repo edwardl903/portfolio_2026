@@ -72,6 +72,7 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-06-21 | ChessV2: interactive chart with Y/X axes, gridlines, crosshair tooltip; opening hover tooltips + win%; rating_diff badge on game rows; dbt last-run timestamp |
 | 2026-06-21 | ChessV2: enhanced dashboard -- W/L/D donut chart, activity heatmap (90-day), stacked opening bars, dual-line rating+accuracy chart, outcome + date-range filters |
 | 2026-06-21 | ChessV2: live stats dashboard at /hobbies/chess (tabs for blitz/bullet/daily, stat cards, rating chart, recent games); old Chess page moved to /hobbies/chess/more |
 | 2026-06-20 | PianoV2: left/right arrow key navigation between videos in modal; prev/next hover buttons on video; kbd hint in footer |
