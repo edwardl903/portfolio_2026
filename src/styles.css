@@ -5201,8 +5201,8 @@ html.pv2-dark body::before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 7rem 2rem 4rem;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
     gap: 3rem;
     overflow: hidden;
     color: var(--text-primary);
@@ -5973,28 +5973,28 @@ html[data-theme="dark"] .pv2-modal-context {
 @media (max-width: 1050px) {
     .pv2-piano-wrap {
         transform: scale(0.78);
-        transform-origin: center bottom;
+        transform-origin: center top;
     }
 
     .pv2-stage {
         gap: 0;
-        margin-bottom: -3.5rem;
+        height: 175px; /* 224px * 0.78 */
     }
 }
 
 @media (max-width: 760px) {
     .pv2-page {
-        padding: 6rem 1rem 3rem;
-        gap: 2rem;
+        padding: 5rem 1rem 2rem;
+        gap: 1.5rem;
     }
 
     .pv2-piano-wrap {
         transform: scale(0.56);
-        transform-origin: center bottom;
+        transform-origin: center top;
     }
 
     .pv2-stage {
-        margin-bottom: -6rem;
+        height: 126px; /* 224px * 0.56 */
     }
 
     .pv2-modal {
@@ -6013,12 +6013,23 @@ html[data-theme="dark"] .pv2-modal-context {
 
 @media (max-width: 500px) {
     .pv2-piano-wrap {
-        transform: scale(0.42);
-        transform-origin: center bottom;
+        transform: scale(0.40);
+        transform-origin: center top;
     }
 
     .pv2-stage {
-        margin-bottom: -9rem;
+        height: 90px; /* 224px * 0.40 */
+    }
+}
+
+@media (max-width: 380px) {
+    .pv2-piano-wrap {
+        transform: scale(0.34);
+        transform-origin: center top;
+    }
+
+    .pv2-stage {
+        height: 77px; /* 224px * 0.34 */
     }
 }
 
