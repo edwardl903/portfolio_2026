@@ -218,7 +218,6 @@ export default function PianoV2() {
     <div className="pv2-page">
       <header className="pv2-header">
         <p className="pv2-eyebrow">hobby</p>
-        <h1 className="pv2-title">Piano</h1>
         <Link to="/hobbies/piano/more" className="pv2-more-link">
           About my piano background <i className="fas fa-arrow-right" />
         </Link>

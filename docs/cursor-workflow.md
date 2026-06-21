@@ -72,6 +72,8 @@ This file governs how the AI assistant should work with this codebase.
 
 | Date | Change |
 |---|---|
+| 2026-06-21 | ChessV2: enhanced dashboard -- W/L/D donut chart, activity heatmap (90-day), stacked opening bars, dual-line rating+accuracy chart, outcome + date-range filters |
+| 2026-06-21 | ChessV2: live stats dashboard at /hobbies/chess (tabs for blitz/bullet/daily, stat cards, rating chart, recent games); old Chess page moved to /hobbies/chess/more |
 | 2026-06-20 | PianoV2: left/right arrow key navigation between videos in modal; prev/next hover buttons on video; kbd hint in footer |
 | 2026-06-20 | PianoV2 is now the default /hobbies/piano route; old Piano page moved to /hobbies/piano/more with a subtle link from PianoV2 |
 | 2026-06-20 | PianoV2: removed hint text, full light+dark mode support via data-theme reactive CSS variables and MutationObserver on html element |

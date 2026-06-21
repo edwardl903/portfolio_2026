@@ -9,4 +9,13 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
   },
+  server: {
+    proxy: {
+      '/api-chess': {
+        target: 'https://chesslyzer-app-51eb54138df6.herokuapp.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-chess/, ''),
+      },
+    },
+  },
 })

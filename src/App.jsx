@@ -9,6 +9,7 @@ import ContactSuccess from './pages/ContactSuccess'
 import Piano from './pages/hobbies/Piano'
 import PianoV2 from './pages/hobbies/PianoV2'
 import Chess from './pages/hobbies/Chess'
+import ChessV2 from './pages/hobbies/ChessV2'
 import Volleyball from './pages/hobbies/Volleyball'
 import Skateboarding from './pages/hobbies/Skateboarding'
 import ChessLytics from './pages/projects/ChessLytics'
@@ -34,7 +35,8 @@ function App() {
         <Route path="/contact-success" element={<ContactSuccess />} />
         <Route path="/hobbies/piano" element={<PianoV2 />} />
         <Route path="/hobbies/piano/more" element={<Piano />} />
-        <Route path="/hobbies/chess" element={<Chess />} />
+        <Route path="/hobbies/chess" element={<ChessV2 />} />
+        <Route path="/hobbies/chess/more" element={<Chess />} />
         <Route path="/hobbies/volleyball" element={<Volleyball />} />
         <Route path="/hobbies/skateboarding" element={<Skateboarding />} />
         <Route path="/projects/chesslytics" element={<ChessLytics />} />
