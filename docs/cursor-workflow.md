@@ -30,7 +30,28 @@ This file governs how the AI assistant should work with this codebase.
 ### After editing
 - Run `npm run build` to confirm zero errors and zero warnings.
 - Update the **Recent Changes** section of this file with a one-line summary.
+- Append an entry to `CHANGELOG.md` at the repo root (date, Added/Changed/Fixed, brief description).
 - Update any affected doc (`design-system.md`, `content-structure.md`, `architecture.md`) if the change affects documented behavior.
+
+### Committing
+Write detailed commit messages that cover:
+1. What changed (specific files and components)
+2. Why (the user's intent from the prompt)
+3. Any notable trade-offs or decisions made
+
+Example format:
+```
+feat(ChessV2): add dbt pipeline hover popover with project link
+
+Edward wanted the dbt badge more prominent and interactive. Moved
+badge to cv2-header, redesigned as pill with green pulse dot and
+orange left border. Hover reveals popover (CSS :hover, no JS state)
+explaining daily GitHub Actions pipeline; "View project" links to
+ChessLytics dbt Pipeline page. Fixed hover gap with padding bridge
+pattern so the link stays reachable.
+
+Files: ChessV2.jsx, styles.css
+```
 
 ---
 
@@ -44,6 +65,8 @@ This file governs how the AI assistant should work with this codebase.
 [ ] Plan the change before executing
 [ ] Run npm run build after
 [ ] Update this file's Recent Changes log
+[ ] Append entry to CHANGELOG.md
+[ ] Write a detailed commit message (what, why, files affected)
 ```
 
 ---

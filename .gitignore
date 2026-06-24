@@ -23,8 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local documentation
+# Local documentation (personal tracking, not for the public repo)
 WORKFLOW.md
+CHANGELOG.md
 
 # Image backups
 public/static/images-backup
