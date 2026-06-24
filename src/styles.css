@@ -5186,15 +5186,10 @@ section.contact-success-page .container {
 
 /* ═══════════════════════════════════════════════════════════════
    Piano V2 — Interactive Piano Keyboard Experience
-   Route: /hobbies/piano-v2
+   Route: /hobbies/piano
 ═══════════════════════════════════════════════════════════════ */
 
-/* Body background override — active only when PianoV2 is mounted */
-html.pv2-dark body::before {
-    background: #06060e !important;
-}
-
-/* ── Page shell ── */
+/* ── Page shell (matches cv2-page) ── */
 .pv2-page {
     position: relative;
     min-height: 100vh;
@@ -5202,9 +5197,10 @@ html.pv2-dark body::before {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 7rem 2rem 7rem;
+    padding: 7rem 2rem 5rem;
     gap: 2rem;
     overflow: hidden;
+    background: var(--bg);
     color: var(--text-primary);
 }
 
@@ -5262,14 +5258,6 @@ html.pv2-dark body::before {
 
 .pv2-more-link:hover i {
     transform: translateX(3px);
-}
-
-html[data-theme="dark"] .pv2-more-link {
-    color: rgba(255, 255, 255, 0.28);
-}
-
-html[data-theme="dark"] .pv2-more-link:hover {
-    color: var(--accent);
 }
 
 /* ── Piano stage ── */
@@ -5526,10 +5514,11 @@ html[data-theme="dark"] .pv2-more-link:hover {
     pointer-events: none;
     border-radius: 14px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--bg-surface);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
     animation: pv2-pop-up 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
@@ -5660,7 +5649,7 @@ html[data-theme="dark"] .pv2-more-link:hover {
     position: fixed;
     inset: 0;
     z-index: 1100;
-    background: rgba(80, 70, 60, 0.6);
+    background: rgba(28, 25, 23, 0.55);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -5847,16 +5836,6 @@ html[data-theme="dark"] .pv2-more-link:hover {
     line-height: 1.4;
 }
 
-html[data-theme="dark"] .pv2-modal-nav-hint {
-    color: rgba(255, 255, 255, 0.28);
-}
-
-html[data-theme="dark"] .pv2-modal-nav-hint kbd {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.5);
-}
-
 .pv2-modal-title {
     font-family: var(--font-heading);
     font-size: 1.2rem;
@@ -5880,96 +5859,23 @@ html[data-theme="dark"] .pv2-modal-nav-hint kbd {
     align-self: center;
 }
 
-/* ── Dark mode overrides ── */
-html[data-theme="dark"] .pv2-page {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-html[data-theme="dark"] .pv2-title {
-    color: #ffffff;
-    text-shadow: 0 0 80px rgba(196, 137, 79, 0.3);
-}
-
-html[data-theme="dark"] .pv2-hint {
-    color: rgba(255, 255, 255, 0.2);
-}
-
-html[data-theme="dark"] .pv2-preview {
-    background: rgba(8, 8, 18, 0.9);
-    border-color: rgba(255, 255, 255, 0.07);
-}
-
+/* ── Dark mode: category accents only (page uses shared theme tokens) ── */
 html[data-theme="dark"] .pv2-preview-duet {
     box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(196, 137, 79, 0.15),
-        0 0 40px rgba(196, 137, 79, 0.12);
+        var(--shadow-md),
+        0 0 0 1px rgba(196, 137, 79, 0.2);
 }
 
 html[data-theme="dark"] .pv2-preview-favorite {
     box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(79, 191, 176, 0.15),
-        0 0 40px rgba(79, 191, 176, 0.12);
+        var(--shadow-md),
+        0 0 0 1px rgba(79, 191, 176, 0.2);
 }
 
 html[data-theme="dark"] .pv2-preview-classical {
     box-shadow:
-        0 24px 64px rgba(0, 0, 0, 0.7),
-        0 0 0 1px rgba(184, 159, 224, 0.15),
-        0 0 40px rgba(184, 159, 224, 0.12);
-}
-
-html[data-theme="dark"] .pv2-preview-thumb-wrap {
-    background: #0a0a18;
-}
-
-html[data-theme="dark"] .pv2-preview-title {
-    color: rgba(255, 255, 255, 0.92);
-}
-
-html[data-theme="dark"] .pv2-preview-artist {
-    color: rgba(255, 255, 255, 0.45);
-}
-
-html[data-theme="dark"] .pv2-preview-cta {
-    color: rgba(255, 255, 255, 0.28);
-}
-
-html[data-theme="dark"] .pv2-modal-backdrop {
-    background: rgba(4, 4, 10, 0.92);
-}
-
-html[data-theme="dark"] .pv2-modal {
-    background: #0c0c18;
-    border-color: rgba(255, 255, 255, 0.07);
-    box-shadow:
-        0 40px 120px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(255, 255, 255, 0.04);
-}
-
-html[data-theme="dark"] .pv2-modal-close {
-    background: rgba(0, 0, 0, 0.55);
-    border-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
-}
-
-html[data-theme="dark"] .pv2-modal-close:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: #ffffff;
-}
-
-html[data-theme="dark"] .pv2-modal-footer {
-    border-top-color: rgba(255, 255, 255, 0.05);
-}
-
-html[data-theme="dark"] .pv2-modal-title {
-    color: rgba(255, 255, 255, 0.92);
-}
-
-html[data-theme="dark"] .pv2-modal-artist,
-html[data-theme="dark"] .pv2-modal-context {
-    color: rgba(255, 255, 255, 0.42);
+        var(--shadow-md),
+        0 0 0 1px rgba(184, 159, 224, 0.2);
 }
 
 /* ── Responsive ── */

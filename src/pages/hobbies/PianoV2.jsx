@@ -140,21 +140,6 @@ export default function PianoV2() {
   const [selected, setSelected] = useState(null)
   const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 })
 
-  // Apply the extra-dark bg override only when site is in dark mode
-  useEffect(() => {
-    const apply = () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-      document.documentElement.classList.toggle('pv2-dark', isDark)
-    }
-    apply()
-    const observer = new MutationObserver(apply)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
-    return () => {
-      observer.disconnect()
-      document.documentElement.classList.remove('pv2-dark')
-    }
-  }, [])
-
   const navigate = (dir) => {
     setSelected((prev) => {
       if (!prev) return prev
