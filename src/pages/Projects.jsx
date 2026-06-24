@@ -105,8 +105,8 @@ function Projects() {
     <section id="projects" className="projects">
       <div className="container">
         <div className="projects-header">
-          <h1 className="projects-title">Data Projects</h1>
-          <p className="projects-subtitle">Analytics, pipelines, and side projects I actually shipped. Open a card for the full story, or ask me about one.</p>
+          <h1 className="projects-title">I have worked on a number of fun data projects (data engineering and data analytics).</h1>
+          <p className="projects-subtitle">Feel free to ask me any questions!</p>
         </div>
 
         <div className="projects-grid">
