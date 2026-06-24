@@ -61,19 +61,36 @@ function fmtOpening(raw) {
   return raw.replace(/-/g, ' ')
 }
 
+
 // ─── LastUpdated ─────────────────────────────────────────────────────────────
 
 function LastUpdated({ data }) {
-  if (!data.length) return null
+  if (!data || !data.length) return null
   const ts = data.reduce(
     (latest, d) => (d.updated_at && d.updated_at > latest ? d.updated_at : latest),
     data[0].updated_at || ''
   )
   if (!ts) return null
   return (
-    <div className="cv2-last-updated">
-      <i className="fas fa-database" aria-hidden="true" />
-      dbt pipeline last ran <strong>{fmtDateTime(ts)}</strong>
+    <div className="cv2-pipeline-footer">
+      <div className="cv2-pipeline-bar">
+        <span className="cv2-dbt-dot" aria-hidden="true" />
+        <i className="fas fa-database" aria-hidden="true" />
+        <span>Powered by <strong>dbt</strong></span>
+        <span className="cv2-dbt-sep" aria-hidden="true">·</span>
+        <span>Updated {fmtDateTime(ts)}</span>
+        <i className="fas fa-circle-info cv2-pipeline-info-icon" aria-hidden="true" />
+      </div>
+      <div className="cv2-pipeline-popover" role="tooltip">
+        <p>
+          This dashboard is powered by a dbt pipeline that runs daily around 6:00 AM UTC
+          via GitHub Actions. It incrementally loads new chess.com games into BigQuery and
+          refreshes these stats automatically.
+        </p>
+        <Link to="/projects/chesslytics-azure" className="cv2-pipeline-link">
+          View the project <i className="fas fa-arrow-right" aria-hidden="true" />
+        </Link>
+      </div>
     </div>
   )
 }
@@ -538,6 +555,10 @@ export default function ChessV2() {
   const hasAccOverlay = daily.some(d => d.avg_accuracy != null)
   const rangeLabel    = rangeDays === Infinity ? 'all time' : `${rangeDays}d`
 
+  const lastPlayedDate = allDailyForClass.length > 0
+    ? allDailyForClass.reduce((max, d) => (d.game_date && d.game_date > max) ? d.game_date : max, allDailyForClass[0].game_date)
+    : recentGames[0]?.game_date
+
   return (
     <div className="cv2-page">
       <header className="cv2-header">
@@ -545,6 +566,7 @@ export default function ChessV2() {
         <Link to="/hobbies/chess/more" className="cv2-more-link">
           About my chess background <i className="fas fa-arrow-right" />
         </Link>
+        {allData && <LastUpdated data={allDailyForClass} />}
       </header>
 
       {/* Filters */}
@@ -588,7 +610,8 @@ export default function ChessV2() {
 
           {/* Stat cards */}
           <div className="cv2-stats-row">
-            <StatCard label="Rating"         value={summary?.current_rating}    accent />
+            <StatCard label="Rating"         value={summary?.current_rating}    accent
+              sub={lastPlayedDate ? `Last played ${fmtDate(lastPlayedDate)}` : undefined} />
             <StatCard label="Peak Rating"    value={summary?.peak_rating_ever} />
             <StatCard label="Total Games"    value={summary?.total_games?.toLocaleString()} />
             <StatCard label="Win Rate"       value={winRatePct} sub={streakSub} />
@@ -694,9 +717,6 @@ export default function ChessV2() {
               </p>
             )}
           </div>
-
-          {/* dbt last run */}
-          <LastUpdated data={allDailyForClass} />
 
         </div>
       )}
