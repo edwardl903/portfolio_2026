@@ -87,7 +87,7 @@ function LastUpdated({ data }) {
           via GitHub Actions. It incrementally loads new chess.com games into BigQuery and
           refreshes these stats automatically.
         </p>
-        <Link to="/projects/chesslytics-azure" className="cv2-pipeline-link">
+        <Link to="/projects/chesslytics-dbt" className="cv2-pipeline-link">
           View the project <i className="fas fa-arrow-right" aria-hidden="true" />
         </Link>
       </div>
@@ -507,7 +507,7 @@ function OpeningBar({ games }) {
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-export default function ChessV2() {
+export default function ChessStats() {
   const [timeClass, setTimeClass]   = useState('blitz')
   const [rangeDays, setRangeDays]   = useState(30)
   const [outcomeFilter, setOutcome] = useState('all')

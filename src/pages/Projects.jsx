@@ -27,14 +27,14 @@ const projects = [
     to: '/projects/chesslytics',
   },
   {
-    id: 'chesslytics-azure',
+    id: 'chesslytics-dbt',
     title: 'ChessLytics dbt Pipeline',
     description:
       'dbt project that incrementally loads chess.com games per username into BigQuery every night. Seeds track multiple players, incremental models skip old rows, and the mart layer powers the chess analytics page on this site.',
     tags: ['dbt', 'BigQuery', 'SQL', 'GCP', 'Incremental Models'],
-    image: '/static/images/projects/chesslytics/chesslytics-azure.jpg',
+    image: '/static/images/projects/chesslytics/chesslytics-dbt-cover.jpg',
     links: [],
-    to: '/projects/chesslytics-azure',
+    to: '/projects/chesslytics-dbt',
   },
   {
     id: 'spotifriend',

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -7,17 +7,17 @@ import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import ContactSuccess from './pages/ContactSuccess'
 import Piano from './pages/hobbies/Piano'
-import PianoV2 from './pages/hobbies/PianoV2'
+import PianoKeyboard from './pages/hobbies/PianoKeyboard'
 import Chess from './pages/hobbies/Chess'
-import ChessV2 from './pages/hobbies/ChessV2'
+import ChessStats from './pages/hobbies/ChessStats'
 import Volleyball from './pages/hobbies/Volleyball'
 import Skateboarding from './pages/hobbies/Skateboarding'
 import ChessLytics from './pages/projects/ChessLytics'
-import ChessLyticsAzure from './pages/projects/ChessLyticsAzure'
+import ChessLyticsDbt from './pages/projects/ChessLyticsDbt'
 import SpotiFriend from './pages/projects/SpotiFriend'
-import NLPipeline from './pages/projects/NLPipeline'
+import NlpPipeline from './pages/projects/NlpPipeline'
 import MovieRecommendations from './pages/projects/MovieRecommendations'
-import ETLTools from './pages/projects/ETLTools'
+import Pison from './pages/projects/Pison'
 import Fidelity from './pages/projects/Fidelity'
 import EEGResearch from './pages/projects/EEGResearch'
 import Analytics from './pages/Analytics'
@@ -33,18 +33,19 @@ function App() {
         {/* Resume hidden for now – uncomment to show: <Route path="/resume" element={<Resume />} /> */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact-success" element={<ContactSuccess />} />
-        <Route path="/hobbies/piano" element={<PianoV2 />} />
+        <Route path="/hobbies/piano" element={<PianoKeyboard />} />
         <Route path="/hobbies/piano/more" element={<Piano />} />
-        <Route path="/hobbies/chess" element={<ChessV2 />} />
+        <Route path="/hobbies/chess" element={<ChessStats />} />
         <Route path="/hobbies/chess/more" element={<Chess />} />
         <Route path="/hobbies/volleyball" element={<Volleyball />} />
         <Route path="/hobbies/skateboarding" element={<Skateboarding />} />
         <Route path="/projects/chesslytics" element={<ChessLytics />} />
-        <Route path="/projects/chesslytics-azure" element={<ChessLyticsAzure />} />
+        <Route path="/projects/chesslytics-dbt" element={<ChessLyticsDbt />} />
+        <Route path="/projects/chesslytics-azure" element={<Navigate to="/projects/chesslytics-dbt" replace />} />
         <Route path="/projects/spotifriend" element={<SpotiFriend />} />
-        <Route path="/projects/nlp-pipeline" element={<NLPipeline />} />
+        <Route path="/projects/nlp-pipeline" element={<NlpPipeline />} />
         <Route path="/projects/movie-recommendations" element={<MovieRecommendations />} />
-        <Route path="/projects/etl-tools" element={<ETLTools />} />
+        <Route path="/projects/etl-tools" element={<Pison />} />
         <Route path="/projects/fidelity" element={<Fidelity />} />
         <Route path="/projects/eeg-research" element={<EEGResearch />} />
         <Route path="/analytics" element={<Analytics />} />

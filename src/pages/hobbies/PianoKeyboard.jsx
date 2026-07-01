@@ -135,7 +135,7 @@ function blackLeft(afterIndex) {
   return (afterIndex + 1) * WHITE_W - BLACK_W / 2
 }
 
-export default function PianoV2() {
+export default function PianoKeyboard() {
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
   const [previewPos, setPreviewPos] = useState({ x: 0, y: 0 })

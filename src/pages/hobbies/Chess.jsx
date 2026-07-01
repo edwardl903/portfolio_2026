@@ -61,8 +61,8 @@ function Chess() {
 
             <div className="chess-photos-grid">
               <div className="chess-photo-card">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/bc.jpg', 'Boston College Chess Tournament', 'Boston College Tournament')}>
-                  <img src="/static/images/hobbies/chess/bc.jpg" alt="Boston College Chess Tournament" loading="lazy" />
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/boston-college-tournament.jpg', 'Boston College Chess Tournament', 'Boston College Tournament')}>
+                  <img src="/static/images/hobbies/chess/boston-college-tournament.jpg" alt="Boston College Chess Tournament" loading="lazy" />
                 </div>
                 <div className="photo-content">
                   <h4>Boston College Tournament</h4>
@@ -91,8 +91,8 @@ function Chess() {
               </div>
 
               <div className="chess-photo-card meeting-photo">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/meeting1.jpg', 'Chess Club Weekly Meeting', 'Weekly Meetings')}>
-                  <img src="/static/images/hobbies/chess/meeting1.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/chess-club-meeting-1.jpg', 'Chess Club Weekly Meeting', 'Weekly Meetings')}>
+                  <img src="/static/images/hobbies/chess/chess-club-meeting-1.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
                 </div>
                 <div className="photo-content">
                   <h4>Weekly Meetings</h4>
@@ -101,8 +101,8 @@ function Chess() {
               </div>
 
               <div className="chess-photo-card meeting-photo">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/meeting2.jpg', 'Chess Club Weekly Meeting', 'Chess Club Community')}>
-                  <img src="/static/images/hobbies/chess/meeting2.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/chess-club-meeting-2.jpg', 'Chess Club Weekly Meeting', 'Chess Club Community')}>
+                  <img src="/static/images/hobbies/chess/chess-club-meeting-2.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
                 </div>
                 <div className="photo-content">
                   <h4>Chess Club Community</h4>

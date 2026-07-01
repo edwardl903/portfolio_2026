@@ -1,6 +1,6 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
 
-function NLPipeline() {
+function NlpPipeline() {
   return (
     <section className="project-detail">
       <div className="container">
@@ -98,12 +98,12 @@ function NLPipeline() {
                 <p>Where the BoW model swaps the two levels, especially on harder prose.</p>
                 <div className="diagram-image-container">
                   <ClickableExpandableImage
-                    src="/static/images/projects/charts/confusion-matrix.jpg"
+                    src="/static/images/projects/nlp-pipeline/nlp-lr-confusion-matrix.jpg"
                     alt="Confusion matrix for Bag-of-Words model"
                     caption="Bag-of-Words confusion matrix"
                   >
                     <img
-                      src="/static/images/projects/charts/confusion-matrix.jpg"
+                      src="/static/images/projects/nlp-pipeline/nlp-lr-confusion-matrix.jpg"
                       alt="Confusion matrix for Bag-of-Words model"
                       className="architecture-image"
                       loading="lazy"
@@ -150,12 +150,12 @@ function NLPipeline() {
                 <p>BERT plus trees after tuning. Compare cell balance to the BoW matrix above.</p>
                 <div className="diagram-image-container">
                   <ClickableExpandableImage
-                    src="/static/images/projects/charts/rf-confusion-matrix.jpg"
+                    src="/static/images/projects/nlp-pipeline/nlp-rf-confusion-matrix.jpg"
                     alt="Confusion matrix for BERT-based random forest model"
                     caption="BERT + Random Forest confusion matrix"
                   >
                     <img
-                      src="/static/images/projects/charts/rf-confusion-matrix.jpg"
+                      src="/static/images/projects/nlp-pipeline/nlp-rf-confusion-matrix.jpg"
                       alt="Confusion matrix for BERT-based random forest model"
                       className="architecture-image"
                       loading="lazy"
@@ -181,4 +181,4 @@ function NLPipeline() {
   )
 }
 
-export default NLPipeline
+export default NlpPipeline

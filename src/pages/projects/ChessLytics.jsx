@@ -250,7 +250,7 @@ function ChessLytics() {
             </p>
             <p>
               I wrote that up over here:{' '}
-              <Link to="/projects/chesslytics-azure">ChessLytics dbt Pipeline</Link>.
+              <Link to="/projects/chesslytics-dbt">ChessLytics dbt Pipeline</Link>.
             </p>
           </div>
 

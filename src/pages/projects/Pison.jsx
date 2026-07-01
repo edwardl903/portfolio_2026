@@ -1,6 +1,6 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
 
-function ETLTools() {
+function Pison() {
   return (
     <section className="project-detail">
       <div className="container">
@@ -178,4 +178,4 @@ function ETLTools() {
   )
 }
 
-export default ETLTools
+export default Pison

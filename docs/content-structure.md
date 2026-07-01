@@ -35,11 +35,11 @@ Hero thumbnails and other large figures use `ClickableExpandableImage` (same lig
 | File | Route | Status |
 |---|---|---|
 | `ChessLytics.jsx` | `/projects/chesslytics` | Flask writeup, screenshot gallery (`chesslytics-ui-home.png`, `chesslytics-year-wrapped.png`, `chesslytics-game-highlights.png`, `chesslytics-looker-dashboard.png`), GCP + hybrid diagrams, roadmap (`docs/projects/chesslytics.md`) |
-| `ChessLyticsAzure.jsx` | `/projects/chesslytics-azure` | Full content |
+| `ChessLyticsDbt.jsx` | `/projects/chesslytics-dbt` | dbt pipeline writeup; `/projects/chesslytics-azure` redirects here |
 | `SpotiFriend.jsx` | `/projects/spotifriend` | Casual writeup; prose + bullets only (no architecture diagram); code on `spotify-etl` |
-| `NLPipeline.jsx` | `/projects/nlp-pipeline` | Hero + PDF + tuning plots (`nlp-lr-mean-cv-auroc-vs-c.png`, `nlp-rf-auroc-vs-max-depth.png`) in `nlp-pipeline/`; confusion matrices in shared `projects/charts/` |
+| `NlpPipeline.jsx` | `/projects/nlp-pipeline` | Hero + PDF + tuning plots + confusion matrices in `nlp-pipeline/` |
 | `MovieRecommendations.jsx` | `/projects/movie-recommendations` | Hero + PDF; plots `movielens-training-vs-validation-rmse.png`, `movielens-validation-mae-vs-trial-randomized-search.png`; `movie-embedding-clusters.jpg` |
-| `ETLTools.jsx` | `/projects/etl-tools` | Pison Data Ops: merges, staging QA, BigQuery, Looker Studio, Jupyter, APIs; hero `pison-technology.jpg`; optional official marketing stills `pison-official-*.png|jpg` (sourced from pison.com, credited in page) |
+| `Pison.jsx` | `/projects/etl-tools` | Pison Data Ops: merges, staging QA, BigQuery, Looker Studio, Jupyter, APIs; hero `pison-technology.jpg`; optional official marketing stills `pison-official-*.png|jpg` (sourced from pison.com, credited in page) |
 | `Fidelity.jsx` | `/projects/fidelity` | PB Optimize analytics; hero `etl-tools-project.jpg` (shared `etl-tools/` assets) |
 | `EEGResearch.jsx` | `/projects/eeg-research` | Full content |
 
@@ -54,8 +54,10 @@ Each hobby page pattern:
 
 | File | Route | Notable content |
 |---|---|---|
-| `Piano.jsx` | `/hobbies/piano` | Multiple YouTube performance sections; smooth-scroll CTA |
-| `Chess.jsx` | `/hobbies/chess` | Live chess board embed, openings section, photo grid |
+| `PianoKeyboard.jsx` | `/hobbies/piano` | Interactive keyboard with hover video previews |
+| `Piano.jsx` | `/hobbies/piano/more` | YouTube performance sections; narrative |
+| `ChessStats.jsx` | `/hobbies/chess` | Live stats dashboard from dbt/API |
+| `Chess.jsx` | `/hobbies/chess/more` | Live chess board embed, openings section, photo grid |
 | `Volleyball.jsx` | `/hobbies/volleyball` | Narrative + photos |
 | `Skateboarding.jsx` | `/hobbies/skateboarding` | Narrative + photos |
 
@@ -78,8 +80,7 @@ public/static/images/
 ├── home/          # profile-picture.jpg
 ├── about/         # killington-snowboarding.jpg, family photos, etc.
 ├── projects/
-│   ├── chesslytics/
-│   ├── chesslytics-azure/
+│   ├── chesslytics/     # chesslytics-dbt-cover.jpg, dbt-docs-lineage.png, UI screenshots
 │   ├── spotifriend/
 │   ├── nlp-pipeline/
 │   ├── movie-recommendations/

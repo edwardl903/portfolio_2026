@@ -41,17 +41,18 @@ Defined in `src/App.jsx` using React Router DOM (`HashRouter` for GitHub Pages):
 | `/about` | `About` |
 | `/projects` | `Projects` |
 | `/projects/chesslytics` | `ChessLytics` |
-| `/projects/chesslytics-azure` | `ChessLyticsAzure` |
+| `/projects/chesslytics-dbt` | `ChessLyticsDbt` |
+| `/projects/chesslytics-azure` | redirects → `/projects/chesslytics-dbt` |
 | `/projects/spotifriend` | `SpotiFriend` |
-| `/projects/nlp-pipeline` | `NLPipeline` |
+| `/projects/nlp-pipeline` | `NlpPipeline` |
 | `/projects/movie-recommendations` | `MovieRecommendations` |
-| `/projects/etl-tools` | `ETLTools` |
+| `/projects/etl-tools` | `Pison` |
 | `/projects/fidelity` | `Fidelity` |
 | `/projects/eeg-research` | `EEGResearch` |
-| `/hobbies/piano` | `Piano` |
-| `/hobbies/chess` | `Chess` |
-| `/hobbies/volleyball` | `Volleyball` |
-| `/hobbies/skateboarding` | `Skateboarding` |
+| `/hobbies/piano` | `PianoKeyboard` |
+| `/hobbies/piano/more` | `Piano` |
+| `/hobbies/chess` | `ChessStats` |
+| `/hobbies/chess/more` | `Chess` |
 | `/contact` | `Contact` |
 | `/contact-success` | `ContactSuccess` |
 | `/resume` | `Resume` *(hidden — uncomment in App.jsx to re-enable)* |

@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom'
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
 
-function ChessLyticsAzure() {
+function ChessLyticsDbt() {
   return (
     <section className="project-detail">
       <div className="container">
         <div className="project-header">
           <div className="project-image">
             <ClickableExpandableImage
-              src="/static/images/projects/chesslytics/chesslytics-azure.jpg"
+              src="/static/images/projects/chesslytics/chesslytics-dbt-cover.jpg"
               alt="ChessLytics dbt Pipeline"
               caption="ChessLytics dbt Pipeline"
             >
               <img
-                src="/static/images/projects/chesslytics/chesslytics-azure.jpg"
+                src="/static/images/projects/chesslytics/chesslytics-dbt-cover.jpg"
                 alt="ChessLytics dbt Pipeline"
                 loading="lazy"
               />
@@ -254,4 +254,4 @@ function ChessLyticsAzure() {
   )
 }
 
-export default ChessLyticsAzure
+export default ChessLyticsDbt

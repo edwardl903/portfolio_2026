@@ -85,9 +85,9 @@ function About() {
             </div>
             <div
               className="pg-item pg-full lb-trigger"
-              onClick={() => open('/static/images/about/sunday-river.JPG', 'Sunday River, ME', 'Sunday River, ME')}
+              onClick={() => open('/static/images/about/sunday-river.jpg', 'Sunday River, ME', 'Sunday River, ME')}
             >
-              <img src="/static/images/about/sunday-river.JPG" alt="Sunday River, ME" loading="lazy" />
+              <img src="/static/images/about/sunday-river.jpg" alt="Sunday River, ME" loading="lazy" />
               <span className="pg-caption">Sunday River, ME</span>
               <span className="lb-expand-icon"><i className="fas fa-expand"></i></span>
             </div>
