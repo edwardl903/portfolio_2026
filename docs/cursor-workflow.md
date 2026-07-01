@@ -147,5 +147,7 @@ Files: ChessV2.jsx, styles.css
 | 2026-05-07 | Fixed dark-theme CSS leftovers in project detail pages (diagrams, pipeline steps, benefits, cloud sections, detail items), converted to light theme variables |
 | 2026-05-10 | Added `docs/cursor-best-practices.md`, `.cursor/rules/portfolio-cursor.mdc`, and `.cursor/skills/portfolio-workflow/SKILL.md` for Cursor conventions |
 | 2026-05-07 | Added `ClickableExpandableImage` + Home hero and project detail lightboxes; `Lightbox` autofocuses close button; `.lb-trigger:focus-visible` and `.project-image > .lb-trigger` layout fixes |
+| 2026-06-30 | Umami: analytics hidden from nav; `/#/analytics` embeds Umami share dashboard in iframe |
+| 2026-06-30 | Umami Analytics: fixed metrics type `url` → `path` (API 400); stats parsing for flat API response |
 | 2026-06-24 | Naming cleanup: added docs/naming-conventions.md; renamed components (ChessLyticsDbt, PianoKeyboard, ChessStats, Pison, NlpPipeline); route chesslytics-dbt + redirect; renamed chess/about images; removed unused assets |
 | 2026-06-24 | PianoV2: removed pv2-dark body override and extra-black dark CSS; page/preview/modal now use shared theme tokens to match ChessV2 |

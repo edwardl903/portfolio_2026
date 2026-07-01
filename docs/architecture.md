@@ -56,7 +56,7 @@ Defined in `src/App.jsx` using React Router DOM (`HashRouter` for GitHub Pages):
 | `/contact` | `Contact` |
 | `/contact-success` | `ContactSuccess` |
 | `/resume` | `Resume` *(hidden — uncomment in App.jsx to re-enable)* |
-| `/analytics` | `Analytics` |
+| `/analytics` | `Analytics` *(hidden — no nav link; embeds Umami share dashboard)* |
 
 ---
 
@@ -115,4 +115,4 @@ Two CSS files, loaded in order:
 | YouTube | `<iframe>` embeds in Piano and Chess hobby pages |
 | Google Fonts | Playfair Display + Inter (loaded in `index.html`) |
 | Vercel | Hosting + auto-deploy |
-| Umami Cloud | Privacy-friendly analytics; tracking script in `index.html`; public share dashboard + REST API stats on `/analytics` page |
+| Umami Cloud | Privacy-friendly analytics; tracking script in `index.html`; hidden `/#/analytics` embeds [Umami share dashboard](https://cloud.umami.is/analytics/us/share/ro275gw9xcSCsLan) |
