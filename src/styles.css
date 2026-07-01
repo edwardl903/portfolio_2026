@@ -727,11 +727,12 @@ html[data-theme="dark"] .nav-logo img {
     height: 100%;
 }
 
-/* Tall photo card — shows face + shoulders naturally */
+/* Tall photo card — 2:3 matches profile-picture.jpg to avoid face crop */
 .hero-photo-card {
     width: 100%;
-    max-width: 420px;
-    height: 560px;
+    max-width: 380px;
+    aspect-ratio: 2 / 3;
+    height: auto;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: var(--shadow-md), 0 20px 60px rgba(0, 0, 0, 0.1);
@@ -743,7 +744,7 @@ html[data-theme="dark"] .nav-logo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 15%;
+    object-position: center 28%;
     display: block;
     transition: transform 0.35s ease;
 }
@@ -1047,9 +1048,13 @@ section h2 {
     }
 
     .hero-photo-card {
-        height: 280px;
-        max-width: 100%;
+        max-width: min(100%, 300px);
+        margin: 0 auto;
         border-radius: 14px;
+    }
+
+    .hero-photo-card img {
+        object-position: center 30%;
     }
 
     .hero-title {
