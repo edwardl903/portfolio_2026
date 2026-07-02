@@ -1,7 +1,11 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
 
+const CHESSLYTICS_URL = 'https://www.chesslytics.xyz'
+
 function ChessLytics() {
+  const [demoLoaded, setDemoLoaded] = useState(false)
   return (
     <section className="project-detail">
       <div className="container">
@@ -44,7 +48,7 @@ function ChessLytics() {
             </div>
             <div className="project-links">
               <a
-                href="https://www.chesslytics.xyz"
+                href={CHESSLYTICS_URL}
                 className="project-link"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -74,7 +78,7 @@ function ChessLytics() {
                 </div>
                 <span className="project-browser-url">chesslytics.xyz</span>
                 <a
-                  href="https://www.chesslytics.xyz"
+                  href={CHESSLYTICS_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-browser-open"
@@ -82,13 +86,29 @@ function ChessLytics() {
                   <i className="fas fa-arrow-up-right-from-square" aria-hidden="true" /> Open
                 </a>
               </div>
-              <iframe
-                src="https://www.chesslytics.xyz"
-                title="ChessLytics live app"
-                className="project-browser-iframe"
-                loading="lazy"
-                sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-              />
+              <div className="project-browser-iframe-wrap">
+                {!demoLoaded ? (
+                  <button
+                    type="button"
+                    className="project-browser-load"
+                    onClick={() => setDemoLoaded(true)}
+                    aria-label="Load ChessLytics live demo in this frame"
+                  >
+                    <span className="project-browser-load-icon" aria-hidden="true">
+                      <i className="fas fa-play" />
+                    </span>
+                    <span className="project-browser-load-title">Load live demo</span>
+                    <span className="project-browser-load-hint">Tap to interact with chesslytics.xyz</span>
+                  </button>
+                ) : (
+                  <iframe
+                    src={CHESSLYTICS_URL}
+                    title="ChessLytics live app"
+                    className="project-browser-iframe"
+                    sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+                  />
+                )}
+              </div>
             </div>
           </div>
 
