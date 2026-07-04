@@ -23,13 +23,18 @@ export function useCursorEffect() {
 
     const onMove = (e) => { mx = e.clientX; my = e.clientY }
 
+    const HOVER_SELECTOR = 'a, button, input, textarea, select, [role="button"], .lb-trigger, .btn, .project-card-v2'
+
+    const onMouseOver = (e) => {
+      if (e.target.closest(HOVER_SELECTOR)) hovering = true
+    }
+    const onMouseOut = (e) => {
+      if (e.target.closest(HOVER_SELECTOR)) hovering = false
+    }
+
     function bindHover() {
-      document.querySelectorAll(
-        'a, button, input, textarea, select, [role="button"], .lb-trigger, .btn, .project-card-v2'
-      ).forEach(el => {
-        el.addEventListener('mouseenter', () => { hovering = true  })
-        el.addEventListener('mouseleave', () => { hovering = false })
-      })
+      document.addEventListener('mouseover', onMouseOver)
+      document.addEventListener('mouseout',  onMouseOut)
     }
 
     function setVisible(show) {
@@ -71,6 +76,8 @@ export function useCursorEffect() {
 
     return () => {
       document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseover', onMouseOver)
+      document.removeEventListener('mouseout',  onMouseOut)
       dot.remove()
       ring.remove()
     }

@@ -24,7 +24,7 @@ function Layout({ children }) {
   }, [location.pathname, location.search, location.hash])
 
   useCursorEffect()
-  useScrollAnimations()
+  useScrollAnimations(location.pathname)
 
   return (
     <>

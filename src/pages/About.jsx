@@ -7,6 +7,9 @@ function About() {
 
   const open = (src, alt, caption = '') => setLightbox({ src, alt, caption })
   const close = () => setLightbox(null)
+  const makeKeyDown = (src, alt, caption = '') => (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(src, alt, caption) }
+  }
 
   return (
     <section id="about" className="about">
@@ -32,6 +35,10 @@ function About() {
             <div
               className="portrait-main-wrap lb-trigger"
               onClick={() => open('/static/images/about/edward-portrait.jpg', 'Edward Lai', 'Edward Lai')}
+              onKeyDown={makeKeyDown('/static/images/about/edward-portrait.jpg', 'Edward Lai', 'Edward Lai')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: Edward Lai"
             >
               <img src="/static/images/about/edward-portrait.jpg" alt="Edward Lai" loading="lazy" />
               <span className="lb-expand-icon"><i className="fas fa-expand"></i></span>
@@ -39,6 +46,10 @@ function About() {
             <div
               className="portrait-pet-wrap lb-trigger"
               onClick={() => open('/static/images/about/charlie-dog.jpg', 'Charlie the Dog', 'Charlie')}
+              onKeyDown={makeKeyDown('/static/images/about/charlie-dog.jpg', 'Charlie the Dog', 'Charlie')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: Charlie"
             >
               <img src="/static/images/about/charlie-dog.jpg" alt="Charlie the Dog" loading="lazy" />
               <span className="portrait-label">Charlie</span>
@@ -54,6 +65,10 @@ function About() {
             <div
               className="pg-item pg-wide lb-trigger"
               onClick={() => open('/static/images/about/family-photo.jpg', 'The Lai Family', 'The Lai Family, Tufts Graduation')}
+              onKeyDown={makeKeyDown('/static/images/about/family-photo.jpg', 'The Lai Family', 'The Lai Family, Tufts Graduation')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: The Lai Family, Tufts Graduation"
             >
               <img src="/static/images/about/family-photo.jpg" alt="The Lai Family" loading="lazy" />
               <span className="pg-caption">The Lai Family, Tufts Graduation</span>
@@ -62,6 +77,10 @@ function About() {
             <div
               className="pg-item pg-tall lb-trigger"
               onClick={() => open('/static/images/about/graduation-friends.jpg', 'Graduation with Friends', 'Friends')}
+              onKeyDown={makeKeyDown('/static/images/about/graduation-friends.jpg', 'Graduation with Friends', 'Friends')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: Friends"
             >
               <img src="/static/images/about/graduation-friends.jpg" alt="Graduation with Friends" loading="lazy" />
               <span className="pg-caption">Friends</span>
@@ -70,6 +89,10 @@ function About() {
             <div
               className="pg-item lb-trigger"
               onClick={() => open('/static/images/about/mount-washington.jpg', 'Mount Washington Climb', 'Mount Washington, NH (6,300 ft)')}
+              onKeyDown={makeKeyDown('/static/images/about/mount-washington.jpg', 'Mount Washington Climb', 'Mount Washington, NH (6,300 ft)')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: Mount Washington, NH (6,300 ft)"
             >
               <img src="/static/images/about/mount-washington.jpg" alt="Mount Washington Climb" loading="lazy" />
               <span className="pg-caption">Mount Washington, NH (6,300 ft)</span>
@@ -78,6 +101,10 @@ function About() {
             <div
               className="pg-item lb-trigger"
               onClick={() => open('/static/images/about/killington-snowboarding.jpg', 'Snowboarding at Killington', 'Killington, VT')}
+              onKeyDown={makeKeyDown('/static/images/about/killington-snowboarding.jpg', 'Snowboarding at Killington', 'Killington, VT')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: Killington, VT"
             >
               <img src="/static/images/about/killington-snowboarding.jpg" alt="Snowboarding at Killington" loading="lazy" />
               <span className="pg-caption">Killington, VT</span>
@@ -86,6 +113,10 @@ function About() {
             <div
               className="pg-item pg-full lb-trigger"
               onClick={() => open('/static/images/about/sunday-river-snowboarding.jpg', 'Sunday River, ME', 'Sunday River, ME')}
+              onKeyDown={makeKeyDown('/static/images/about/sunday-river-snowboarding.jpg', 'Sunday River, ME', 'Sunday River, ME')}
+              role="button"
+              tabIndex={0}
+              aria-label="Enlarge image: Sunday River, ME"
             >
               <img src="/static/images/about/sunday-river-snowboarding.jpg" alt="Sunday River, ME" loading="lazy" />
               <span className="pg-caption">Sunday River, ME</span>

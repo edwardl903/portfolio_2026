@@ -5,6 +5,9 @@ function Chess() {
   const [lightbox, setLightbox] = useState(null)
   const open = (src, alt, caption = '') => setLightbox({ src, alt, caption })
   const close = () => setLightbox(null)
+  const makeKeyDown = (src, alt, caption = '') => (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(src, alt, caption) }
+  }
 
   return (
     <section className="hobby-detail">
@@ -61,7 +64,7 @@ function Chess() {
 
             <div className="chess-photos-grid">
               <div className="chess-photo-card">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/boston-college-tournament.jpg', 'Boston College Chess Tournament', 'Boston College Tournament')}>
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/boston-college-tournament.jpg', 'Boston College Chess Tournament', 'Boston College Tournament')} onKeyDown={makeKeyDown('/static/images/hobbies/chess/boston-college-tournament.jpg', 'Boston College Chess Tournament', 'Boston College Tournament')} role="button" tabIndex={0} aria-label="Enlarge image: Boston College Tournament">
                   <img src="/static/images/hobbies/chess/boston-college-tournament.jpg" alt="Boston College Chess Tournament" loading="lazy" />
                 </div>
                 <div className="photo-content">
@@ -71,7 +74,7 @@ function Chess() {
               </div>
 
               <div className="chess-photo-card">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/eboard.png', '2025 E-Board Members', '2025 E-Board')}>
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/eboard.png', '2025 E-Board Members', '2025 E-Board')} onKeyDown={makeKeyDown('/static/images/hobbies/chess/eboard.png', '2025 E-Board Members', '2025 E-Board')} role="button" tabIndex={0} aria-label="Enlarge image: 2025 E-Board">
                   <img src="/static/images/hobbies/chess/eboard.png" alt="2025 E-Board Members" loading="lazy" />
                 </div>
                 <div className="photo-content">
@@ -81,7 +84,7 @@ function Chess() {
               </div>
 
               <div className="chess-photo-card">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/founders.png', 'Chess Club Founders', 'Chess Club Founders')}>
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/founders.png', 'Chess Club Founders', 'Chess Club Founders')} onKeyDown={makeKeyDown('/static/images/hobbies/chess/founders.png', 'Chess Club Founders', 'Chess Club Founders')} role="button" tabIndex={0} aria-label="Enlarge image: Chess Club Founders">
                   <img src="/static/images/hobbies/chess/founders.png" alt="Chess Club Founders" loading="lazy" />
                 </div>
                 <div className="photo-content">
@@ -91,7 +94,7 @@ function Chess() {
               </div>
 
               <div className="chess-photo-card meeting-photo">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/chess-club-meeting-1.jpg', 'Chess Club Weekly Meeting', 'Weekly Meetings')}>
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/chess-club-meeting-1.jpg', 'Chess Club Weekly Meeting', 'Weekly Meetings')} onKeyDown={makeKeyDown('/static/images/hobbies/chess/chess-club-meeting-1.jpg', 'Chess Club Weekly Meeting', 'Weekly Meetings')} role="button" tabIndex={0} aria-label="Enlarge image: Weekly Meetings">
                   <img src="/static/images/hobbies/chess/chess-club-meeting-1.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
                 </div>
                 <div className="photo-content">
@@ -101,7 +104,7 @@ function Chess() {
               </div>
 
               <div className="chess-photo-card meeting-photo">
-                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/chess-club-meeting-2.jpg', 'Chess Club Weekly Meeting', 'Chess Club Community')}>
+                <div className="chess-photo-img-wrap lb-trigger" onClick={() => open('/static/images/hobbies/chess/chess-club-meeting-2.jpg', 'Chess Club Weekly Meeting 2', 'Chess Club Community')} onKeyDown={makeKeyDown('/static/images/hobbies/chess/chess-club-meeting-2.jpg', 'Chess Club Weekly Meeting 2', 'Chess Club Community')} role="button" tabIndex={0} aria-label="Enlarge image: Chess Club Community">
                   <img src="/static/images/hobbies/chess/chess-club-meeting-2.jpg" alt="Chess Club Weekly Meeting" loading="lazy" />
                 </div>
                 <div className="photo-content">

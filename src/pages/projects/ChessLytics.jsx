@@ -223,9 +223,10 @@ function ChessLytics() {
             <p>
               The Chess.com pull was the annoying bit at first. I now hit the archive index so I skip empty months,
               fan out month fetches with a small worker pool, back off when I get 429s, and cache hard with
-              requests-cache in SQLite (old months basically never expire, current month is short TTL). Pandas does the
+              requests-cache in SQLite (old months basically never expire, current month is short TTL).               Pandas does the
               boring shaping for the HTML and the PNGs so the page does not wait on BigQuery. BigQuery still gets a
-              flattened copy of the raw response in one append-friendly table. dbt is on the roadmap, not in prod yet.
+              flattened copy of the raw response in one append-friendly table. A separate dbt project runs nightly on
+              top of that raw table and powers the chess analytics page on this site.
             </p>
             <p>
               Looker is one shared report for everyone. Flask just sets the filter params per request so I never had to
@@ -256,20 +257,20 @@ function ChessLytics() {
               <div className="diagram-caption">
                 <p>
                   Roughly: browser talks to Flask, processor hits Chess.com with caching, pandas spits out JSON and chart
-                  files for the page, same pass shoves rows into BigQuery for Looker (and later dbt if I finish it).
+                  files for the page, same pass shoves rows into BigQuery for Looker and the nightly dbt pipeline.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="project-section story-section">
-            <h2>When it gets huge</h2>
+            <h2>The dbt layer</h2>
             <p>
-              If you are doing silly-big historical batches, the cute Heroku path is not enough. I spun up a separate
-              Azure track with Databricks and Delta for the warehouse-style work. Same overall idea, different scale.
-            </p>
-            <p>
-              I wrote that up over here:{' '}
+              Once the raw data is in BigQuery, a separate dbt project cleans, models, and aggregates it nightly via
+              GitHub Actions. That pipeline is what keeps the{' '}
+              <Link to="/hobbies/chess">chess analytics page</Link> on this site up to date. If you want to see the
+              model lineage, incremental strategy, and how the mart tables are structured, that is all documented
+              separately:{' '}
               <Link to="/projects/chesslytics-dbt">ChessLytics dbt Pipeline</Link>.
             </p>
           </div>
@@ -292,7 +293,6 @@ function ChessLytics() {
           <div className="project-section">
             <h2>Still want to do</h2>
             <ul>
-              <li>Actually ship dbt on top of raw_games.</li>
               <li>Stop doing the slow pandas row loops where vectorized code would win.</li>
               <li>Smarter incremental fetch using max game time in BigQuery, not only cache luck.</li>
               <li>Import the pipeline from Flask instead of subprocess so a request is not paying a cold Python boot.</li>

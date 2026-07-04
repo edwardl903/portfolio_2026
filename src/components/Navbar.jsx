@@ -59,9 +59,14 @@ function Navbar() {
             <li><Link to="/about"    className={isActive('/about')    ? 'active' : ''}>About</Link></li>
             <li><Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
             <li className="dropdown">
-              <span className={`dropdown-toggle${hobbyOn ? ' active' : ''}`}>
-                Hobbies <i className="fas fa-chevron-down" />
-              </span>
+              <button
+                type="button"
+                className={`dropdown-toggle${hobbyOn ? ' active' : ''}`}
+                aria-haspopup="true"
+                aria-label="Hobbies submenu"
+              >
+                Hobbies <i className="fas fa-chevron-down" aria-hidden="true" />
+              </button>
               <ul className="dropdown-menu">
                 <li><Link to="/hobbies/piano"        className={isActive('/hobbies/piano')        ? 'active' : ''}>Piano</Link></li>
                 <li><Link to="/hobbies/chess"        className={isActive('/hobbies/chess')        ? 'active' : ''}>Chess</Link></li>

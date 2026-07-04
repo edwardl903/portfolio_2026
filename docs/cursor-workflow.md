@@ -152,3 +152,5 @@ Files: ChessV2.jsx, styles.css
 | 2026-06-24 | Naming cleanup: added docs/naming-conventions.md; renamed components (ChessLyticsDbt, PianoKeyboard, ChessStats, Pison, NlpPipeline); route chesslytics-dbt + redirect; renamed chess/about images; removed unused assets |
 | 2026-06-24 | PianoV2: removed pv2-dark body override and extra-black dark CSS; page/preview/modal now use shared theme tokens to match ChessV2 |
 | 2026-07-04 | Added gitignored `docs/private/edward-context.md` + tracked template for Edward's private Cursor context; rule pointer in `portfolio-cursor.mdc` |
+| 2026-07-04 | Fixed ChessLytics dbt contradiction; fixed `--accent-primary` undefined; keyboard a11y on About/Chess lightboxes and Hobbies dropdown; scroll/cursor hooks re-run on route change; dead CSS purge |
+| 2026-07-04 | styles.css: removed ~2,100 lines of dead CSS across 10 blocks (old project-card v1, resume section, hobby card grid, project navigation, chess game/openings/stats, architecture/diagram grids, background animation, misc dead selectors, dead utility rules) |

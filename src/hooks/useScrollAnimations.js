@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export function useScrollAnimations() {
+export function useScrollAnimations(pathname) {
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
@@ -32,6 +32,6 @@ export function useScrollAnimations() {
         observer.unobserve(section)
       })
     }
-  }, [])
+  }, [pathname])
 }
 
