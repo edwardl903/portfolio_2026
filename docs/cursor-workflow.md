@@ -32,6 +32,7 @@ This file governs how the AI assistant should work with this codebase.
 - Update the **Recent Changes** section of this file with a one-line summary.
 - Append an entry to `CHANGELOG.md` at the repo root (date, Added/Changed/Fixed, brief description).
 - Update any affected doc (`design-system.md`, `content-structure.md`, `architecture.md`) if the change affects documented behavior.
+- If a page/route was added or removed, a project was added or reordered, the narrative framing changed, or a known issue was fixed or found: update `docs/mental-model.md`.
 
 ### Committing
 Write detailed commit messages that cover:
@@ -66,6 +67,7 @@ Files: ChessV2.jsx, styles.css
 [ ] Run npm run build after
 [ ] Update this file's Recent Changes log
 [ ] Append entry to CHANGELOG.md
+[ ] Update docs/mental-model.md if pages/routes/narrative changed
 [ ] Write a detailed commit message (what, why, files affected)
 ```
 
@@ -88,6 +90,7 @@ Files: ChessV2.jsx, styles.css
 | Reading columns | Project content + hobby description: `max-width: 720-780px; margin: 0 auto` |
 | Media sections | Must be siblings of `.hobby-description`, NOT nested inside (avoids width constraint) |
 | Cursor project files | `.cursor/rules/portfolio-cursor.mdc` (always-on hints), `docs/cursor-best-practices.md` (guide), `.cursor/skills/portfolio-workflow/SKILL.md` (optional skill), `docs/private/edward-context.md` (gitignored personal context) |
+| Mental model | `docs/mental-model.md` — bird's-eye view of the whole site; update when pages/routes/narrative change |
 
 ---
 
@@ -153,4 +156,5 @@ Files: ChessV2.jsx, styles.css
 | 2026-06-24 | PianoV2: removed pv2-dark body override and extra-black dark CSS; page/preview/modal now use shared theme tokens to match ChessV2 |
 | 2026-07-04 | Added gitignored `docs/private/edward-context.md` + tracked template for Edward's private Cursor context; rule pointer in `portfolio-cursor.mdc` |
 | 2026-07-04 | Fixed ChessLytics dbt contradiction; fixed `--accent-primary` undefined; keyboard a11y on About/Chess lightboxes and Hobbies dropdown; scroll/cursor hooks re-run on route change; dead CSS purge |
+| 2026-07-04 | Added `docs/mental-model.md` — living bird's-eye site map; wired into cursor rule and post-edit checklist |
 | 2026-07-04 | styles.css: removed ~2,100 lines of dead CSS across 10 blocks (old project-card v1, resume section, hobby card grid, project navigation, chess game/openings/stats, architecture/diagram grids, background animation, misc dead selectors, dead utility rules) |
