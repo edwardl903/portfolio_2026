@@ -27,6 +27,9 @@ dist-ssr
 WORKFLOW.md
 CHANGELOG.md
 
+# Private AI / personal context (never commit — template stays tracked)
+docs/private/edward-context.md
+
 # Image backups
 public/static/images-backup
 DEPLOYMENT_CHECKLIST.md

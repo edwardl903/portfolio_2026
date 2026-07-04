@@ -47,6 +47,7 @@ Use **@** to ground the model: `@file`, `@folder`, `@Docs`, `@Web` (when you nee
 ## 5. Repo-specific reminders (portfolio_2026)
 
 - Read `docs/cursor-workflow.md` before edits; update its Recent Changes after sessions.
+- Private voice/career context: `docs/private/edward-context.md` (gitignored). Copy from `edward-context.template.md` on a new machine.
 - Light theme tokens live in `src/styles/base.css`; avoid dark-theme leftovers in `styles.css`.
 - Do not use `overflow-x: hidden` on `body` (iOS fixed positioning). Use `html` instead.
 - Deploy: push to GitHub; Vercel builds from the connected repo.

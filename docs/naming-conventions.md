@@ -64,5 +64,7 @@ Renaming the JSX file does not require renaming CSS prefixes unless doing a full
 ## Docs and private files
 
 - `docs/` — agent and human reference (tracked in git)
+- `docs/private/edward-context.md` — Edward's private voice/career context for Cursor (gitignored)
+- `docs/private/edward-context.template.md` — structure guide for the private file (tracked)
 - `CHANGELOG.md` — personal session log (gitignored)
 - `.cursor/rules/` — short always-on AI hints; detail lives in `docs/`

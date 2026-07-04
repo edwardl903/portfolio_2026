@@ -87,7 +87,7 @@ Files: ChessV2.jsx, styles.css
 | Container | `max-width: 1200px; margin: 0 auto; padding: 0 2rem` |
 | Reading columns | Project content + hobby description: `max-width: 720-780px; margin: 0 auto` |
 | Media sections | Must be siblings of `.hobby-description`, NOT nested inside (avoids width constraint) |
-| Cursor project files | `.cursor/rules/portfolio-cursor.mdc` (always-on hints), `docs/cursor-best-practices.md` (guide), `.cursor/skills/portfolio-workflow/SKILL.md` (optional skill) |
+| Cursor project files | `.cursor/rules/portfolio-cursor.mdc` (always-on hints), `docs/cursor-best-practices.md` (guide), `.cursor/skills/portfolio-workflow/SKILL.md` (optional skill), `docs/private/edward-context.md` (gitignored personal context) |
 
 ---
 
@@ -151,3 +151,4 @@ Files: ChessV2.jsx, styles.css
 | 2026-06-30 | Umami Analytics: fixed metrics type `url` → `path` (API 400); stats parsing for flat API response |
 | 2026-06-24 | Naming cleanup: added docs/naming-conventions.md; renamed components (ChessLyticsDbt, PianoKeyboard, ChessStats, Pison, NlpPipeline); route chesslytics-dbt + redirect; renamed chess/about images; removed unused assets |
 | 2026-06-24 | PianoV2: removed pv2-dark body override and extra-black dark CSS; page/preview/modal now use shared theme tokens to match ChessV2 |
+| 2026-07-04 | Added gitignored `docs/private/edward-context.md` + tracked template for Edward's private Cursor context; rule pointer in `portfolio-cursor.mdc` |
