@@ -1,0 +1,23 @@
+# Cursor context exclusions
+# These paths are excluded from Cursor's codebase index.
+# Binary assets, build output, and generated files add noise without helping the agent.
+
+# Build output
+dist/
+
+# All static images (binary — agent cannot read them anyway)
+public/static/images/
+
+# Design source files
+*.psd
+*.ai
+*.sketch
+
+# Resume PDFs
+public/static/images/resume/
+
+# Node modules (usually auto-excluded, explicit here for clarity)
+node_modules/
+
+# Image backups
+public/static/images-backup/
