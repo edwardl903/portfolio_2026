@@ -228,7 +228,7 @@ function ChessLytics() {
               flattened copy of the raw response in one append-friendly table.
             </p>
             <p>
-              A separate GitHub Actions cron at 2 AM UTC runs the daily ingest incrementally (high-water mark per user
+              A separate GitHub Actions cron at 06:00 UTC (2am ET) runs the daily ingest incrementally (high-water mark per user
               from BigQuery, not re-fetching everything). dbt runs right after and rebuilds mart tables used by the Pulse
               and chess dashboard pages. Matchup Analyzer is its own Flask endpoint: two usernames in, Elo win
               probability + form stats + game plan text out. Looker is one shared report for everyone -- Flask sets the
@@ -240,7 +240,7 @@ function ChessLytics() {
           <div className="project-section story-section">
             <h2>Full pipeline</h2>
             <p>
-              Three phases. Ingest: a GitHub Actions cron at 2 AM UTC runs <code>daily_ingest.py</code>, which does an
+              Three phases. Ingest: a GitHub Actions cron at 06:00 UTC (2am ET) runs <code>daily_ingest.py</code>, which does an
               incremental pull per user (high-water mark from BigQuery) and appends to <code>raw_games</code>. Transform:
               dbt runs immediately after ingest, rebuilding staging views, the intermediate per-player model, and four
               mart tables. Serve: Flask on Heroku exposes the API; React + Vite serves Year in Review, Matchup Analyzer,

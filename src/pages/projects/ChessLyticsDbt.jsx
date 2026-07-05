@@ -23,9 +23,10 @@ function ChessLyticsDbt() {
             <h1>ChessLytics dbt Pipeline</h1>
             <p className="project-description">
               I built a dbt project on top of the raw chess.com game data already sitting in BigQuery.
-              It runs every night, keeps game history fresh for 15 players including Hikaru and Magnus,
-              and directly powers the{' '}
-              <Link to="/hobbies/chess">chess analytics page</Link> on this site.
+              It runs every night via GitHub Actions (06:00 UTC, 2am ET), keeps game history fresh for 15 players
+              including Hikaru and Magnus, and directly powers the{' '}
+              <Link to="/hobbies/chess">chess analytics page</Link>, the Pulse opening trends view, and
+              the Matchup Analyzer on this site.
             </p>
             <div className="project-tech">
               <span className="tech-tag">dbt</span>
@@ -209,6 +210,11 @@ function ChessLyticsDbt() {
                 active days, and a time-class game count breakdown.
               </li>
               <li>
+                <strong>snap_dim_users</strong> - SCD Type 2 dbt snapshot of <code>dim_users</code>.
+                Tracks historical rating changes over time so you can see when a player peaked, not
+                just their current number.
+              </li>
+              <li>
                 <strong>my_daily_stats</strong> - portfolio-specific table that pre-aggregates
                 everything the chess hobby page needs, including win/loss streak calculations, into
                 one flat table the Flask API can read with a single SELECT.
@@ -236,16 +242,22 @@ function ChessLyticsDbt() {
           <div className="project-section">
             <h2>Daily pipeline and live output</h2>
             <p>
-              GitHub Actions runs at 06:00 UTC. It fetches new games for everyone in{' '}
-              <code>tracked_usernames.csv</code>, appends to <code>raw_games</code> in BigQuery, then
-              runs <code>dbt seed, dbt snapshot, dbt run, dbt test</code> in sequence. Each run gets
-              logged to a <code>pipeline_runs</code> audit table.
+              The <code>Daily Chesslytics Pipeline</code> workflow runs at 06:00 UTC (2am ET). Job 1
+              runs <code>scripts/daily_ingest.py</code>: fetch new games for everyone in{' '}
+              <code>tracked_usernames.csv</code> and append to <code>raw_games</code> in BigQuery. Job 2
+              runs only after ingest succeeds: <code>dbt deps</code>, <code>dbt seed</code>,{' '}
+              <code>dbt snapshot</code>, <code>dbt run</code>, <code>dbt test</code>. Each ingest run
+              also logs to a <code>pipeline_runs</code> audit table. You can trigger it manually from
+              the Actions UI with optional username overrides or a dry-run flag.
             </p>
             <p>
-              The final output is my <Link to="/hobbies/chess">chess analytics page</Link>. The Flask
-              API on Heroku reads from <code>fct_my_games</code> and <code>my_daily_stats</code> and
-              the page shows rating trends, win rates by opening, recent games, and a &quot;last
-              updated&quot; timestamp pulled from <code>MAX(updated_at)</code> in the mart.
+              Three things on this site read from those mart tables. The{' '}
+              <Link to="/hobbies/chess">chess analytics page</Link> reads from{' '}
+              <code>fct_my_games</code> and <code>my_daily_stats</code> and shows rating trends,
+              win rates by opening, recent games, and a &quot;last updated&quot; timestamp. The Pulse
+              view reads opening frequency directly from <code>fct_games</code> filtered by time class.
+              The Matchup Analyzer pulls live player stats from Chess.com on demand but uses the mart
+              tables as a fallback reference for head-to-head history.
             </p>
           </div>
         </div>

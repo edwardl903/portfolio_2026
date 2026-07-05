@@ -160,3 +160,4 @@ Files: ChessV2.jsx, styles.css
 | 2026-07-04 | Contact page redesign: editorial header, topic pills, side-by-side name/email, char count, contact method cards row |
 | 2026-07-04 | styles.css: removed ~2,100 lines of dead CSS across 10 blocks (old project-card v1, resume section, hobby card grid, project navigation, chess game/openings/stats, architecture/diagram grids, background animation, misc dead selectors, dead utility rules) |
 | 2026-07-05 | ChessLytics: replaced pipeline diagram with full INGEST/TRANSFORM/SERVE image; updated page copy + docs/projects/chesslytics.md to reflect shipped dbt, GitHub Actions cron, Matchup Analyzer, and Pulse |
+| 2026-07-05 | ChessLyticsDbt: cron corrected to 06:00 UTC (2am ET); added snap_dim_users; expanded daily pipeline section (two-job workflow, Pulse, Matchup Analyzer) |

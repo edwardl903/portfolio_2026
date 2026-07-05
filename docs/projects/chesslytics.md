@@ -15,7 +15,7 @@
 What started as a Flask app that fetches Chess.com data on demand turned into
 a full end-to-end data pipeline. The system has three distinct phases:
 
-1. **Ingest** — `daily_ingest.py` runs on a GitHub Actions cron (2 AM UTC)
+1. **Ingest** — `daily_ingest.py` runs on a GitHub Actions cron (06:00 UTC, 2am ET)
    and writes raw Chess.com API responses into BigQuery.
 2. **Transform** — a dbt project runs immediately after ingest: staging views
    clean the raw data, an intermediate model fans games into per-player rows,
@@ -41,7 +41,7 @@ daily_ingest.py ───┘      dbt run                          │
      │                         │                  ┌────────┴────────┐
      ▼                   ┌─────┼─────┐            ▼                 ▼
 GitHub Actions /         ▼     ▼     ▼     Year in Review    Matchup Analyzer
-cron 2 AM UTC     stg  int  fct/dim/fct         │                   │
+cron 06:00 UTC    stg  int  fct/dim/fct         │                   │
                   views      marts              ▼                   ▼
                                              Pulse            Dashboard →
                                                            Looker Studio
@@ -168,7 +168,7 @@ between environments.
 | Layer | Tools |
 |---|---|
 | Backend | Python 3.13, Flask, Flask-Cors, gunicorn |
-| Ingest | daily_ingest.py, GitHub Actions (cron 2 AM UTC) |
+| Ingest | daily_ingest.py, GitHub Actions (cron 06:00 UTC, 2am ET) |
 | Data | pandas, NumPy, python-chess |
 | HTTP | requests, requests-cache (SQLite), urllib3 retry |
 | Visualization | matplotlib, seaborn |
