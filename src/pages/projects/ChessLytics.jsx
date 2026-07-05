@@ -223,41 +223,48 @@ function ChessLytics() {
             <p>
               The Chess.com pull was the annoying bit at first. I now hit the archive index so I skip empty months,
               fan out month fetches with a small worker pool, back off when I get 429s, and cache hard with
-              requests-cache in SQLite (old months basically never expire, current month is short TTL).               Pandas does the
-              boring shaping for the HTML and the PNGs so the page does not wait on BigQuery. BigQuery still gets a
-              flattened copy of the raw response in one append-friendly table. A separate dbt project runs nightly on
-              top of that raw table and powers the chess analytics page on this site.
+              requests-cache in SQLite (old months basically never expire, current month is short TTL). Pandas does the
+              boring shaping for the HTML and PNGs so the page does not wait on BigQuery. BigQuery still gets a
+              flattened copy of the raw response in one append-friendly table.
             </p>
             <p>
-              Looker is one shared report for everyone. Flask just sets the filter params per request so I never had to
-              clone dashboards by hand. For credentials I read JSON from a Heroku config var in prod and fall back to
-              a local service account file when I am debugging on my laptop.
+              A separate GitHub Actions cron at 2 AM UTC runs the daily ingest incrementally (high-water mark per user
+              from BigQuery, not re-fetching everything). dbt runs right after and rebuilds mart tables used by the Pulse
+              and chess dashboard pages. Matchup Analyzer is its own Flask endpoint: two usernames in, Elo win
+              probability + form stats + game plan text out. Looker is one shared report for everyone -- Flask sets the
+              filter params per request so I never had to clone dashboards. For credentials I read JSON from a Heroku
+              config var in prod and fall back to a local service account file when debugging.
             </p>
           </div>
 
           <div className="project-section story-section">
-            <h2>Sketch of the GCP side</h2>
+            <h2>Full pipeline</h2>
             <p>
-              I split it on purpose: Python makes the response snappy, BigQuery keeps the messy truth so I can change my
-              mind about metrics later without replaying the whole API crawl.
+              Three phases. Ingest: a GitHub Actions cron at 2 AM UTC runs <code>daily_ingest.py</code>, which does an
+              incremental pull per user (high-water mark from BigQuery) and appends to <code>raw_games</code>. Transform:
+              dbt runs immediately after ingest, rebuilding staging views, the intermediate per-player model, and four
+              mart tables. Serve: Flask on Heroku exposes the API; React + Vite serves Year in Review, Matchup Analyzer,
+              and Pulse. The on-demand Year in Review flow also appends to <code>raw_games</code> mid-request so the
+              marts stay current.
             </p>
             <div className="diagram-image-container">
               <ClickableExpandableImage
-                src="/static/images/projects/chesslytics/chesslytics-initial-diagram.png"
-                alt="ChessLytics initial GCP architecture"
-                caption="Flask, fetch pipeline, BigQuery raw table, Looker embed"
+                src="/static/images/projects/chesslytics/chesslytics-pipeline.png"
+                alt="ChessLytics full pipeline: Ingest, Transform, Serve"
+                caption="Ingest (GitHub Actions + daily_ingest.py) → Transform (BigQuery + dbt) → Serve (Flask + React)"
               >
                 <img
-                  src="/static/images/projects/chesslytics/chesslytics-initial-diagram.png"
-                  alt="ChessLytics initial GCP architecture"
+                  src="/static/images/projects/chesslytics/chesslytics-pipeline.png"
+                  alt="ChessLytics full pipeline: Ingest, Transform, Serve"
                   className="architecture-image"
                   loading="lazy"
                 />
               </ClickableExpandableImage>
               <div className="diagram-caption">
                 <p>
-                  Roughly: browser talks to Flask, processor hits Chess.com with caching, pandas spits out JSON and chart
-                  files for the page, same pass shoves rows into BigQuery for Looker and the nightly dbt pipeline.
+                  Chess.com API → <code>daily_ingest.py</code> → GitHub Actions cron → BigQuery <code>raw_games</code>{' '}
+                  → dbt (staging, intermediate, marts) → Flask + React serving Year in Review, Matchup Analyzer, Pulse,
+                  and Looker Studio.
                 </p>
               </div>
             </div>
@@ -294,7 +301,6 @@ function ChessLytics() {
             <h2>Still want to do</h2>
             <ul>
               <li>Stop doing the slow pandas row loops where vectorized code would win.</li>
-              <li>Smarter incremental fetch using max game time in BigQuery, not only cache luck.</li>
               <li>Import the pipeline from Flask instead of subprocess so a request is not paying a cold Python boot.</li>
               <li>Real tests. The tests folder is mostly wishful thinking right now.</li>
             </ul>

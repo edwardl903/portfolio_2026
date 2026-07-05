@@ -1,159 +1,165 @@
 # Chesslytics — Portfolio Writeup
 
-> A self-serve chess analytics web app. Enter your Chess.com username,
-> get a personalized stats dashboard backed by BigQuery and embedded
-> Looker Studio reporting.
+> A self-serve chess analytics platform. Enter a Chess.com username, get a
+> personalized stats dashboard backed by BigQuery, dbt mart tables, and a
+> React frontend with Year in Review, Matchup Analyzer, and opening Pulse views.
 
-**Live demo:** _(add your Heroku URL here)_
-**Code:** _(add your GitHub URL here)_
-**Stack:** Python · Flask · pandas · BigQuery · dbt · Looker Studio · matplotlib · Heroku
+**Live demo:** [chesslytics.xyz](https://www.chesslytics.xyz)
+**Code:** [github.com/edwardl903/chesslyzer](https://github.com/edwardl903/chesslyzer)
+**Stack:** Python · Flask · pandas · BigQuery · dbt · Looker Studio · GitHub Actions · React · Vite · Heroku
 
 ---
 
 ## TL;DR
 
-I built a Flask web app that turns the Chess.com public API into a
-personalized analytics dashboard. The interesting part isn't the chart
-generation — that's just matplotlib — it's the **data architecture**:
-the same fetch that feeds the live web UI also lands raw data in
-BigQuery so I can layer dbt models, Looker Studio dashboards, and
-incremental analytics on top.
+What started as a Flask app that fetches Chess.com data on demand turned into
+a full end-to-end data pipeline. The system has three distinct phases:
 
-The app is deployed on Heroku and runs against a real GCP project.
-
----
-
-## What it does (user view)
-
-1. User opens the page, types their Chess.com username and a year.
-2. ~2 seconds later the page renders:
-   - high-level stats (total games, W/D/L, time played, longest streak,
-     biggest upset, favorite openings, etc.)
-   - 10+ matplotlib charts (rating-over-time, openings tree map,
-     time-of-day heatmap, opponent rating distribution, …)
-   - an embedded Looker Studio dashboard pre-filtered to that user
-     and year, backed by their now-uploaded BigQuery data.
+1. **Ingest** — `daily_ingest.py` runs on a GitHub Actions cron (2 AM UTC)
+   and writes raw Chess.com API responses into BigQuery.
+2. **Transform** — a dbt project runs immediately after ingest: staging views
+   clean the raw data, an intermediate model fans games into per-player rows,
+   and mart tables (`fct_games`, `dim_users`, `fct_user_statistics`) power the
+   serve layer.
+3. **Serve** — a Flask API on Heroku and a React + Vite frontend expose four
+   features: Year in Review, Matchup Analyzer, Pulse (opening trends), and
+   an embedded Looker Studio dashboard.
 
 ---
 
-## Architecture
+## Pipeline architecture
 
 ```
-┌─────────────┐     ┌──────────────────────────────────┐
-│  Browser    │────▶│  Flask app (app.py)              │
-│  index.html │     │                                  │
-└─────────────┘     │  ┌────────────────────────────┐  │
-                    │  │  Chess.com fetch pipeline  │  │
-                    │  │  src/data/processor.py     │  │
-                    │  │   - /games/archives index  │  │
-                    │  │   - 8-worker concurrent    │  │
-                    │  │     monthly fetch          │  │
-                    │  │   - SQLite HTTP cache      │  │
-                    │  │     (requests-cache)       │  │
-                    │  └─────────────┬──────────────┘  │
-                    │                │                 │
-                    │   ┌────────────┴────────────┐    │
-                    │   ▼                         ▼    │
-                    │ Pandas processing      ┌────────────┐
-                    │ ├─ statistics JSON     │ BigQuery   │
-                    │ ├─ matplotlib PNGs     │ raw_games  │
-                    │ ├─ CSV / XLSX export   │ (append)   │
-                    │ └─ frontend payload    └─────┬──────┘
-                    └─────────────────┬────────────┘     │
-                                      │                  │
-                                      ▼                  ▼
-                              public/index.html    Looker Studio
-                              (renders results)    (embedded, filtered)
-                                                          │
-                                                          ▼
-                                                 (planned) dbt models:
-                                                  stg_* → int_* → fct_*
+INGEST                   TRANSFORM                        SERVE
+──────                   ─────────                        ─────
+
+Chess.com          ┌──► BigQuery · raw_games         Flask · Heroku
+Public API         │    test1 dataset (append-only)        │
+     │             │           │                           ▼
+     ▼             │           ▼                      React + Vite
+daily_ingest.py ───┘      dbt run                          │
+     │                         │                  ┌────────┴────────┐
+     ▼                   ┌─────┼─────┐            ▼                 ▼
+GitHub Actions /         ▼     ▼     ▼     Year in Review    Matchup Analyzer
+cron 2 AM UTC     stg  int  fct/dim/fct         │                   │
+                  views      marts              ▼                   ▼
+                                             Pulse            Dashboard →
+                                                           Looker Studio
 ```
 
-Two-pronged data flow on purpose:
+Two data flows co-exist on purpose:
 
-- The **Python pipeline** powers the immediate page load — it has to
-  finish fast, so it pre-computes JSON and PNGs the frontend can
-  render without a round-trip to BigQuery.
-- The **BigQuery upload** writes the *raw* Chess.com response (nested
-  objects flattened, no transformations applied) into a single
-  `raw_games` table. Anything analytical — including replays of past
-  transformations — is built on top of this in dbt.
+- **On-demand (Year in Review):** Flask fetches fresh games from Chess.com
+  during the request, using an 8-worker `ThreadPoolExecutor` with
+  `requests-cache` (SQLite, `NEVER_EXPIRE` for completed months). Pandas
+  pre-computes JSON + PNG charts so the page renders without waiting on
+  BigQuery. The same fetch also appends to `raw_games`.
+- **Nightly batch:** `daily_ingest.py` does an incremental fetch per user
+  (high-water mark from BigQuery), then the dbt job rebuilds mart tables.
+  The React frontend reads live stats from mart tables via `/api/portfolio/stats`.
 
-This separation is the key design decision. It means I can iterate on
-analytics in SQL without touching the Python serving path, and I can
-rebuild any historical metric from raw data instead of re-fetching from
-the API.
+---
+
+## dbt model lineage
+
+```
+SOURCE
+test1.raw_games  (append-only)
+      │
+      ▼  STAGING  (view)
+stg_raw_games
+  - parse Unix end_time → game_date, game_end_timestamp
+  - rename to snake_case
+  - QUALIFY ROW_NUMBER() deduplication
+      │
+      ▼  INTERMEDIATE  (table)
+int_player_games
+  - UNION ALL: white POV + black POV (2 rows per game)
+  - derives: outcome, rating_diff
+  - ECO opening from REGEXP_EXTRACT on PGN
+      │
+      ├──────────────────────┬─────────────────────────────────┐
+      ▼                      ▼                                 ▼
+dim_users             fct_games (incremental)       fct_user_statistics
+1 row/user            grain: game × player          grain: user × date × time class
+current + peak        partitioned by game_date      watermark: stat_date
+W/D/L                 clustered by username
+                            │
+                      fct_my_games (incremental)
+                        EdwardL903 only, pre-filtered
+                            │
+                      my_daily_stats (table)
+                        consumed by /api/portfolio/stats
+```
+
+41 dbt tests run after every nightly pipeline job.
+
+---
+
+## Features
+
+### Year in Review (`/wrapped`)
+User submits a Chess.com username and year. Flask fetches, Pandas processes,
+matplotlib generates 10+ charts, BigQuery gets the raw append. Response
+includes statistics JSON, image paths, embed config, and a Looker Studio URL
+pre-filtered to that user and year.
+
+### Matchup Analyzer (`/matchup`)
+Two usernames (or a game URL) → Flask pulls profiles, recent games, and per-player
+ratings from Chess.com. Returns win probability (Elo expected score + form nudge),
+head-to-head stats, strengths/weaknesses, and game plan text per player.
+
+### Pulse (`/pulse`)
+Opening trends from the `fct_games` dbt mart, filterable by time class. No
+Chess.com API call at view time -- reads from mart tables directly.
 
 ---
 
 ## Engineering highlights
 
-### 1. Made the Chess.com fetch ~5× faster cold and ~65× faster warm
+### Fetch performance: ~5x faster cold, ~65x faster warm
 
-The original fetch had three pessimistic choices:
+Original problems:
+- Walked every month from join date, including empty ones (lots of 404s)
+- Capped at 2 concurrent workers from a misread comment
+- No caching, fresh TLS per request
 
-- Walked every month from `joined` → today, even months with zero games
-  (lots of wasted 404s).
-- Capped concurrency at 2 workers based on a misread of Chess.com's docs.
-- Created a fresh TLS connection per request and never cached anything.
-
-The fixes (see `src/data/processor.py`):
-
-- **Use the `/pub/player/{user}/games/archives` endpoint** to enumerate
-  only months that actually have games.
-- **8-worker `ThreadPoolExecutor`** with per-call exponential backoff on
-  HTTP 429 (Chess.com tolerates this fine in practice).
-- **Single `requests-cache.CachedSession` (SQLite backend) with smart
-  per-call TTL:** `NEVER_EXPIRE` for completed months (immutable),
-  300 s for the current month and the archive index. Connection pooling
-  via `HTTPAdapter` and automatic retry on 5xx.
+Fixes:
+- Use `/pub/player/{user}/games/archives` to enumerate only months with games
+- 8-worker `ThreadPoolExecutor` + exponential backoff on HTTP 429
+- `requests-cache` CachedSession (SQLite): `NEVER_EXPIRE` for past months, 300s for current
 
 | Scenario | Before | After |
 |---|---|---|
-| Cold fetch (1376 games / 12 months) | ~9–12 s | **1.77 s** |
+| Cold fetch (1376 games / 12 months) | ~9-12 s | **1.77 s** |
 | Warm fetch (cache hit) | same | **0.03 s** |
 
-### 2. Raw-first BigQuery loading
+### Raw-first BigQuery loading
 
-Instead of doing pandas transformations, then writing the result to
-BigQuery (the typical pattern), I do the opposite: I write the **raw
-Chess.com API response** to BigQuery (`raw_games` table, nested objects
-flattened). All transformations — date parsing, ECO opening cleanup,
-player-perspective calculations, win/loss categorization — are done
-either in Python (for the immediate page render) or, on the analytics
-side, in **dbt**.
+Raw Chess.com response goes into BigQuery first (nested objects flattened to
+top-level columns, no transformations applied). All analytical work -- date
+parsing, ECO cleanup, player-perspective calcs -- happens in dbt on top of
+the raw table. This makes the pipeline replayable: any metric can be rebuilt
+from `raw_games` without re-calling the API.
 
-Why: it makes the pipeline replayable. If I want to recompute a metric
-historically, I don't have to re-fetch 5 years of API data — I just
-re-run the dbt model. It also makes the data layer auditable: anything
-in a mart can be traced back to a row in `raw_games`.
+### Incremental dbt models
 
-The schema flattens nested objects (`white`, `black`, `accuracies`)
-to top-level columns so dbt can address them in plain SQL — see
-`api/bigquery_dashboard.py::flatten_raw_game`.
+`fct_games` and `fct_user_statistics` are incremental (merge strategy) with
+`uploaded_at` as the watermark. `my_daily_stats` is a full rebuild on top
+of `fct_my_games`. The nightly pipeline runs all models in order, then
+runs 41 dbt tests.
 
-### 3. Per-user Looker Studio dashboards via embed config
+### Per-user Looker Studio via embed config
 
-The single Looker Studio report is parameterized by `username_year`. The
-Flask backend builds an embed configuration that pre-filters the report
-to the requested user and year, then the frontend embeds it. One
-dashboard, infinite users, no per-user dashboard provisioning.
+One shared Looker report. Flask builds an embed configuration scoped to
+`username_year`, so there is no per-user dashboard provisioning. Infinite
+users, one dashboard.
 
-### 4. Dual-credential GCP loading
+### Dual-credential GCP loading
 
-To support both local development and Heroku without code changes, the
-BigQuery client tries env-var-based credentials first
-(`GOOGLE_APPLICATION_CREDENTIALS_JSON`, the JSON itself stored in a
-Heroku config var) then falls back to the local `gcp/service_account.json`
-file. See `api/bigquery_dashboard.py::_get_bigquery_client`.
-
-### 5. Repo hygiene
-
-Untracked all generated artifacts (per-user CSV/JSON/XLSX, matplotlib
-PNGs, Python `__pycache__`), strict secrets policy via `.gitignore`
-(GCP keys, `.env`, all `*.pem`/`*.key`), and a real `.env.example` so
-anyone can stand the project up locally.
+BigQuery client tries `GOOGLE_APPLICATION_CREDENTIALS_JSON` (Heroku config var)
+first, falls back to `gcp/service_account.json` locally. No code changes
+between environments.
 
 ---
 
@@ -162,72 +168,41 @@ anyone can stand the project up locally.
 | Layer | Tools |
 |---|---|
 | Backend | Python 3.13, Flask, Flask-Cors, gunicorn |
-| Data | pandas, NumPy, scikit-learn (lightweight stats), python-chess |
-| HTTP | requests, requests-cache (SQLite backend), urllib3 retry |
+| Ingest | daily_ingest.py, GitHub Actions (cron 2 AM UTC) |
+| Data | pandas, NumPy, python-chess |
+| HTTP | requests, requests-cache (SQLite), urllib3 retry |
 | Visualization | matplotlib, seaborn |
-| Cloud | Google Cloud BigQuery (raw + transformed), Looker Studio (embedded) |
-| Analytics (planned) | dbt (BigQuery adapter) — staging, intermediate, marts |
+| Cloud (raw) | Google Cloud BigQuery, dataset: test1 |
+| Cloud (marts) | BigQuery, dataset: chesslytics_dbt |
+| Analytics | dbt (BigQuery adapter), 41 tests |
+| Reporting | Looker Studio (embedded, per-user config) |
 | Hosting | Heroku |
-| Frontend | Vanilla HTML/CSS/JS (single-page) |
+| Frontend | React 19, Vite 7, TypeScript |
 
 ---
 
-## Things I learned / decisions I'd defend
+## Things I learned / decisions I would defend
 
-- **"Land raw data first" is the right default.** It cost me almost
-  nothing to add a `raw_games` table and gave me unlimited replay-ability
-  for transformations later. Every project that talks to a third-party
-  API should do this.
-- **Don't trust comments in old code.** The "max 2 simultaneous
-  requests" comment in the fetch had been there forever; reading the
-  actual Chess.com docs revealed it was wrong, and the trivial fix gave
-  a 4× speedup on the API-bound path.
-- **HTTP caching is the highest-ROI optimization for this kind of app.**
-  A 9 MB SQLite file converts a "slow site" into an "instant site" for
-  any returning user. `requests-cache` made it ~10 lines of code.
-- **Two transformation systems is fine, briefly.** The Python pipeline
-  and the (planned) dbt pipeline currently both produce stats. That's
-  the right state during a migration — kill the Python side once dbt is
-  serving the dashboard, not before.
+- **Land raw data first.** It cost almost nothing to add `raw_games` and it
+  gave me unlimited replayability for transformations. Any project that
+  talks to a third-party API should do this.
+- **HTTP caching is the highest-ROI optimization here.** A 9 MB SQLite file
+  converts a slow site into an instant one for returning users.
+  `requests-cache` made it about 10 lines of code.
+- **Don't trust old comments.** The "max 2 simultaneous requests" comment
+  had been there forever. Reading the actual docs revealed it was wrong, and
+  bumping workers gave a 4x speedup.
+- **Two transformation systems is fine temporarily.** Python and dbt both
+  compute stats right now. That is the right state during a migration -- kill
+  the Python side once dbt is fully serving the dashboard.
 
 ---
 
 ## What's next
 
-Honest roadmap (these are real, not aspirational):
-
-1. **Write the dbt project** (`stg_raw_games` → `int_user_games` →
-   `fct_games`, `dim_users`, `fct_user_statistics`). Models are
-   sketched in [`DBT_PROJECT_STRUCTURE.md`](./DBT_PROJECT_STRUCTURE.md).
-2. **Vectorize `clean_dataframe`.** Replace the `iterrows()` loop
-   doing player-perspective calcs with `np.where`. ~50–100× speedup
-   on processing for power users with 10k+ games.
-3. **Incremental fetch.** Query `MAX(end_time)` from `raw_games` per
-   user, only fetch months strictly after that. Currently the cache
-   prevents re-downloads but a fresh server has no cache; a BigQuery
-   high-water-mark query would solve that across deployments.
-4. **Replace `subprocess.run` from `app.py`.** Import the pipeline
-   directly to skip Python interpreter cold-start (~500 ms saved per
-   request).
-5. **Add a real test suite.** `tests/` is currently a CLI runner
-   misnamed as `tests/`. Pytest coverage on `src/data` and `src/stats`
-   is high-leverage before the dbt cutover.
-
----
-
-## How to run it (so you can demo it)
-
-```bash
-git clone <repo>
-cd chesslyzer-experimental
-python3.13 -m venv venv && source venv/bin/activate
-pip install -r requirements.txt
-
-# Either drop your GCP service account JSON at gcp/service_account.json,
-# or copy .env.example to .env and fill in GOOGLE_APPLICATION_CREDENTIALS_JSON.
-
-python app.py
-# → http://localhost:5001
-```
-
-Heroku deployment walkthrough: [`HEROKU_DEPLOYMENT.md`](./HEROKU_DEPLOYMENT.md).
+1. Vectorize `clean_dataframe` -- replace `iterrows()` with `np.where` for
+   a 50-100x speedup on large accounts.
+2. Import the pipeline directly from Flask instead of `subprocess.run` to skip
+   Python interpreter cold-start (~500 ms saved per request).
+3. Add real pytest coverage on `src/data` and `src/stats` before the dbt
+   cutover.
