@@ -37,7 +37,7 @@ function EEGResearch() {
 
         <div className="project-content">
           <div className="project-section">
-            <h2>Overview</h2>
+            <h2>What it was</h2>
             <p>
               I contributed to a published study that used the MUSE 2 consumer EEG headband to tell different
               cognitive tasks apart (e.g. chess puzzles, memory games, visual rotation). The goal was to see whether
@@ -46,7 +46,7 @@ function EEGResearch() {
           </div>
 
           <div className="project-section">
-            <h2>My Role</h2>
+            <h2>What I did</h2>
             <ul>
               <li>Helped design the protocol and select tasks</li>
               <li>Ran participants, managed MUSE 2 setup, and kept data quality high</li>
@@ -56,7 +56,7 @@ function EEGResearch() {
           </div>
 
           <div className="project-section">
-            <h2>Findings</h2>
+            <h2>What it showed</h2>
             <p>
               The MUSE 2 could reliably distinguish between tasks and workload levels. Our classifiers predicted
               whether someone was doing chess puzzles, memory tasks, or other activities from EEG alone, suggesting

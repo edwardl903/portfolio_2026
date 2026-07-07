@@ -109,7 +109,7 @@ function Chess() {
                 </div>
                 <div className="photo-content">
                   <h4>Chess Club Community</h4>
-                  <p>More from weekly meetings. We genuinely had a lot of fun with this club.</p>
+                  <p>More from weekly meetings. We had a lot of fun with this club.</p>
                 </div>
               </div>
             </div>

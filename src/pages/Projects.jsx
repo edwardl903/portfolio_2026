@@ -83,7 +83,7 @@ const projects = [
   {
     id: 'fidelity',
     title: 'Fidelity User Behavior Analysis',
-    description: 'Led user behavior analysis for Fidelity PB Optimize to identify high-value features and surface actionable insights for product teams.',
+    description: 'User behavior analysis for Fidelity PB Optimize: SQL and Python on usage logs to show product and CS where people got stuck and which features moved retention.',
     tags: ['SQL', 'Python', 'Tableau', 'Analytics'],
     image: '/static/images/projects/etl-tools/etl-tools-project.jpg',
     links: [],

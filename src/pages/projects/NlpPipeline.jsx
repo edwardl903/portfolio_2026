@@ -55,8 +55,8 @@ function NlpPipeline() {
             <h2>What I actually built</h2>
             <p>
               End to end it is the usual ML story: clean text, vectorize, cross validate, tune hyperparameters, then
-              hold out a test set and stare at the confusion matrix until it makes sense. The interesting part is how
-              little the fancy model moved the headline number until the features changed. Literary and abstract authors
+              hold out a test set and stare at the confusion matrix until it makes sense. How little the fancy model
+              moved the headline number until the features changed is the real takeaway. Literary and abstract authors
               stayed the headache in both setups, which tells you the label is partly about style and not just word
               rarity.
             </p>
@@ -170,7 +170,7 @@ function NlpPipeline() {
             <h2>What stuck with me</h2>
             <p>
               Better features beat incremental model drama here. BERT did not blow the doors off on AUROC, but it
-              behaved more honestly on the test split. Both models kept tripping on the same kinds of passages, which is
+              behaved more honestly on the test split. Both models kept tripping on the same passages, which is
               a good reminder that metrics are only as clean as the definition of &quot;reading level&quot; you started
               with.
             </p>
