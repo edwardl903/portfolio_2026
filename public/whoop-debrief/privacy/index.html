@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — WHOOP Debrief</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f7f4;
+      --text-primary: #1c1917;
+      --text-secondary: #57534e;
+      --accent: #C4894F;
+      --border: #e7e5e4;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      padding: 4rem 1.5rem;
+    }
+
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      font-size: 0.875rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back:hover { text-decoration: underline; }
+
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
+    .footer-note {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back" href="https://edward-lai.com">edward-lai.com</a>
+
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">WHOOP Debrief &mdash; Last updated July 2026</p>
+
+    <h2>What this app is</h2>
+    <p>
+      WHOOP Debrief is a personal data pipeline built and used solely by Edward Lai.
+      It is not a product, service, or commercial application. There are no other users.
+    </p>
+
+    <h2>What data is collected</h2>
+    <p>
+      The app reads Edward's own WHOOP data via the WHOOP API: daily recovery scores,
+      sleep records, strain cycles, and workout summaries. No data from any other WHOOP
+      account is accessed or collected.
+    </p>
+
+    <h2>Where data goes</h2>
+    <p>
+      Fetched data is written to Edward's private Google BigQuery project. It is not
+      published, transmitted to any third party, or exposed publicly.
+    </p>
+
+    <h2>Data sharing and selling</h2>
+    <p>
+      No data is sold, shared, or disclosed to any third party. The pipeline runs on
+      GitHub Actions with secrets stored as encrypted environment variables.
+    </p>
+
+    <h2>Data retention</h2>
+    <p>
+      Data lives in a private BigQuery dataset and is retained at Edward's discretion.
+      There is no automatic deletion policy because there are no external users.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions? Reach out via the
+      <a href="https://edward-lai.com/#/contact">contact page</a> on this site.
+    </p>
+
+    <p class="footer-note">
+      This policy applies only to the WHOOP Debrief personal project.
+      It does not represent a commercial privacy policy.
+    </p>
+  </div>
+</body>
+</html>

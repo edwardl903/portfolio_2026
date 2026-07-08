@@ -162,3 +162,4 @@ Files: ChessV2.jsx, styles.css
 | 2026-07-05 | ChessLytics: replaced pipeline diagram with full INGEST/TRANSFORM/SERVE image; updated page copy + docs/projects/chesslytics.md to reflect shipped dbt, GitHub Actions cron, Matchup Analyzer, and Pulse |
 | 2026-07-05 | ChessLyticsDbt: cron corrected to 06:00 UTC (2am ET); added snap_dim_users; expanded daily pipeline section (two-job workflow, Pulse, Matchup Analyzer) |
 | 2026-07-07 | avoid-ai-writing audit: Fidelity card (actionable insights + high-value removed); Chess.jsx (genuinely removed); NlpPipeline (The interesting part rewritten); EEGResearch headers (Overview/My Role/Findings → specific) |
+| 2026-07-07 | Added static privacy policy page at public/whoop-debrief/privacy/index.html for WHOOP OAuth app registration; served at edward-lai.com/whoop-debrief/privacy |
