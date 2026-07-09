@@ -12,6 +12,7 @@ import Chess from './pages/hobbies/Chess'
 import ChessStats from './pages/hobbies/ChessStats'
 import Volleyball from './pages/hobbies/Volleyball'
 import Skateboarding from './pages/hobbies/Skateboarding'
+import Running from './pages/hobbies/Running'
 import ChessLytics from './pages/projects/ChessLytics'
 import ChessLyticsDbt from './pages/projects/ChessLyticsDbt'
 import SpotiFriend from './pages/projects/SpotiFriend'
@@ -39,6 +40,7 @@ function App() {
         <Route path="/hobbies/chess/more" element={<Chess />} />
         <Route path="/hobbies/volleyball" element={<Volleyball />} />
         <Route path="/hobbies/skateboarding" element={<Skateboarding />} />
+        <Route path="/hobbies/running" element={<Running />} />
         <Route path="/projects/chesslytics" element={<ChessLytics />} />
         <Route path="/projects/chesslytics-dbt" element={<ChessLyticsDbt />} />
         <Route path="/projects/chesslytics-azure" element={<Navigate to="/projects/chesslytics-dbt" replace />} />

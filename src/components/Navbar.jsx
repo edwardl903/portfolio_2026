@@ -72,6 +72,7 @@ function Navbar() {
                 <li><Link to="/hobbies/chess"        className={isActive('/hobbies/chess')        ? 'active' : ''}>Chess</Link></li>
                 <li><Link to="/hobbies/volleyball"   className={isActive('/hobbies/volleyball')   ? 'active' : ''}>Volleyball</Link></li>
                 <li><Link to="/hobbies/skateboarding"className={isActive('/hobbies/skateboarding')? 'active' : ''}>Skateboarding</Link></li>
+                <li><Link to="/hobbies/running"      className={isActive('/hobbies/running')      ? 'active' : ''}>Running</Link></li>
               </ul>
             </li>
             <li><Link to="/contact"   className={isActive('/contact')    ? 'active' : ''}>Contact</Link></li>
@@ -121,6 +122,7 @@ function Navbar() {
             <Link to="/hobbies/chess"        className={`mob-link sub${isActive('/hobbies/chess')        ? ' active' : ''}`} onClick={closeMenu}>Chess</Link>
             <Link to="/hobbies/volleyball"   className={`mob-link sub${isActive('/hobbies/volleyball')   ? ' active' : ''}`} onClick={closeMenu}>Volleyball</Link>
             <Link to="/hobbies/skateboarding"className={`mob-link sub${isActive('/hobbies/skateboarding')? ' active' : ''}`} onClick={closeMenu}>Skateboarding</Link>
+            <Link to="/hobbies/running"      className={`mob-link sub${isActive('/hobbies/running')      ? ' active' : ''}`} onClick={closeMenu}>Running</Link>
           </div>
 
           <Link to="/contact"   className={`mob-link${isActive('/contact')    ? ' active' : ''}`} onClick={closeMenu}>Contact</Link>
