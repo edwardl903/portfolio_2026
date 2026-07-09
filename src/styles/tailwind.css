@@ -1,0 +1,26 @@
+/* Tailwind v4 — utilities + theme only, NO preflight.
+   Preflight is deliberately excluded so Tailwind does not reset the existing
+   site (headings, lists, buttons in styles.css). We only want utility classes
+   available for newer components (e.g. the Running page). */
+@layer theme, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Map the site's existing design tokens (from base.css) into Tailwind's theme.
+   `inline` makes utilities emit var() references, so light/dark switching via
+   html[data-theme="dark"] keeps working automatically. */
+@theme inline {
+    --color-bg: var(--bg);
+    --color-surface: var(--bg-surface);
+    --color-subtle: var(--bg-subtle);
+    --color-ink: var(--text-primary);
+    --color-body: var(--text-secondary);
+    --color-muted: var(--text-muted);
+    --color-line: var(--border-color);
+    --color-accent: var(--accent);
+    --color-accent-dark: var(--accent-dark);
+
+    --font-heading: var(--font-heading);
+    --font-sans: var(--font-sans);
+}

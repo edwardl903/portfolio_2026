@@ -1,161 +1,12 @@
-/* Running gallery — scoped CSS Module
-   Class names are camelCase here, accessed as styles.className in JSX.
-   Global classes from base.css (--accent, --bg-surface etc.) still apply. */
+/* Running page — SVG + motion only.
+   Everything layout/color/spacing lives in Tailwind utilities in Running.jsx.
+   This file holds the things utilities express poorly: path-draw keyframes,
+   staggered entrances, and the custom scrollbar on the filmstrip. */
 
-/* ── Delta colour helpers ───────────────────────────────────────────────────── */
-.pos { color: #4ade80; }
-.neg { color: #f87171; }
-
-/* ── Summary stat pills ─────────────────────────────────────────────────────── */
-.statsRow {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin: 2rem 0 1.5rem;
-}
-
-.statPill {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.85rem 1.2rem;
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    min-width: 100px;
-    gap: 0.15rem;
-}
-
-.statPillAccent {
-    border-color: rgba(196, 137, 79, 0.3);
-    background: linear-gradient(135deg, var(--bg-surface) 55%, var(--accent-light));
-}
-
-.statVal {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.02em;
-    font-family: var(--font-heading);
-    line-height: 1;
-}
-
-.statLbl {
-    font-size: 0.66rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    white-space: nowrap;
-}
-
-/* ── Delta bar chart ────────────────────────────────────────────────────────── */
-.chartPanel {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 1rem 1rem 0.5rem;
-    margin-bottom: 1.75rem;
-}
-
-.chartLabel {
-    display: block;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-}
-
-.deltaChart {
-    width: 100%;
-    height: auto;
-    display: block;
-    overflow: visible;
-}
-
-.chartBar {
-    cursor: default;
-    transition: opacity 0.12s;
-}
-
-.chartBar:hover { opacity: 1 !important; }
-
-/* ── Grid ───────────────────────────────────────────────────────────────────── */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 2rem;
-    align-items: start;
-}
-
-/* ── Flip card ──────────────────────────────────────────────────────────────── */
-/* .card is the outer shell — border + perspective but no transform.
-   .cardInner is what flips. .cardFront + .cardBack are the two faces.         */
-.card {
-    height: 380px;
-    position: relative;
-    border-left: 3px solid var(--delta-border, transparent);
-    border-radius: 10px;
-    perspective: 1000px;
-    cursor: default;
-}
-
-.cardInner {
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.72s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 10px;
-}
-
-.flipped .cardInner {
-    transform: rotateY(180deg);
-}
-
-.cardFront,
-.cardBack {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    border-radius: 9px;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-}
-
-/* front ── route SVG fills the full face */
-.cardFront {
-    background: #0e0d0b;
-}
-
-/* back ── dark stats panel */
-.cardBack {
-    transform: rotateY(180deg);
-    background: #0d0c0a;
-    border-color: rgba(255, 255, 255, 0.08);
-    overflow-y: auto;
-}
-
-/* ── Route SVG ──────────────────────────────────────────────────────────────── */
-.routeSvg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    transition: filter 0.25s ease;
-}
-
-/* Glow intensifies briefly during flip */
-.card:focus-within .routeSvg,
-.cardGlow .routeSvg {
-    filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.5));
-}
-
-/* ── Route draw animation ───────────────────────────────────────────────────────
-   pathLength="1" normalises the path to unit length so we can animate from
-   dashoffset: 1 (fully hidden) to 0 (fully visible) for any path shape.
-   Changing <path key={routeKey}> remounts the DOM node, resetting dashoffset
-   to 1 from CSS, so the animation replays from scratch on each trigger.       */
+/* ── Route draw ──────────────────────────────────────────────────────────────
+   pathLength="1" normalises any path to unit length, so dashoffset 1→0 draws
+   the whole route regardless of its real length. Remounting <path key={...}>
+   resets dashoffset to 1 and replays the animation. */
 @keyframes drawRoute {
     from { stroke-dashoffset: 1; }
     to   { stroke-dashoffset: 0; }
@@ -167,261 +18,75 @@
 }
 
 .routeAnimate {
-    animation: drawRoute 4s cubic-bezier(0.25, 0, 0.4, 1) forwards;
+    animation: drawRoute 3.4s cubic-bezier(0.25, 0, 0.35, 1) forwards;
 }
 
-/* Replay after flip back — still slow, just not as slow as first draw */
 .routeReplay {
-    animation: drawRoute 2.5s cubic-bezier(0.25, 0, 0.4, 1) forwards;
+    animation: drawRoute 2s cubic-bezier(0.25, 0, 0.35, 1) forwards;
 }
 
-/* ── Back panel ─────────────────────────────────────────────────────────────── */
-.backInner {
-    padding: 1.1rem 1.15rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    height: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
+/* Slow ambient pulse for the start/finish markers */
+@keyframes markerPulse {
+    0%, 100% { opacity: 0.15; transform: scale(1); }
+    50%      { opacity: 0.35; transform: scale(1.25); }
 }
 
-.backHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 0.6rem;
-    flex-shrink: 0;
+.markerPulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: markerPulse 2.6s ease-in-out infinite;
 }
 
-.backDate {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: rgba(192, 186, 176, 0.7);
-    letter-spacing: 0.04em;
+/* ── Entrance ────────────────────────────────────────────────────────────────*/
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-.backName {
-    font-size: 0.72rem;
-    color: var(--accent);
-    text-align: right;
-    flex: 1;
-    margin-left: 0.5rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.fadeUp {
+    opacity: 0;
+    animation: fadeUp 0.7s cubic-bezier(0.2, 0, 0.2, 1) forwards;
 }
 
-/* ── Hero stat row ──────────────────────────────────────────────────────────── */
-.heroRow {
-    display: flex;
-    gap: 0;
-    margin-bottom: 0.75rem;
-    flex-shrink: 0;
-}
-
-.heroStat {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
-    padding: 0.5rem 0.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.03);
-    margin-right: 0.4rem;
-}
-
-.heroStat:last-child { margin-right: 0; }
-
-.heroVal {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #f0ece5;
-    font-family: var(--font-heading);
-    letter-spacing: -0.02em;
-    line-height: 1;
-}
-
-.heroUnit {
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: rgba(192, 186, 176, 0.5);
-}
-
-/* ── Divider ────────────────────────────────────────────────────────────────── */
-.divider {
-    border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    margin: 0.6rem 0;
-    flex-shrink: 0;
-}
-
-/* ── Section ────────────────────────────────────────────────────────────────── */
-.section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    flex-shrink: 0;
-}
-
-.sectionTitle {
-    font-size: 0.58rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(196, 137, 79, 0.7);
-}
-
-/* ── Recovery rail on back panel ────────────────────────────────────────────── */
-.recRailWrap {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.recRailLabel {
-    font-size: 0.65rem;
-    color: rgba(192, 186, 176, 0.45);
-    flex-shrink: 0;
-    width: 22px;
-    text-align: right;
-}
-
-.recRail {
-    flex: 1;
-    position: relative;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 2px;
-    overflow: visible;
-}
-
-.recFill {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    border-radius: 2px;
-}
-
-.recDot {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: rgba(192, 186, 176, 0.5);
-    border: 1.5px solid #0d0c0a;
-}
-
-.recDotPos { background: #4ade80; }
-.recDotNeg { background: #f87171; }
-
-.recVal {
-    position: absolute;
-    top: 11px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.6rem;
-    font-weight: 600;
-    color: rgba(192, 186, 176, 0.6);
-    white-space: nowrap;
-    pointer-events: none;
-}
-
-/* ── Recovery meta row ──────────────────────────────────────────────────────── */
-.recMeta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.68rem;
-}
-
-.recDelta {
-    font-weight: 700;
-}
-
-.recMetaItem {
-    color: rgba(192, 186, 176, 0.5);
-}
-
-.recMetaSep {
-    color: rgba(255, 255, 255, 0.12);
-}
-
-/* ── Signal grid ────────────────────────────────────────────────────────────── */
-.signalGrid {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.2rem 0.6rem;
-    align-items: baseline;
-}
-
-.signalLabel {
-    font-size: 0.66rem;
-    color: rgba(192, 186, 176, 0.45);
-    white-space: nowrap;
-}
-
-.signalVal {
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: #d8d0c5;
-    text-align: right;
-}
-
-/* ── Always-visible card footer (below flip container) ──────────────────────── */
-/* NOT used — we moved everything inside the flip faces.
-   Keeping this comment so it's clear this was a design decision. */
-
-/* ── State messages ─────────────────────────────────────────────────────────── */
-.stateMsg {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 2.5rem 0;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-.stateError { color: #f87171; }
+/* ── Spinner ─────────────────────────────────────────────────────────────────*/
+@keyframes spin { to { transform: rotate(360deg); } }
 
 .spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border-color);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: runSpin 0.7s linear infinite;
-    flex-shrink: 0;
+    animation: spin 0.7s linear infinite;
 }
 
-@keyframes runSpin { to { transform: rotate(360deg); } }
-
-/* ── Responsive ─────────────────────────────────────────────────────────────── */
-@media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
+/* ── Filmstrip scrollbar ─────────────────────────────────────────────────────*/
+.filmstrip {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
 }
 
-@media (max-width: 600px) {
-    .grid { grid-template-columns: 1fr; }
+.filmstrip::-webkit-scrollbar {
+    height: 6px;
+}
 
-    .statsRow {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+.filmstrip::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.filmstrip::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .routeAnimate,
+    .routeReplay,
+    .markerPulse,
+    .fadeUp,
+    .spinner {
+        animation: none !important;
     }
-
-    .card { height: 340px; }
-
-    /* On touch — show back by default, no flip */
-    .cardInner { transform: none !important; }
-    .cardBack {
-        transform: none;
-        position: static;
-        height: auto;
+    .routePath {
+        stroke-dashoffset: 0;
     }
-    .cardFront { display: none; }
+    .fadeUp {
+        opacity: 1;
+    }
 }
