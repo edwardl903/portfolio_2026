@@ -650,7 +650,7 @@ function Running() {
             <h2 className={styles.heroTitle}>Running</h2>
             <p className={styles.heroBody}>
               My sister got me into distance running in June 2026. I ran varsity track in high
-              school, but I was always a sprinter — 100m, 200m, never anything longer than
+              school, but I was always a sprinter: 55m, 300m, never anything longer than
               400m. Distance running was a completely different world. Since moving to Cambridge
               I have been running along the Charles River constantly, trying to get my 5K time
               down, joining run clubs, and even starting my own. I wear a WHOOP every day, so
