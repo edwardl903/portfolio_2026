@@ -37,6 +37,19 @@ const projects = [
     to: '/projects/chesslytics-dbt',
   },
   {
+    id: 'whoop-debrief',
+    title: 'WHOOP Debrief',
+    description:
+      'End-to-end personal health pipeline: WHOOP API + Strava ingested to BigQuery, transformed with dbt (incremental models, source freshness, CI tests), and served as static JSON to the portfolio running page. Every GPS route you see on the running page came through this pipeline.',
+    tags: ['Python', 'BigQuery', 'dbt', 'Strava API', 'WHOOP API', 'GitHub Actions', 'OAuth 2.0', 'GCP'],
+    image: '/static/images/projects/whoop-debrief/whoop-debrief-cover.jpg',
+    links: [
+      { label: 'Code', icon: 'fab fa-github', href: 'https://github.com/edwardl903/whoop-analytics' },
+      { label: 'dbt docs', icon: 'fas fa-book', href: 'https://edwardl903.github.io/whoop-debrief/#!/overview' },
+    ],
+    to: '/projects/whoop-debrief',
+  },
+  {
     id: 'spotifriend',
     title: 'SpotiFriend',
     description:

@@ -15,6 +15,7 @@ import Skateboarding from './pages/hobbies/Skateboarding'
 import Running from './pages/hobbies/Running'
 import ChessLytics from './pages/projects/ChessLytics'
 import ChessLyticsDbt from './pages/projects/ChessLyticsDbt'
+import WhoopDebrief from './pages/projects/WhoopDebrief'
 import SpotiFriend from './pages/projects/SpotiFriend'
 import NlpPipeline from './pages/projects/NlpPipeline'
 import MovieRecommendations from './pages/projects/MovieRecommendations'
@@ -44,6 +45,7 @@ function App() {
         <Route path="/projects/chesslytics" element={<ChessLytics />} />
         <Route path="/projects/chesslytics-dbt" element={<ChessLyticsDbt />} />
         <Route path="/projects/chesslytics-azure" element={<Navigate to="/projects/chesslytics-dbt" replace />} />
+        <Route path="/projects/whoop-debrief" element={<WhoopDebrief />} />
         <Route path="/projects/spotifriend" element={<SpotiFriend />} />
         <Route path="/projects/nlp-pipeline" element={<NlpPipeline />} />
         <Route path="/projects/movie-recommendations" element={<MovieRecommendations />} />

@@ -632,8 +632,15 @@ function Running() {
     <div className={styles.page}>
       <div className="container">
         <div className={styles.hero}>
+          <div style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: 'url(/running-cover.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            opacity: 0.28,
+          }} />
           {bounds && runs.length > 0 && (
-            <div style={{ position: 'absolute', inset: 0, opacity: 0.7 }}>
+            <div style={{ position: 'absolute', inset: 0, opacity: 0.5 }}>
               <AllRoutesBackdrop runs={runs} bounds={bounds} />
               <div className={styles.heroBackdrop} />
             </div>
