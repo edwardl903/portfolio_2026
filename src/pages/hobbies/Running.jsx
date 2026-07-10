@@ -60,10 +60,23 @@ function fmtDate(raw, opts = { month: 'short', day: 'numeric', year: 'numeric' }
   return isNaN(d) ? raw : d.toLocaleDateString('en-US', opts)
 }
 
-function fmtPace(val) {
+const KM_TO_MI = 0.621371
+const MI_PACE_FACTOR = 1.60934  // multiply min/km to get min/mile
+
+function kmToUnit(km, unit) {
+  return unit === 'mi' ? km * KM_TO_MI : km
+}
+
+function fmtDist(km, unit) {
+  if (km == null || km <= 0) return null
+  return kmToUnit(km, unit).toFixed(2)
+}
+
+function fmtPace(val, unit = 'km') {
   if (val == null) return null
-  const m = Math.floor(val)
-  const s = Math.round((val - m) * 60)
+  const converted = unit === 'mi' ? val * MI_PACE_FACTOR : val
+  const m = Math.floor(converted)
+  const s = Math.round((converted - m) * 60)
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
@@ -78,10 +91,18 @@ function fmtTime(val) {
 
 function useCountUp(target, duration = 1400) {
   const [val, setVal] = useState(0)
+  const hasAnimated = useRef(false)
+
   useEffect(() => {
     if (target == null) return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    if (reduce) { setVal(target); return }
+    // Only run the count-up animation on the very first value arrival.
+    // Unit switches (or any later updates) snap instantly so there's no re-count glitch.
+    if (reduce || hasAnimated.current) {
+      setVal(target)
+      return
+    }
+    hasAnimated.current = true
     let raf, start
     const step = t => {
       if (!start) start = t
@@ -100,6 +121,12 @@ function Counter({ value, decimals = 0, prefix = '', suffix = '' }) {
   const v = useCountUp(value)
   const shown = value == null ? '--' : `${prefix}${v.toFixed(decimals)}${suffix}`
   return <span>{shown}</span>
+}
+
+// Wraps any value that changes on unit switch with a quick fade-in.
+// Using key= causes React to remount the span, triggering the CSS animation.
+function UnitFade({ watchKey, children }) {
+  return <span key={watchKey} className={styles.unitFade}>{children}</span>
 }
 
 function AllRoutesBackdrop({ runs, bounds }) {
@@ -354,7 +381,7 @@ function SleepPanel({ run }) {
 }
 
 // ── Stage with tabs ───────────────────────────────────────────────────────────
-function Stage({ run }) {
+function Stage({ run, badge, idx, total, onPrev, onNext, unit = 'km' }) {
   const [tab, setTab] = useState('run')
 
   // Reset to run tab when run changes
@@ -369,8 +396,17 @@ function Stage({ run }) {
       <div className={styles.stageMap}>
         <StageRoute run={run} />
         <div className={styles.mapOverlayTop}>
-          <p className={styles.runTitle}>{run.run_name || 'Run'}</p>
-          <p className={styles.runDate}>{fmtDate(run.run_date)}</p>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
+            <div>
+              <p className={styles.runTitle}>{run.run_name || 'Run'}</p>
+              <p className={styles.runDate}>{fmtDate(run.run_date)}</p>
+            </div>
+            {badge && (
+              <span className={styles.runBadge} style={{ background: `${badge.color}22`, color: badge.color, borderColor: `${badge.color}44` }}>
+                {badge.label}
+              </span>
+            )}
+          </div>
         </div>
         <div className={styles.mapOverlayBottom}>
           <span className={`${styles.runLegend} ${styles.legendItem}`}>
@@ -380,15 +416,33 @@ function Stage({ run }) {
             <span style={{ height: 8, width: 8, borderRadius: '50%', background: ORANGE, display: 'inline-block' }} /> Finish
           </span>
         </div>
+        {/* Prev / Next arrows overlaid on the map */}
+        {onPrev && (
+          <button className={styles.mapNavBtn} style={{ left: '0.5rem' }}
+            onClick={onPrev} aria-label="Previous run" type="button">
+            <i className="fas fa-chevron-left" aria-hidden="true" />
+          </button>
+        )}
+        {onNext && (
+          <button className={styles.mapNavBtn} style={{ right: '0.5rem' }}
+            onClick={onNext} aria-label="Next run" type="button">
+            <i className="fas fa-chevron-right" aria-hidden="true" />
+          </button>
+        )}
       </div>
 
       {/* Right: tabbed telemetry */}
       <div className={styles.stageTelemetry}>
-        {/* Top stats always visible */}
-        <div className={styles.stageStats}>
-          <BigStat value={run.distance_km > 0 ? run.distance_km.toFixed(2) : '--'} unit="km" />
-          <BigStat value={fmtPace(run.pace_min_per_km) ?? '--'} unit="min/km" />
-          <BigStat value={fmtTime(run.moving_time_min) ?? '--'} unit="moving" />
+        {/* Top stats + position counter */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+          <div className={styles.stageStats}>
+            <BigStat value={<UnitFade watchKey={unit}>{fmtDist(run.distance_km, unit) ?? '--'}</UnitFade>} unit={unit} />
+            <BigStat value={<UnitFade watchKey={unit}>{fmtPace(run.pace_min_per_km, unit) ?? '--'}</UnitFade>} unit={`min/${unit}`} />
+            <BigStat value={fmtTime(run.moving_time_min) ?? '--'} unit="moving" />
+          </div>
+          {total != null && (
+            <span className={styles.stageCounter}>{idx + 1} / {total}</span>
+          )}
         </div>
 
         <div className={styles.divider} />
@@ -436,7 +490,7 @@ function BigStat({ value, unit }) {
   )
 }
 
-function RecoveryScatter({ runs, selectedId, onSelect }) {
+function RecoveryScatter({ runs, selectedId, onSelect, unit = 'km' }) {
   const W = 720, H = 320
   const ML = 44, MR = 20, MT = 24, MB = 40
   const CW = W - ML - MR, CH = H - MT - MB
@@ -505,7 +559,7 @@ function RecoveryScatter({ runs, selectedId, onSelect }) {
                 fill="var(--run-tooltip-bg)" stroke="var(--run-border)" />
               <text x={tx} y={ty + 14} textAnchor="middle" fontSize="9"
                 fill="var(--run-tooltip-text)" fontFamily="system-ui">
-                {fmtDate(hover.r.run_date, { month: 'short', day: 'numeric' })} · {hover.r.distance_km?.toFixed(1)} km
+                {fmtDate(hover.r.run_date, { month: 'short', day: 'numeric' })} · {kmToUnit(hover.r.distance_km ?? 0, unit).toFixed(1)} {unit}
               </text>
               <text x={tx} y={ty + 28} textAnchor="middle" fontSize="10" fontWeight="700"
                 fill={pos ? GREEN : RED} fontFamily="system-ui">
@@ -589,6 +643,7 @@ function Running() {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
+  const [unit, setUnit] = useState('km')
 
   useEffect(() => {
     fetch(DATA_URL)
@@ -623,10 +678,48 @@ function Running() {
   const avgDelta = deltaRuns.length ? deltaRuns.reduce((s, r) => s + r.recovery_delta, 0) / deltaRuns.length : null
   const helpRate = deltaRuns.length ? (deltaRuns.filter(r => r.recovery_delta > 0).length / deltaRuns.length) * 100 : null
 
-  const onSelect = useCallback(id => {
+  const selectedIdx = runs.findIndex(r => r.run_id === selectedId)
+
+  const goTo = useCallback(idx => {
+    if (idx < 0 || idx >= runs.length) return
+    setSelectedId(runs[idx].run_id)
+  }, [runs])
+
+  // Filmstrip click: select + scroll to stage
+  const onSelectScroll = useCallback(id => {
     setSelectedId(id)
-    document.getElementById('run-stage')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    document.getElementById('run-stage')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }, [])
+
+  // Scatter click: select only, no scroll (user is already looking at scatter)
+  const onSelectQuiet = useCallback(id => {
+    setSelectedId(id)
+  }, [])
+
+  // Keyboard ← / → to step through runs
+  useEffect(() => {
+    const handler = e => {
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(selectedIdx - 1) }
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(selectedIdx + 1) }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [selectedIdx, goTo])
+
+  // Personal best badge for the selected run
+  const badge = useMemo(() => {
+    if (!selected || runs.length < 2) return null
+    const paceRuns = runs.filter(r => r.pace_min_per_km != null && r.distance_km > 0)
+    const bestPace = paceRuns.length ? Math.min(...paceRuns.map(r => r.pace_min_per_km)) : null
+    const longestDist = Math.max(...runs.map(r => r.distance_km || 0))
+    const validDelta = runs.filter(r => r.recovery_delta != null)
+    const bestDelta = validDelta.length ? Math.max(...validDelta.map(r => r.recovery_delta)) : null
+    if (bestPace != null && selected.pace_min_per_km === bestPace) return { label: 'PR Pace', color: ORANGE }
+    if (selected.distance_km === longestDist && longestDist > 0)   return { label: 'Longest Run', color: BLUE }
+    if (bestDelta != null && selected.recovery_delta === bestDelta) return { label: 'Best Recovery', color: GREEN }
+    return null
+  }, [selected, runs])
 
   return (
     <div className={styles.page}>
@@ -661,13 +754,27 @@ function Running() {
             {runs.length > 0 && (
               <div className={styles.heroStats}>
                 <HeroStat label="runs mapped"><Counter value={runs.length} /></HeroStat>
-                <HeroStat label="total km"><Counter value={totalDist} decimals={1} /></HeroStat>
+                <HeroStat label={`total ${unit}`}>
+                  <UnitFade watchKey={unit}><Counter value={kmToUnit(totalDist, unit)} decimals={1} /></UnitFade>
+                </HeroStat>
                 <HeroStat label="avg pace">
-                  {avgPace ? <>{fmtPace(avgPace)}<span style={{ fontSize: '1rem' }}> /km</span></> : '--'}
+                  <UnitFade watchKey={unit}>
+                    {avgPace ? <>{fmtPace(avgPace, unit)}<span style={{ fontSize: '1rem' }}> /{unit}</span></> : '--'}
+                  </UnitFade>
                 </HeroStat>
                 <HeroStat label="runs that helped recovery">
                   <Counter value={helpRate} decimals={0} suffix="%" />
                 </HeroStat>
+                <button
+                  className={styles.unitToggle}
+                  onClick={() => setUnit(u => u === 'km' ? 'mi' : 'km')}
+                  aria-label={`Switch to ${unit === 'km' ? 'miles' : 'kilometers'}`}
+                  type="button"
+                >
+                  <span className={unit === 'km' ? styles.unitActive : styles.unitInactive}>km</span>
+                  <span className={styles.unitSep}>/</span>
+                  <span className={unit === 'mi' ? styles.unitActive : styles.unitInactive}>mi</span>
+                </button>
               </div>
             )}
           </div>
@@ -692,7 +799,18 @@ function Running() {
         {!error && selected && (
           <div className={styles.contentStack}>
             <div id="run-stage" className={styles.fadeUp} style={{ scrollMarginTop: '120px' }}>
-              <Stage run={selected} />
+              <Stage
+                run={selected}
+                badge={badge}
+                idx={selectedIdx}
+                total={runs.length}
+                unit={unit}
+                onPrev={selectedIdx > 0 ? () => goTo(selectedIdx - 1) : null}
+                onNext={selectedIdx < runs.length - 1 ? () => goTo(selectedIdx + 1) : null}
+              />
+              <p className={styles.keyHint}>
+                <kbd>←</kbd> <kbd>→</kbd> to step through runs
+              </p>
             </div>
 
             <div>
@@ -706,7 +824,7 @@ function Running() {
                   const delta = run.recovery_delta
                   const edge = delta == null ? 'transparent' : delta >= 0 ? GREEN : RED
                   return (
-                    <button key={run.run_id} onClick={() => onSelect(run.run_id)}
+                    <button key={run.run_id} onClick={() => onSelectScroll(run.run_id)}
                       className={`${styles.filmstripCard} ${active ? styles.filmstripCardActive : ''}`}
                       style={{ borderTopColor: edge }}
                       aria-label={`${fmtDate(run.run_date)}, ${run.distance_km?.toFixed(2)} km`}
@@ -719,7 +837,7 @@ function Running() {
                           {fmtDate(run.run_date, { month: 'short', day: 'numeric' })}
                         </div>
                         <div className={styles.filmstripDist}>
-                          {run.distance_km > 0 ? `${run.distance_km.toFixed(1)} km` : 'indoor'}
+                          {run.distance_km > 0 ? `${kmToUnit(run.distance_km, unit).toFixed(1)} ${unit}` : 'indoor'}
                         </div>
                       </div>
                     </button>
@@ -729,7 +847,7 @@ function Running() {
             </div>
 
             <PhotoStrip />
-            <RecoveryScatter runs={runs} selectedId={selectedId} onSelect={onSelect} />
+            <RecoveryScatter runs={runs} selectedId={selectedId} onSelect={onSelectQuiet} unit={unit} />
 
             {avgDelta != null && (
               <p className={styles.takeaway}>

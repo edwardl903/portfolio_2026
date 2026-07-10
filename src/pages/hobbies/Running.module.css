@@ -186,6 +186,126 @@ html[data-theme="dark"] .page {
   gap: 0.5rem;
 }
 
+/* position counter: "3 / 14" */
+.stageCounter {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--run-text-muted);
+  white-space: nowrap;
+  padding-top: 0.15rem;
+}
+
+/* prev / next arrows overlaid on the map panel */
+.mapNavBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 1px solid var(--run-border);
+  background: var(--run-overlay);
+  color: var(--run-text);
+  font-size: 0.75rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.18s ease, background 0.18s ease;
+}
+
+.stageMap:hover .mapNavBtn {
+  opacity: 1;
+}
+
+.mapNavBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* personal best / longest / recovery badge */
+.runBadge {
+  flex-shrink: 0;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+}
+
+/* unit switch fade-in — applied via key= remount trick */
+.unitFade {
+  display: inline-block;
+  animation: unitSwap 0.2s ease both;
+}
+
+@keyframes unitSwap {
+  from { opacity: 0.2; transform: translateY(3px); }
+  to   { opacity: 1;   transform: translateY(0); }
+}
+
+/* km / mi unit toggle in hero stats */
+.unitToggle {
+  align-self: flex-end;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  background: var(--run-surface);
+  border: 1px solid var(--run-border);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: border-color 0.15s;
+}
+
+.unitToggle:hover {
+  border-color: var(--run-border-hover);
+}
+
+.unitActive {
+  color: var(--run-text);
+}
+
+.unitInactive {
+  color: var(--run-text-faint);
+}
+
+.unitSep {
+  color: var(--run-text-dim);
+  margin: 0 0.05rem;
+}
+
+/* keyboard hint below stage */
+.keyHint {
+  margin: 0.4rem 0 0;
+  text-align: center;
+  font-size: 0.65rem;
+  color: var(--run-text-faint);
+  font-family: var(--font-sans);
+}
+
+.keyHint kbd {
+  display: inline-block;
+  padding: 0.05rem 0.3rem;
+  border-radius: 3px;
+  border: 1px solid var(--run-border);
+  background: var(--run-surface);
+  font-size: 0.6rem;
+  font-family: var(--font-sans);
+  color: var(--run-text-muted);
+}
+
 .bigStatValue {
   font-family: var(--font-sans);
   font-size: 1.35rem;
