@@ -558,9 +558,19 @@ function PipelineFooter({ generatedAt }) {
           recovery scores, and the result auto-commits here as static JSON. No backend, no server
           cost, fully automated.
         </p>
-        <Link to="/projects" className="cv2-pipeline-link">
-          View the project <i className="fas fa-arrow-right" aria-hidden="true" />
-        </Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <Link to="/projects" className="cv2-pipeline-link">
+            View the project <i className="fas fa-arrow-right" aria-hidden="true" />
+          </Link>
+          <a
+            href="https://edwardl903.github.io/whoop-debrief/#!/overview"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cv2-pipeline-link"
+          >
+            dbt docs <i className="fas fa-arrow-right" aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -632,11 +642,14 @@ function Running() {
             <p className={styles.heroEyebrow}>Strava × WHOOP</p>
             <h2 className={styles.heroTitle}>Running</h2>
             <p className={styles.heroBody}>
-              I started running seriously in 2024, joined a run club, and somehow ended up
-              waking up at 6am for long runs. I wear a WHOOP every day, so naturally I started
-              wondering whether running was actually helping my recovery or just beating me up.
-              Every route here is real GPS from Strava, joined to WHOOP recovery scores the
-              next morning, via BigQuery and dbt. Pick a run to find out.
+              My sister got me into distance running in June 2026. I ran varsity track in high
+              school, but I was always a sprinter — 100m, 200m, never anything longer than
+              400m. Distance running was a completely different world. Since moving to Cambridge
+              I have been running along the Charles River constantly, trying to get my 5K time
+              down, joining run clubs, and even starting my own. I wear a WHOOP every day, so
+              naturally I started tracking whether the runs were helping my recovery or just
+              wrecking me. Every route here is real GPS from Strava, joined to WHOOP recovery
+              the next morning via BigQuery and dbt. My running journey, with data.
             </p>
             {runs.length > 0 && (
               <div className={styles.heroStats}>
