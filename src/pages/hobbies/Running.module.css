@@ -100,19 +100,20 @@ html[data-theme="dark"] .page {
 }
 
 .heroTitle {
-  margin: 0 0 1rem;
+  margin: 0 0 0.85rem;
   font-family: var(--font-heading);
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.1;
   color: var(--run-text);
 }
 
 .heroBody {
-  margin: 0 0 2.5rem;
-  font-size: 1rem;
-  line-height: 1.65;
+  margin: 0 0 2rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
   color: var(--run-text-body);
+  max-width: 520px;
 }
 
 .heroStats {
@@ -122,19 +123,22 @@ html[data-theme="dark"] .page {
 }
 
 .statValue {
-  font-family: var(--font-heading);
-  font-size: 2.25rem;
+  font-family: var(--font-sans);
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1;
   color: var(--run-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .statLabel {
-  margin-top: 0.4rem;
-  font-size: 0.7rem;
+  margin-top: 0.35rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.06em;
   color: var(--run-text-muted);
+  font-family: var(--font-sans);
 }
 
 .card {
@@ -172,30 +176,33 @@ html[data-theme="dark"] .page {
 .stageTelemetry {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding: 1.5rem;
+  gap: 1rem;
+  padding: 1.25rem;
 }
 
 .stageStats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .bigStatValue {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-family: var(--font-sans);
+  font-size: 1.35rem;
   font-weight: 700;
   line-height: 1;
   color: var(--run-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 .bigStatUnit {
-  margin-top: 0.25rem;
-  font-size: 0.6rem;
+  margin-top: 0.2rem;
+  font-size: 0.58rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   color: var(--run-text-muted);
+  font-family: var(--font-sans);
 }
 
 .divider {
@@ -595,6 +602,166 @@ html[data-theme="dark"] .page {
   }
 }
 
+/* ── Telemetry tabs ─────────────────────────────────────────────────────────── */
+@keyframes tabFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tabContent {
+  animation: tabFade 0.18s ease forwards;
+}
+
+.tabBar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--run-divider);
+  margin-bottom: 1rem;
+}
+
+.tab {
+  padding: 0.38rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-family: var(--font-sans);
+  color: var(--run-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+}
+
+.tab:hover {
+  color: var(--run-text-strong);
+}
+
+.tabActive {
+  color: var(--run-text);
+  border-bottom-color: var(--accent);
+}
+
+/* ── Sleep panel ─────────────────────────────────────────────────────────── */
+.sleepPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sleepHoursRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sleepHoursLabel {
+  font-size: 0.68rem;
+  color: var(--run-text-muted);
+  white-space: nowrap;
+}
+
+.sleepHoursNumber {
+  font-family: var(--font-sans);
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--run-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.sleepHoursUnit {
+  font-size: 0.75rem;
+  color: var(--run-text-muted);
+  margin-left: 0.2rem;
+}
+
+.sleepBarTrack {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--run-track);
+  overflow: hidden;
+}
+
+.sleepBarFill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(to right, #818cf8, #60a5fa);
+  transition: width 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.sleepQualityBadge {
+  display: inline-block;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(129, 140, 248, 0.15);
+  color: #a5b4fc;
+  border: 1px solid rgba(129, 140, 248, 0.25);
+}
+
+.sleepMetricGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.sleepMetricCard {
+  background: var(--run-track);
+  border-radius: 0.6rem;
+  padding: 0.75rem;
+}
+
+.sleepMetricCardLabel {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--run-text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.sleepMetricCardValue {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  color: var(--run-text);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.sleepMetricCardSub {
+  font-size: 0.6rem;
+  color: var(--run-text-muted);
+  margin-top: 0.2rem;
+}
+
+.sleepEmpty {
+  font-size: 0.875rem;
+  color: var(--run-text-muted);
+  padding: 1rem 0;
+}
+
+.hrvArrow {
+  font-size: 0.7rem;
+  margin: 0 0.2rem;
+  color: var(--run-text-muted);
+}
+
+/* ── Run signals (condensed 2-col in run tab) ────────────────────────────── */
+.signalGrid2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1.5rem;
+}
+
 @media (max-width: 720px) {
   .hero {
     padding: 2rem 1.5rem;
@@ -610,5 +777,13 @@ html[data-theme="dark"] .page {
 
   .photoCardOffset {
     margin-top: 0;
+  }
+
+  .sleepMetricGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .signalGrid2col {
+    grid-template-columns: 1fr;
   }
 }

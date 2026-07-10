@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Running.module.css'
 
@@ -238,9 +238,134 @@ function Signal({ label, value }) {
   )
 }
 
+// ── Sleep quality colour helper ───────────────────────────────────────────────
+function sleepQualityColor(q) {
+  if (!q) return '#818cf8'
+  const s = q.toLowerCase()
+  if (s.includes('excellent') || s.includes('great')) return '#4ade80'
+  if (s.includes('good')) return '#60a5fa'
+  if (s.includes('fair') || s.includes('okay')) return '#f97316'
+  return '#f87171'
+}
+
+// ── Sleep panel ───────────────────────────────────────────────────────────────
+function SleepPanel({ run }) {
+  const hours = run.next_day_sleep_hours != null ? Number(run.next_day_sleep_hours) : null
+  const perf  = run.next_day_sleep_performance != null ? Math.round(run.next_day_sleep_performance) : null
+  const qual  = run.next_day_sleep_quality ?? null
+  const hrv1  = run.same_day_hrv != null ? Math.round(run.same_day_hrv) : null
+  const hrv2  = run.next_day_hrv != null ? Math.round(run.next_day_hrv) : null
+  const rhr   = run.next_day_resting_hr != null ? Math.round(run.next_day_resting_hr) : null
+
+  if (hours == null && perf == null) {
+    return <p className={styles.sleepEmpty}>No sleep data linked to this run.</p>
+  }
+
+  const MAX_SLEEP = 9
+  const barPct = hours != null ? Math.min(hours / MAX_SLEEP, 1) * 100 : 0
+  const hrvDelta = hrv1 != null && hrv2 != null ? hrv2 - hrv1 : null
+  const qColor = sleepQualityColor(qual)
+
+  return (
+    <div className={styles.sleepPanel}>
+      {/* Hours + bar */}
+      {hours != null && (
+        <div>
+          <div className={styles.sleepHoursRow}>
+            <div>
+              <span className={styles.sleepHoursNumber}>{hours.toFixed(1)}</span>
+              <span className={styles.sleepHoursUnit}>hrs</span>
+            </div>
+            {qual && (
+              <span className={styles.sleepQualityBadge} style={{
+                background: `${qColor}22`, color: qColor, borderColor: `${qColor}44`,
+              }}>{qual}</span>
+            )}
+          </div>
+          <div className={styles.sleepBarTrack} style={{ marginTop: '0.6rem' }}>
+            <div className={styles.sleepBarFill} style={{ width: `${barPct}%` }} />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.3rem' }}>
+            <span className={styles.sleepHoursLabel}>0 hrs</span>
+            <span className={styles.sleepHoursLabel}>9 hrs target</span>
+          </div>
+        </div>
+      )}
+
+      {/* Metric cards */}
+      <div className={styles.sleepMetricGrid}>
+        {perf != null && (
+          <div className={styles.sleepMetricCard}>
+            <div className={styles.sleepMetricCardLabel}>Sleep perf.</div>
+            <div className={styles.sleepMetricCardValue} style={{ color: perf >= 85 ? GREEN : perf >= 70 ? ORANGE : RED }}>
+              {perf}%
+            </div>
+            <div className={styles.sleepMetricCardSub}>next morning</div>
+          </div>
+        )}
+        {rhr != null && (
+          <div className={styles.sleepMetricCard}>
+            <div className={styles.sleepMetricCardLabel}>Resting HR</div>
+            <div className={styles.sleepMetricCardValue}>{rhr} <span style={{ fontSize: '0.7rem', fontWeight: 400 }}>bpm</span></div>
+            <div className={styles.sleepMetricCardSub}>next morning</div>
+          </div>
+        )}
+        {hrv1 != null && hrv2 != null && (
+          <div className={styles.sleepMetricCard} style={{ gridColumn: hrv1 != null && hrv2 != null && perf == null && rhr == null ? 'span 2' : undefined }}>
+            <div className={styles.sleepMetricCardLabel}>HRV</div>
+            <div className={styles.sleepMetricCardValue} style={{ fontSize: '0.95rem' }}>
+              {hrv1}
+              <span className={styles.hrvArrow}>→</span>
+              <span style={{ color: hrvDelta >= 0 ? GREEN : RED }}>{hrv2}</span>
+              <span style={{ fontSize: '0.6rem', fontWeight: 400, color: 'var(--run-text-muted)', marginLeft: '0.2rem' }}>ms</span>
+            </div>
+            <div className={styles.sleepMetricCardSub} style={{ color: hrvDelta >= 0 ? GREEN : RED }}>
+              {hrvDelta >= 0 ? '+' : ''}{hrvDelta} ms overnight
+            </div>
+          </div>
+        )}
+        {run.same_day_recovery != null && run.next_day_recovery != null && (
+          <div className={styles.sleepMetricCard}>
+            <div className={styles.sleepMetricCardLabel}>Recovery</div>
+            <div className={styles.sleepMetricCardValue} style={{ fontSize: '0.95rem' }}>
+              {Math.round(run.same_day_recovery)}
+              <span className={styles.hrvArrow}>→</span>
+              <span style={{ color: run.next_day_recovery > run.same_day_recovery ? GREEN : RED }}>
+                {Math.round(run.next_day_recovery)}
+              </span>
+            </div>
+            <div className={styles.sleepMetricCardSub}>before → after</div>
+          </div>
+        )}
+      </div>
+
+      {/* Narrative */}
+      {perf != null && hours != null && (
+        <p style={{ fontSize: '0.7rem', color: 'var(--run-text-muted)', margin: 0 }}>
+          {perf >= 85 && hours >= 7
+            ? 'Strong sleep night after this run — body absorbed it well.'
+            : perf < 70 || hours < 6
+            ? 'Tough night after this run. Harder efforts can compress recovery sleep.'
+            : 'Solid sleep night, though there is room for more rest.'}
+        </p>
+      )}
+    </div>
+  )
+}
+
+// ── Stage with tabs ───────────────────────────────────────────────────────────
 function Stage({ run }) {
+  const [tab, setTab] = useState('run')
+
+  // Reset to run tab when run changes
+  const prevId = useRef(run.run_id)
+  useEffect(() => {
+    if (prevId.current !== run.run_id) { setTab('run'); prevId.current = run.run_id }
+  }, [run.run_id])
+
   return (
     <div className={`${styles.card} ${styles.stage}`}>
+      {/* Left: route map */}
       <div className={styles.stageMap}>
         <StageRoute run={run} />
         <div className={styles.mapOverlayTop}>
@@ -257,7 +382,9 @@ function Stage({ run }) {
         </div>
       </div>
 
+      {/* Right: tabbed telemetry */}
       <div className={styles.stageTelemetry}>
+        {/* Top stats always visible */}
         <div className={styles.stageStats}>
           <BigStat value={run.distance_km > 0 ? run.distance_km.toFixed(2) : '--'} unit="km" />
           <BigStat value={fmtPace(run.pace_min_per_km) ?? '--'} unit="min/km" />
@@ -265,23 +392,35 @@ function Stage({ run }) {
         </div>
 
         <div className={styles.divider} />
-        <RecoveryMeter before={run.same_day_recovery} after={run.next_day_recovery} />
-        <div className={styles.divider} />
 
-        <div>
-          <span className={styles.eyebrow}>Signals</span>
-          <div className={styles.signalGrid}>
-            <Signal label="Avg HR" value={run.run_avg_hr != null ? `${Math.round(run.run_avg_hr)} bpm` : null} />
-            <Signal label="Max HR" value={run.run_max_hr != null ? `${Math.round(run.run_max_hr)} bpm` : null} />
-            <Signal label="Cadence" value={run.average_cadence != null ? `${Math.round(run.average_cadence)} spm` : null} />
-            <Signal label="Elevation" value={run.total_elevation_gain_meter != null ? `${Math.round(run.total_elevation_gain_meter)} m` : null} />
-            <Signal label="Strain" value={run.same_day_strain != null ? Number(run.same_day_strain).toFixed(1) : null} />
-            <Signal label="Suffer" value={run.suffer_score != null ? run.suffer_score : null} />
-            <Signal label="HRV" value={run.same_day_hrv != null && run.next_day_hrv != null ? `${Math.round(run.same_day_hrv)} → ${Math.round(run.next_day_hrv)} ms` : null} />
-            <Signal label="Resting HR" value={run.next_day_resting_hr != null ? `${Math.round(run.next_day_resting_hr)} bpm` : null} />
-            <Signal label="Sleep" value={run.next_day_sleep_hours != null ? `${Number(run.next_day_sleep_hours).toFixed(1)} hrs` : null} />
-            <Signal label="Sleep perf." value={run.next_day_sleep_performance != null ? `${Math.round(run.next_day_sleep_performance)}%` : null} />
-          </div>
+        {/* Tab bar */}
+        <div className={styles.tabBar}>
+          {[['run', 'Run'], ['recovery', 'Recovery'], ['sleep', 'Sleep']].map(([id, label]) => (
+            <button key={id} className={`${styles.tab} ${tab === id ? styles.tabActive : ''}`}
+              onClick={() => setTab(id)} type="button">
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Tab content */}
+        <div key={tab} className={styles.tabContent}>
+          {tab === 'run' && (
+            <div className={styles.signalGrid2col}>
+              <Signal label="Avg HR"    value={run.run_avg_hr != null ? `${Math.round(run.run_avg_hr)} bpm` : null} />
+              <Signal label="Max HR"    value={run.run_max_hr != null ? `${Math.round(run.run_max_hr)} bpm` : null} />
+              <Signal label="Cadence"   value={run.average_cadence != null ? `${Math.round(run.average_cadence)} spm` : null} />
+              <Signal label="Elevation" value={run.total_elevation_gain_meter != null ? `${Math.round(run.total_elevation_gain_meter)} m` : null} />
+              <Signal label="Strain"    value={run.same_day_strain != null ? Number(run.same_day_strain).toFixed(1) : null} />
+              <Signal label="Suffer"    value={run.suffer_score != null ? String(run.suffer_score) : null} />
+            </div>
+          )}
+          {tab === 'recovery' && (
+            <RecoveryMeter before={run.same_day_recovery} after={run.next_day_recovery} />
+          )}
+          {tab === 'sleep' && (
+            <SleepPanel run={run} />
+          )}
         </div>
       </div>
     </div>
@@ -493,9 +632,11 @@ function Running() {
             <p className={styles.heroEyebrow}>Strava × WHOOP</p>
             <h2 className={styles.heroTitle}>Running</h2>
             <p className={styles.heroBody}>
-              Every route I have run, joined to my WHOOP recovery data. The question I kept asking:
-              does a hard run actually set me back, or does my body bounce back stronger? Pick any
-              run below and watch it draw, or scan the scatter to see the pattern.
+              I started running seriously in 2024, joined a run club, and somehow ended up
+              waking up at 6am for long runs. I wear a WHOOP every day, so naturally I started
+              wondering whether running was actually helping my recovery or just beating me up.
+              Every route here is real GPS from Strava, joined to WHOOP recovery scores the
+              next morning, via BigQuery and dbt. Pick a run to find out.
             </p>
             {runs.length > 0 && (
               <div className={styles.heroStats}>
