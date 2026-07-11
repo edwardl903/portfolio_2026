@@ -1,6 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
-import { flushSync } from 'react-dom'
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -28,33 +26,10 @@ import EEGResearch from './pages/projects/EEGResearch'
 import Analytics from './pages/Analytics'
 import './styles.css'
 
-function AppRoutes() {
-  const location = useLocation()
-  const [displayLocation, setDisplayLocation] = useState(location)
-  const lastPath = useRef(location.pathname)
-
-  useEffect(() => {
-    if (location === displayLocation) return
-
-    // Only cross-fade on a real path change, not hash/search-only updates.
-    const samePath = location.pathname === lastPath.current
-    lastPath.current = location.pathname
-
-    const prefersReduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    const startViewTransition = document.startViewTransition?.bind(document)
-
-    if (samePath || prefersReduced || !startViewTransition) {
-      setDisplayLocation(location) // eslint-disable-line react-hooks/set-state-in-effect
-      return
-    }
-
-    startViewTransition(() => {
-      flushSync(() => setDisplayLocation(location))
-    })
-  }, [location, displayLocation])
-
+function App() {
   return (
-    <Routes location={displayLocation}>
+    <Layout>
+      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/projects" element={<Projects />} />
@@ -80,14 +55,7 @@ function AppRoutes() {
         <Route path="/projects/fidelity" element={<Fidelity />} />
         <Route path="/projects/eeg-research" element={<EEGResearch />} />
         <Route path="/analytics" element={<Analytics />} />
-    </Routes>
-  )
-}
-
-function App() {
-  return (
-    <Layout>
-      <AppRoutes />
+      </Routes>
     </Layout>
   )
 }

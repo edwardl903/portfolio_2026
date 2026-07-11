@@ -61,22 +61,3 @@ body {
 #root {
   min-height: 100vh;
 }
-
-/*
- * Global reduced-motion guard. !important is required here to override
- * component-level animation/transition durations and inline animationDelay
- * (e.g. the project card stagger) so motion-sensitive users get an instant,
- * fully-visible UI. Near-zero (not "none") lets fill-mode animations still
- * settle on their end state, so no content is left hidden.
- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
