@@ -201,8 +201,7 @@ html[data-theme="dark"] .nav-logo img {
     transition: transform 0.2s ease;
 }
 
-.dropdown:hover .dropdown-toggle,
-.dropdown:focus-within .dropdown-toggle {
+.dropdown:hover:not(.dropdown-closed) .dropdown-toggle {
     color: var(--accent-dark);
     background: var(--accent-light);
     transform: translateY(-2px);
@@ -210,8 +209,7 @@ html[data-theme="dark"] .nav-logo img {
     border-bottom-color: var(--accent);
 }
 
-.dropdown:hover .dropdown-toggle i,
-.dropdown:focus-within .dropdown-toggle i {
+.dropdown:hover:not(.dropdown-closed) .dropdown-toggle i {
     transform: rotate(180deg);
 }
 
@@ -238,11 +236,17 @@ html[data-theme="dark"] .nav-logo img {
     z-index: 1001;
 }
 
-.dropdown:hover .dropdown-menu,
-.dropdown:focus-within .dropdown-menu {
+.dropdown:hover:not(.dropdown-closed) .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
+}
+
+/* Force-hide after click or navigation, even if the pointer is still over the item */
+.dropdown.dropdown-closed .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-6px);
 }
 
 .dropdown-menu li {

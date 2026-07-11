@@ -5,6 +5,7 @@ import { useTheme } from '../hooks/useTheme'
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [menuOpen,   setMenuOpen]   = useState(false)
+  const [hobbiesClosed, setHobbiesClosed] = useState(false)
   const location  = useLocation()
   const overlayRef = useRef(null)
   const [theme, toggleTheme] = useTheme()
@@ -36,10 +37,17 @@ function Navbar() {
   // Auto-close on route change
   useEffect(() => {
     setMenuOpen(false)
+    setHobbiesClosed(true)
+    document.activeElement?.blur()
   }, [location.pathname])
 
   const toggleMenu = () => setMenuOpen(o => !o)
   const closeMenu  = () => setMenuOpen(false)
+  const closeHobbiesDropdown = () => {
+    setHobbiesClosed(true)
+    document.activeElement?.blur()
+  }
+  const openHobbiesDropdown = () => setHobbiesClosed(false)
 
   const isActive  = path => location.pathname === path
   const hobbyOn   = location.pathname.startsWith('/hobbies')
@@ -58,20 +66,25 @@ function Navbar() {
             <li><Link to="/"         className={isActive('/')         ? 'active' : ''}>Home</Link></li>
             <li><Link to="/about"    className={isActive('/about')    ? 'active' : ''}>About</Link></li>
             <li><Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
-            <li className="dropdown">
+            <li
+              className={`dropdown${hobbiesClosed ? ' dropdown-closed' : ''}`}
+              onMouseEnter={openHobbiesDropdown}
+              onMouseLeave={closeHobbiesDropdown}
+            >
               <Link
                 to="/hobbies"
                 className={`dropdown-toggle${hobbyOn ? ' active' : ''}`}
                 aria-haspopup="true"
+                onClick={closeHobbiesDropdown}
               >
                 Hobbies <i className="fas fa-chevron-down" aria-hidden="true" />
               </Link>
               <ul className="dropdown-menu">
-                <li><Link to="/hobbies/piano"        className={isActive('/hobbies/piano')        ? 'active' : ''}>Piano</Link></li>
-                <li><Link to="/hobbies/chess"        className={isActive('/hobbies/chess')        ? 'active' : ''}>Chess</Link></li>
-                <li><Link to="/hobbies/volleyball"   className={isActive('/hobbies/volleyball')   ? 'active' : ''}>Volleyball</Link></li>
-                <li><Link to="/hobbies/skateboarding"className={isActive('/hobbies/skateboarding')? 'active' : ''}>Skateboarding</Link></li>
-                <li><Link to="/hobbies/running"      className={isActive('/hobbies/running')      ? 'active' : ''}>Running</Link></li>
+                <li><Link to="/hobbies/piano"        className={isActive('/hobbies/piano')        ? 'active' : ''} onClick={closeHobbiesDropdown}>Piano</Link></li>
+                <li><Link to="/hobbies/chess"        className={isActive('/hobbies/chess')        ? 'active' : ''} onClick={closeHobbiesDropdown}>Chess</Link></li>
+                <li><Link to="/hobbies/volleyball"   className={isActive('/hobbies/volleyball')   ? 'active' : ''} onClick={closeHobbiesDropdown}>Volleyball</Link></li>
+                <li><Link to="/hobbies/skateboarding"className={isActive('/hobbies/skateboarding')? 'active' : ''} onClick={closeHobbiesDropdown}>Skateboarding</Link></li>
+                <li><Link to="/hobbies/running"      className={isActive('/hobbies/running')      ? 'active' : ''} onClick={closeHobbiesDropdown}>Running</Link></li>
               </ul>
             </li>
             <li><Link to="/contact"   className={isActive('/contact')    ? 'active' : ''}>Contact</Link></li>
