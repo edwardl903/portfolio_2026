@@ -4760,34 +4760,6 @@ html[data-theme="dark"] .pv2-preview-classical {
     text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
-.hob-tile-blurb {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.82);
-    max-width: 34ch;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.hob-tile-cue {
-    margin-top: 0.4rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
-}
-
-.hob-tile-cue i {
-    transition: transform 0.3s ease;
-}
-
 /* Hover / focus reveal */
 .hob-tile:hover .hob-tile-img,
 .hob-tile:focus-visible .hob-tile-img {
@@ -4801,19 +4773,6 @@ html[data-theme="dark"] .pv2-preview-classical {
     background:
         linear-gradient(180deg, rgba(15, 13, 11, 0) 35%, rgba(15, 13, 11, 0.78) 100%),
         rgba(30, 24, 16, 0.15);
-}
-
-.hob-tile:hover .hob-tile-blurb,
-.hob-tile:focus-visible .hob-tile-blurb,
-.hob-tile:hover .hob-tile-cue,
-.hob-tile:focus-visible .hob-tile-cue {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.hob-tile:hover .hob-tile-cue i,
-.hob-tile:focus-visible .hob-tile-cue i {
-    transform: translateX(4px);
 }
 
 .hob-tile:focus-visible {
@@ -4851,11 +4810,6 @@ html[data-theme="dark"] .pv2-preview-classical {
             "running"
             "skate"
             "volley";
-    }
-    .hob-tile-blurb,
-    .hob-tile-cue {
-        opacity: 1;
-        transform: none;
     }
 }
 
