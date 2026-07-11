@@ -59,14 +59,13 @@ function Navbar() {
             <li><Link to="/about"    className={isActive('/about')    ? 'active' : ''}>About</Link></li>
             <li><Link to="/projects" className={isActive('/projects') ? 'active' : ''}>Projects</Link></li>
             <li className="dropdown">
-              <button
-                type="button"
+              <Link
+                to="/hobbies"
                 className={`dropdown-toggle${hobbyOn ? ' active' : ''}`}
                 aria-haspopup="true"
-                aria-label="Hobbies submenu"
               >
                 Hobbies <i className="fas fa-chevron-down" aria-hidden="true" />
-              </button>
+              </Link>
               <ul className="dropdown-menu">
                 <li><Link to="/hobbies/piano"        className={isActive('/hobbies/piano')        ? 'active' : ''}>Piano</Link></li>
                 <li><Link to="/hobbies/chess"        className={isActive('/hobbies/chess')        ? 'active' : ''}>Chess</Link></li>
@@ -117,7 +116,7 @@ function Navbar() {
           <Link to="/projects" className={`mob-link${isActive('/projects') ? ' active' : ''}`} onClick={closeMenu}>Projects</Link>
 
           <div className="mob-section">
-            <span className={`mob-label${hobbyOn ? ' active' : ''}`}>Hobbies</span>
+            <Link to="/hobbies" className={`mob-label${hobbyOn ? ' active' : ''}`} onClick={closeMenu}>Hobbies</Link>
             <Link to="/hobbies/piano"        className={`mob-link sub${isActive('/hobbies/piano')        ? ' active' : ''}`} onClick={closeMenu}>Piano</Link>
             <Link to="/hobbies/chess"        className={`mob-link sub${isActive('/hobbies/chess')        ? ' active' : ''}`} onClick={closeMenu}>Chess</Link>
             <Link to="/hobbies/volleyball"   className={`mob-link sub${isActive('/hobbies/volleyball')   ? ' active' : ''}`} onClick={closeMenu}>Volleyball</Link>

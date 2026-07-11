@@ -13,6 +13,7 @@ import ChessStats from './pages/hobbies/ChessStats'
 import Volleyball from './pages/hobbies/Volleyball'
 import Skateboarding from './pages/hobbies/Skateboarding'
 import Running from './pages/hobbies/Running'
+import Hobbies from './pages/hobbies/Hobbies'
 import ChessLytics from './pages/projects/ChessLytics'
 import ChessLyticsDbt from './pages/projects/ChessLyticsDbt'
 import WhoopDebrief from './pages/projects/WhoopDebrief'
@@ -35,6 +36,7 @@ function App() {
         {/* Resume hidden for now – uncomment to show: <Route path="/resume" element={<Resume />} /> */}
         <Route path="/contact" element={<Contact />} />
         <Route path="/contact-success" element={<ContactSuccess />} />
+        <Route path="/hobbies" element={<Hobbies />} />
         <Route path="/hobbies/piano" element={<PianoKeyboard />} />
         <Route path="/hobbies/piano/more" element={<Piano />} />
         <Route path="/hobbies/chess" element={<ChessStats />} />
