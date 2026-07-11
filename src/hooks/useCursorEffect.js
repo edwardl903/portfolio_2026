@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+const EMBED_SELECTOR = 'iframe, embed, object'
+
 export function useCursorEffect() {
   useEffect(() => {
     if (window.matchMedia?.('(pointer: coarse)').matches) return
@@ -18,6 +20,7 @@ export function useCursorEffect() {
     let rx = -300, ry = -300
     let hidden   = false
     let hovering = false
+    let embedDepth = 0
     let dotScale  = 1
     let ringScale = 1
 
@@ -32,11 +35,6 @@ export function useCursorEffect() {
       if (e.target.closest(HOVER_SELECTOR)) hovering = false
     }
 
-    function bindHover() {
-      document.addEventListener('mouseover', onMouseOver)
-      document.addEventListener('mouseout',  onMouseOut)
-    }
-
     function setVisible(show) {
       hidden = !show
       const v = show ? '' : '0'
@@ -44,10 +42,28 @@ export function useCursorEffect() {
       ring.style.opacity = v
     }
 
-    document.querySelectorAll('iframe, embed, object').forEach(f => {
-      f.addEventListener('mouseenter', () => setVisible(false))
-      f.addEventListener('mouseleave', () => setVisible(true))
-    })
+    function enterEmbed() {
+      embedDepth += 1
+      setVisible(false)
+    }
+
+    function leaveEmbed() {
+      embedDepth = Math.max(0, embedDepth - 1)
+      if (embedDepth === 0) setVisible(true)
+    }
+
+    function bindEmbedZones() {
+      document.querySelectorAll(EMBED_SELECTOR).forEach(el => {
+        if (el.dataset.cursorBound) return
+        el.dataset.cursorBound = '1'
+        el.addEventListener('mouseenter', enterEmbed)
+        el.addEventListener('mouseleave', leaveEmbed)
+      })
+    }
+
+    const observer = new MutationObserver(bindEmbedZones)
+    observer.observe(document.body, { childList: true, subtree: true })
+    bindEmbedZones()
 
     const RING_LERP = 0.16
 
@@ -71,13 +87,15 @@ export function useCursorEffect() {
     }
 
     document.addEventListener('mousemove', onMove)
-    bindHover()
+    document.addEventListener('mouseover', onMouseOver)
+    document.addEventListener('mouseout', onMouseOut)
     tick()
 
     return () => {
+      observer.disconnect()
       document.removeEventListener('mousemove', onMove)
       document.removeEventListener('mouseover', onMouseOver)
-      document.removeEventListener('mouseout',  onMouseOut)
+      document.removeEventListener('mouseout', onMouseOut)
       dot.remove()
       ring.remove()
     }

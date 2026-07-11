@@ -1,7 +1,6 @@
 /* ── Hide default cursor (desktop / fine pointer only) ───────── */
 @media (pointer: fine) {
     * { cursor: none !important; }
-    iframe, embed, object { cursor: auto !important; }
 }
 
 /* ── Custom cursor: dot + ring only ─────────────────────────── */
@@ -2952,7 +2951,6 @@ section.contact-success-page .container {
 }
 
 .analytics-frame-open {
-    margin-left: auto;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -2961,6 +2959,13 @@ section.contact-success-page .container {
     color: var(--accent);
     text-decoration: none;
     transition: opacity 0.2s ease;
+}
+
+.analytics-frame-bar-actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .analytics-frame-open:hover {
