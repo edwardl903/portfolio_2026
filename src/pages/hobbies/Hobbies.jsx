@@ -18,7 +18,7 @@ function Hobbies() {
         <p className="hob-eyebrow">Off the clock</p>
         <h1 className="hob-title">Hobbies</h1>
         <p className="hob-lede">
-          The stuff I do when I am not moving data around. Pick one to dig in.
+          Here are some of the things I like to do in my personal time.
         </p>
       </div>
 
