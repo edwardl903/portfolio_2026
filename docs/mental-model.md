@@ -156,6 +156,8 @@ This is the story that shows Edward can own an end-to-end pipeline, not just bui
 | Theme | **Light only** in practice. Dark mode toggle exists in Navbar but is legacy. Tokens in `base.css` still include dark overrides. See `design-system.md` for token list. |
 | Cursor | osu!-style dot + ring, event delegation hover, disabled on touch/coarse-pointer |
 | Scroll animations | IntersectionObserver on `section` elements; re-runs on route change (fixed 2026-07-04) |
+| Route transitions | View Transitions API cross-fade in `App.tsx` (`AppRoutes` + `displayLocation`); no animation library; degrades to instant swap |
+| Language | TypeScript 5 (`.tsx`/`.ts`); `npm run typecheck` = `tsc --noEmit` |
 | Analytics | Umami Cloud (privacy-friendly); GTM/GA4 `dataLayer` push on route change |
 | Contact form | Formspree POST; client validation; success redirect to `/contact-success` |
 | Image optimization | `npm run optimize-images` (sharp); lazy-load on all non-hero images |
@@ -172,6 +174,7 @@ This is the story that shows Edward can own an end-to-end pipeline, not just bui
 | Hobbies dropdown keyboard-accessible | Done (fixed 2026-07-04) |
 | Scroll/cursor hooks work after navigation | Done (fixed 2026-07-04) |
 | Contact form labels + error states | Done |
+| Reduced-motion support | Done (global `prefers-reduced-motion` guard in `base.css`; route transitions skipped in JS) |
 | Lightbox focus trap | Not done — Tab can escape to page behind |
 | Color contrast on `--text-muted` / accent small text | Not verified — likely below WCAG AA |
 | Skip-to-content link | Not done |

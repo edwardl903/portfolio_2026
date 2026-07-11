@@ -122,6 +122,15 @@ Dark mode overrides `--bg`, `--bg-surface`, `--bg-subtle`, `--bg-nav`, all text 
 - Smooth scrolling for internal anchors (e.g., Piano performances link)
 - `scroll-margin-top: 120px` on sections and key anchors
 
+### Route transitions
+- Native **View Transitions API** cross-fade on path change, driven in `src/App.tsx` (`AppRoutes` keeps a `displayLocation` and wraps the swap in `document.startViewTransition` + `flushSync`). No animation library.
+- Styling: `::view-transition-old(root)` / `::view-transition-new(root)` keyframes (`vt-fade-out` / `vt-fade-in`) in `styles.css`.
+- Degrades gracefully: browsers without the API (or hash/search-only changes) swap instantly.
+- Projects grid cards use a staggered `cardEnter` entrance (inline `animationDelay` per index, capped at 0.5s).
+
+### Reduced motion
+- Global guard in `base.css`: under `prefers-reduced-motion: reduce`, all animation/transition durations and delays collapse to near-zero (uses `!important`; documented in the file). Route transitions are also skipped in JS when the user prefers reduced motion.
+
 ---
 
 ## 6. Interaction Patterns

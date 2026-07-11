@@ -123,8 +123,12 @@ function Projects() {
         </div>
 
         <div className="projects-grid">
-          {projects.map((project) => (
-            <div className="project-card-v2" key={project.id}>
+          {projects.map((project, index) => (
+            <div
+              className="project-card-v2"
+              key={project.id}
+              style={{ animationDelay: `${Math.min(index * 0.06, 0.5)}s` }}
+            >
               <Link to={project.to} className="project-card-img-wrap">
                 <img src={project.image} alt={project.title} loading="lazy" />
               </Link>

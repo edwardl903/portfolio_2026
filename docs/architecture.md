@@ -28,7 +28,7 @@ index.html
 |---|---|
 | `index.html` | Shell HTML, loads Google Fonts (Playfair Display + Inter) |
 | `src/main.tsx` | Mounts React into `#root`, imports `base.css` then `styles.css` |
-| `src/App.tsx` | All route declarations |
+| `src/App.tsx` | All route declarations; `AppRoutes` drives View Transitions API cross-fade on route change (renders `<Routes>` against a `displayLocation`) |
 | `src/components/Layout.tsx` | Shared shell; scroll-to-top; `dataLayer` push `portfolio_route_change` for GTM/GA4 SPA routes; global hooks |
 
 ---
