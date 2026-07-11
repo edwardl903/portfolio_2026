@@ -54,7 +54,6 @@ function App() {
         <Route path="/projects/etl-tools" element={<Pison />} />
         <Route path="/projects/fidelity" element={<Fidelity />} />
         <Route path="/projects/eeg-research" element={<EEGResearch />} />
-        {/* Hidden: no nav link — bookmark /#/analytics */}
         <Route path="/analytics" element={<Analytics />} />
       </Routes>
     </Layout>

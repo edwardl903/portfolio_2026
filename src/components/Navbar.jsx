@@ -88,6 +88,7 @@ function Navbar() {
               </ul>
             </li>
             <li><Link to="/contact"   className={isActive('/contact')    ? 'active' : ''}>Contact</Link></li>
+            <li><Link to="/analytics" className={isActive('/analytics')  ? 'active' : ''}>Analytics</Link></li>
             <li>
               <button
                 className="theme-toggle"
@@ -138,6 +139,7 @@ function Navbar() {
           </div>
 
           <Link to="/contact"   className={`mob-link${isActive('/contact')    ? ' active' : ''}`} onClick={closeMenu}>Contact</Link>
+          <Link to="/analytics" className={`mob-link${isActive('/analytics')  ? ' active' : ''}`} onClick={closeMenu}>Analytics</Link>
 
           <button
             className="mob-theme-toggle"
