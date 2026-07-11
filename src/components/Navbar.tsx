@@ -34,9 +34,9 @@ function Navbar() {
     }
   }, [menuOpen])
 
-  // Auto-close on route change
+  // Auto-close on route change — setState here intentionally syncs UI to route
   useEffect(() => {
-    setMenuOpen(false)
+    setMenuOpen(false) // eslint-disable-line react-hooks/set-state-in-effect
     setHobbiesClosed(true)
     ;(document.activeElement as HTMLElement | null)?.blur()
   }, [location.pathname])

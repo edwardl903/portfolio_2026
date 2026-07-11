@@ -154,7 +154,7 @@ async function main() {
   // Check if images directory exists
   try {
     await fs.access(IMAGES_DIR);
-  } catch (error) {
+  } catch {
     console.error('❌ Images directory not found:', IMAGES_DIR);
     process.exit(1);
   }

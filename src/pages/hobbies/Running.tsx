@@ -99,7 +99,7 @@ function useCountUp(target, duration = 1400) {
     // Only run the count-up animation on the very first value arrival.
     // Unit switches (or any later updates) snap instantly so there's no re-count glitch.
     if (reduce || hasAnimated.current) {
-      setVal(target)
+      setVal(target) // eslint-disable-line react-hooks/set-state-in-effect
       return
     }
     hasAnimated.current = true
@@ -154,7 +154,7 @@ function StageRoute({ run }) {
   const gid = `stage-grad-${String(run.run_id).replace(/\D/g, 'x')}`
 
   useEffect(() => {
-    setAnim('')
+    setAnim('') // eslint-disable-line react-hooks/set-state-in-effect
     const t = setTimeout(() => setAnim(styles.routeAnimate), 60)
     return () => clearTimeout(t)
   }, [run.run_id])
@@ -387,7 +387,7 @@ function Stage({ run, badge, idx, total, onPrev, onNext, unit = 'km' }) {
   // Reset to run tab when run changes
   const prevId = useRef(run.run_id)
   useEffect(() => {
-    if (prevId.current !== run.run_id) { setTab('run'); prevId.current = run.run_id }
+    if (prevId.current !== run.run_id) { setTab('run'); prevId.current = run.run_id } // eslint-disable-line react-hooks/set-state-in-effect
   }, [run.run_id])
 
   return (
@@ -655,7 +655,7 @@ function Running() {
   const runs = useMemo(() => (data?.runs ?? []).filter(r => r.summary_polyline), [data])
 
   useEffect(() => {
-    if (runs.length && selectedId == null) setSelectedId(runs[0].run_id)
+    if (runs.length && selectedId == null) setSelectedId(runs[0].run_id) // eslint-disable-line react-hooks/set-state-in-effect
   }, [runs, selectedId])
 
   const bounds = useMemo(() => {
