@@ -1,12 +1,22 @@
 import { useState, useCallback } from 'react'
+import type { ReactNode, KeyboardEvent } from 'react'
 import Lightbox from './Lightbox'
 
-function ClickableExpandableImage({ src, alt, caption = '', className = '', showExpandIcon = true, children }) {
+interface ClickableExpandableImageProps {
+  src: string
+  alt: string
+  caption?: string
+  className?: string
+  showExpandIcon?: boolean
+  children?: ReactNode
+}
+
+function ClickableExpandableImage({ src, alt, caption = '', className = '', showExpandIcon = true, children }: ClickableExpandableImageProps) {
   const [open, setOpen] = useState(false)
   const close = useCallback(() => setOpen(false), [])
   const label = caption || alt
 
-  const onKeyDown = (e) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       setOpen(true)

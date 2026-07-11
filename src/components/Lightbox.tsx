@@ -1,9 +1,16 @@
 import { useEffect, useCallback, useRef } from 'react'
 
-function Lightbox({ src, alt, caption, onClose }) {
-  const closeBtnRef = useRef(null)
+interface LightboxProps {
+  src: string
+  alt: string
+  caption?: string
+  onClose: () => void
+}
 
-  const handleKey = useCallback((e) => {
+function Lightbox({ src, alt, caption, onClose }: LightboxProps) {
+  const closeBtnRef = useRef<HTMLButtonElement>(null)
+
+  const handleKey = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose()
   }, [onClose])
 

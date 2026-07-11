@@ -1,6 +1,8 @@
 # Architecture
 
-Client-rendered React SPA built on Vite. No backend — all server-side concerns (hosting, SSL, CDN) are handled by Vercel.
+Client-rendered React SPA written in TypeScript and built on Vite. No backend — all server-side concerns (hosting, SSL, CDN) are handled by Vercel.
+
+Source is TypeScript: components/pages are `.tsx`, hooks are `.ts`. `tsconfig.json` targets the `src` folder; `npm run typecheck` runs `tsc --noEmit` (Vite/esbuild strips types at build time without type-checking, so `typecheck` is the gate for type errors). Config files (`vite.config.js`, `eslint.config.js`, `scripts/optimize-images.js`) stay JavaScript.
 
 ---
 
@@ -8,7 +10,7 @@ Client-rendered React SPA built on Vite. No backend — all server-side concerns
 
 ```
 index.html
-  └─ src/main.jsx         ← mounts React, imports base.css + styles.css
+  └─ src/main.tsx         ← mounts React, imports base.css + styles.css
        └─ <HashRouter>
             └─ <App>      ← declares all routes
                  └─ <Layout>
@@ -25,15 +27,15 @@ index.html
 | File | Role |
 |---|---|
 | `index.html` | Shell HTML, loads Google Fonts (Playfair Display + Inter) |
-| `src/main.jsx` | Mounts React into `#root`, imports `base.css` then `styles.css` |
-| `src/App.jsx` | All route declarations |
-| `src/components/Layout.jsx` | Shared shell; scroll-to-top; `dataLayer` push `portfolio_route_change` for GTM/GA4 SPA routes; global hooks |
+| `src/main.tsx` | Mounts React into `#root`, imports `base.css` then `styles.css` |
+| `src/App.tsx` | All route declarations |
+| `src/components/Layout.tsx` | Shared shell; scroll-to-top; `dataLayer` push `portfolio_route_change` for GTM/GA4 SPA routes; global hooks |
 
 ---
 
 ## Routing
 
-Defined in `src/App.jsx` using React Router DOM (`HashRouter` for GitHub Pages):
+Defined in `src/App.tsx` using React Router DOM (`HashRouter` for GitHub Pages):
 
 | Path | Component |
 |---|---|
@@ -55,7 +57,7 @@ Defined in `src/App.jsx` using React Router DOM (`HashRouter` for GitHub Pages):
 | `/hobbies/chess/more` | `Chess` |
 | `/contact` | `Contact` |
 | `/contact-success` | `ContactSuccess` |
-| `/resume` | `Resume` *(hidden — uncomment in App.jsx to re-enable)* |
+| `/resume` | `Resume` *(hidden — uncomment in App.tsx to re-enable)* |
 | `/analytics` | `Analytics` *(hidden — no nav link; embeds Umami share dashboard)* |
 
 ---
@@ -111,7 +113,7 @@ Two CSS files, loaded in order:
 
 | Service | Usage |
 |---|---|
-| Formspree | Contact form POST (`src/pages/Contact.jsx`) |
+| Formspree | Contact form POST (`src/pages/Contact.tsx`) |
 | YouTube | `<iframe>` embeds in Piano and Chess hobby pages |
 | Google Fonts | Playfair Display + Inter (loaded in `index.html`) |
 | Vercel | Hosting + auto-deploy |

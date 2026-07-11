@@ -2,11 +2,11 @@ import { useEffect } from 'react'
 
 const EMBED_SELECTOR = 'iframe, embed, object'
 
-export function useCursorEffect() {
+export function useCursorEffect(): void {
   useEffect(() => {
     if (window.matchMedia?.('(pointer: coarse)').matches) return
 
-    function make(cls) {
+    function make(cls: string): HTMLDivElement {
       const d = document.createElement('div')
       d.className = cls
       document.body.appendChild(d)
@@ -24,18 +24,18 @@ export function useCursorEffect() {
     let dotScale  = 1
     let ringScale = 1
 
-    const onMove = (e) => { mx = e.clientX; my = e.clientY }
+    const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY }
 
     const HOVER_SELECTOR = 'a, button, input, textarea, select, [role="button"], .lb-trigger, .btn, .project-card-v2'
 
-    const onMouseOver = (e) => {
-      if (e.target.closest(HOVER_SELECTOR)) hovering = true
+    const onMouseOver = (e: MouseEvent) => {
+      if ((e.target as Element).closest(HOVER_SELECTOR)) hovering = true
     }
-    const onMouseOut = (e) => {
-      if (e.target.closest(HOVER_SELECTOR)) hovering = false
+    const onMouseOut = (e: MouseEvent) => {
+      if ((e.target as Element).closest(HOVER_SELECTOR)) hovering = false
     }
 
-    function setVisible(show) {
+    function setVisible(show: boolean) {
       hidden = !show
       const v = show ? '' : '0'
       dot.style.opacity  = v
@@ -53,7 +53,7 @@ export function useCursorEffect() {
     }
 
     function bindEmbedZones() {
-      document.querySelectorAll(EMBED_SELECTOR).forEach(el => {
+      document.querySelectorAll<HTMLElement>(EMBED_SELECTOR).forEach(el => {
         if (el.dataset.cursorBound) return
         el.dataset.cursorBound = '1'
         el.addEventListener('mouseenter', enterEmbed)

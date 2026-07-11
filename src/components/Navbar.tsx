@@ -7,7 +7,7 @@ function Navbar() {
   const [menuOpen,   setMenuOpen]   = useState(false)
   const [hobbiesClosed, setHobbiesClosed] = useState(false)
   const location  = useLocation()
-  const overlayRef = useRef(null)
+  const overlayRef = useRef<HTMLDivElement>(null)
   const [theme, toggleTheme] = useTheme()
 
   // Scroll-shrink effect
@@ -38,18 +38,18 @@ function Navbar() {
   useEffect(() => {
     setMenuOpen(false)
     setHobbiesClosed(true)
-    document.activeElement?.blur()
+    ;(document.activeElement as HTMLElement | null)?.blur()
   }, [location.pathname])
 
   const toggleMenu = () => setMenuOpen(o => !o)
   const closeMenu  = () => setMenuOpen(false)
   const closeHobbiesDropdown = () => {
     setHobbiesClosed(true)
-    document.activeElement?.blur()
+    ;(document.activeElement as HTMLElement | null)?.blur()
   }
   const openHobbiesDropdown = () => setHobbiesClosed(false)
 
-  const isActive  = path => location.pathname === path
+  const isActive  = (path: string) => location.pathname === path
   const hobbyOn   = location.pathname.startsWith('/hobbies')
 
   return (

@@ -7,7 +7,7 @@ How files, routes, and assets are named in this repo. Follow these when adding o
 ## General rules
 
 - **Lowercase kebab-case** for folders, routes, and image filenames: `chess-club-meeting-1.jpg`, `/projects/chesslytics-dbt`
-- **PascalCase** for React page/component files: `ChessLyticsDbt.jsx`, `PianoKeyboard.jsx`
+- **PascalCase** for React page/component files: `ChessLyticsDbt.tsx`, `PianoKeyboard.tsx`
 - **Descriptive over short**: `boston-college-tournament.jpg` not `bc.jpg`
 - **No spaces, UUIDs, or "copy"** in filenames
 - **Image extensions**: prefer `.jpg` / `.png` lowercase (not `.JPG`)
@@ -20,14 +20,14 @@ How files, routes, and assets are named in this repo. Follow these when adding o
 
 | Route | Component file | Notes |
 |---|---|---|
-| `/hobbies/piano` | `PianoKeyboard.jsx` | Interactive keyboard; legacy narrative at `/hobbies/piano/more` → `Piano.jsx` |
-| `/hobbies/chess` | `ChessStats.jsx` | Live stats dashboard; legacy at `/hobbies/chess/more` → `Chess.jsx` |
-| `/projects/chesslytics` | `ChessLytics.jsx` | Flask app writeup |
-| `/projects/chesslytics-dbt` | `ChessLyticsDbt.jsx` | dbt pipeline writeup; old `/projects/chesslytics-azure` redirects here |
-| `/projects/etl-tools` | `Pison.jsx` | Pison internship (route kept for bookmarks) |
-| `/projects/nlp-pipeline` | `NlpPipeline.jsx` | Reading level classifier |
+| `/hobbies/piano` | `PianoKeyboard.tsx` | Interactive keyboard; legacy narrative at `/hobbies/piano/more` → `Piano.tsx` |
+| `/hobbies/chess` | `ChessStats.tsx` | Live stats dashboard; legacy at `/hobbies/chess/more` → `Chess.tsx` |
+| `/projects/chesslytics` | `ChessLytics.tsx` | Flask app writeup |
+| `/projects/chesslytics-dbt` | `ChessLyticsDbt.tsx` | dbt pipeline writeup; old `/projects/chesslytics-azure` redirects here |
+| `/projects/etl-tools` | `Pison.tsx` | Pison internship (route kept for bookmarks) |
+| `/projects/nlp-pipeline` | `NlpPipeline.tsx` | Reading level classifier |
 
-When renaming a route, add a `<Navigate>` redirect from the old path in `App.jsx` and update `public/sitemap.xml`.
+When renaming a route, add a `<Navigate>` redirect from the old path in `App.tsx` and update `public/sitemap.xml`.
 
 ---
 

@@ -49,15 +49,15 @@ function projectCoords(coords, W, H, PAD, bounds) {
   return { d: 'M' + pts.map(p => p.join(',')).join('L'), start: pts[0], end: pts[pts.length - 1] }
 }
 
-function runSvg(run, W, H, PAD, bounds) {
+function runSvg(run, W, H, PAD, bounds?) {
   if (!run?.summary_polyline) return null
   return projectCoords(decodePolyline(run.summary_polyline), W, H, PAD, bounds)
 }
 
-function fmtDate(raw, opts = { month: 'short', day: 'numeric', year: 'numeric' }) {
+function fmtDate(raw, opts: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' }) {
   if (!raw) return ''
   const d = new Date(raw + 'T00:00:00')
-  return isNaN(d) ? raw : d.toLocaleDateString('en-US', opts)
+  return isNaN(d.getTime()) ? raw : d.toLocaleDateString('en-US', opts)
 }
 
 const KM_TO_MI = 0.621371

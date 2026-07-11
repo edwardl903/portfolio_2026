@@ -4,11 +4,11 @@ import { HashRouter } from 'react-router-dom'
 import './styles/base.css'
 import './styles/tailwind.css'
 import './styles.css'
-import App from './App.jsx'
+import App from './App'
 
 // Using HashRouter for GitHub Pages compatibility
 // For Vercel/Netlify, change to BrowserRouter
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HashRouter>
       <App />

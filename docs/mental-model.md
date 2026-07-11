@@ -61,7 +61,7 @@ The site should read like a person, not a resume. Direct, specific, a little per
 /hobbies/skateboarding          Skateboarding                 ← in nav
 
 ── Hidden pages (not in nav — direct URL only) ───────────────────────
-/resume                         Resume      ← HIDDEN (uncomment in App.jsx + Navbar.jsx)
+/resume                         Resume      ← HIDDEN (uncomment in App.tsx + Navbar.tsx)
 /analytics                      Analytics   ← HIDDEN bookmark (embeds Umami dashboard)
 ```
 
@@ -85,7 +85,7 @@ The site should read like a person, not a resume. Direct, specific, a little per
 - **Job:** Give a recruiters a fast overview of all projects; link to detail pages
 - **Key elements:** casual subtitle, project card grid (`.project-card-v2`)
 - **Current state:** Fidelity card copy is still generic ("Led... high-value... actionable insights") — needs a rewrite pass to match the Fidelity detail page
-- **Project ranking on the card grid:** [check current order in Projects.jsx — update this line when reordered]
+- **Project ranking on the card grid:** [check current order in Projects.tsx — update this line when reordered]
 
 ### Project deep-dives
 | Route | What it shows | Flagship? | Known issues |
@@ -183,12 +183,12 @@ This is the story that shows Edward can own an end-to-end pipeline, not just bui
 
 | Issue | Priority | Where |
 |-------|----------|-------|
-| Home + About still say present-tense Curaleaf | High — when Edward decides on framing | `Home.jsx`, `About.jsx` |
-| Fidelity card on Projects index is generic copy | High | `Projects.jsx` |
-| Education (Tufts, CS + HFE, May 2025) missing from About | Medium | `About.jsx` |
+| Home + About still say present-tense Curaleaf | High — when Edward decides on framing | `Home.tsx`, `About.tsx` |
+| Fidelity card on Projects index is generic copy | High | `Projects.tsx` |
+| Education (Tufts, CS + HFE, May 2025) missing from About | Medium | `About.tsx` |
 | Dark theme infrastructure is dead code | Medium | `useTheme.js`, Navbar toggle, `base.css` dark overrides |
-| ChessStats: rating numbers will go stale in Chess.jsx | Low | `Chess.jsx` line ~24 |
-| Lightbox has no focus trap | Medium | `Lightbox.jsx` |
+| ChessStats: rating numbers will go stale in Chess.tsx | Low | `Chess.tsx` line ~24 |
+| Lightbox has no focus trap | Medium | `Lightbox.tsx` |
 | Pison / Fidelity / EEG deep-dive copy not yet personalized | Medium | respective JSX files |
 | Google Fonts + Font Awesome are render-blocking | Low | `index.html` |
 

@@ -1,6 +1,6 @@
 # Project Overview
 
-Edward Lai's personal portfolio — a single-page React application showcasing his work as a Data Analyst, his data engineering projects, and his personal hobbies.
+Edward Lai's personal portfolio — a single-page React + TypeScript application showcasing his work as a Data Analyst, his data engineering projects, and his personal hobbies.
 
 ## Primary Goals
 
@@ -13,6 +13,7 @@ Edward Lai's personal portfolio — a single-page React application showcasing h
 
 | Layer | Tool |
 |---|---|
+| Language | TypeScript 5 (`.tsx` / `.ts`; `npm run typecheck` runs `tsc --noEmit`) |
 | Framework | React 19 |
 | Routing | React Router DOM 7 (BrowserRouter, Vercel deployment) |
 | Build | Vite 7 |
@@ -43,4 +44,4 @@ Edward Lai's personal portfolio — a single-page React application showcasing h
 - No authentication or user accounts
 - No CMS or admin interface
 - No backend API (projects link out to external apps/repos)
-- Resume page is temporarily hidden (can be re-enabled in `App.jsx` and `Navbar.jsx`)
+- Resume page is temporarily hidden (can be re-enabled in `App.tsx` and `Navbar.tsx`)

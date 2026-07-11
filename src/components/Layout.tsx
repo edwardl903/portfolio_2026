@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import type { ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
@@ -6,7 +7,7 @@ import Background from './Background'
 import { useCursorEffect } from '../hooks/useCursorEffect'
 import { useScrollAnimations } from '../hooks/useScrollAnimations'
 
-function Layout({ children }) {
+function Layout({ children }: { children: ReactNode }) {
   const location = useLocation()
   
   useEffect(() => {

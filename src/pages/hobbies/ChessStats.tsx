@@ -42,13 +42,13 @@ function cutoffDate(days) {
 function fmtDate(raw) {
   if (!raw) return ''
   const d = new Date(raw)
-  return isNaN(d) ? raw : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  return isNaN(d.getTime()) ? raw : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
 function fmtDateTime(raw) {
   if (!raw) return ''
   const d = new Date(raw)
-  if (isNaN(d)) return raw
+  if (isNaN(d.getTime())) return raw
   return (
     d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
     ' at ' +
@@ -97,7 +97,14 @@ function LastUpdated({ data }) {
 
 // ─── StatCard ─────────────────────────────────────────────────────────────────
 
-function StatCard({ label, value, sub, accent }) {
+interface StatCardProps {
+  label: string
+  value?: string | number | null
+  sub?: string
+  accent?: boolean
+}
+
+function StatCard({ label, value, sub, accent }: StatCardProps) {
   return (
     <div className={`cv2-stat-card${accent ? ' cv2-stat-accent' : ''}`}>
       <span className="cv2-stat-value">{value ?? '--'}</span>
@@ -527,7 +534,7 @@ export default function ChessStats() {
 
   const daily = (allData?.daily ?? [])
     .filter(d => d.time_class === timeClass && (cutoff ? d.game_date >= cutoff : true))
-    .sort((a, b) => new Date(a.game_date) - new Date(b.game_date))
+    .sort((a, b) => new Date(a.game_date).getTime() - new Date(b.game_date).getTime())
 
   const allDailyForClass = (allData?.daily ?? []).filter(d => d.time_class === timeClass)
 

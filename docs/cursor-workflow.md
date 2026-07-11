@@ -82,7 +82,8 @@ Files: ChessV2.jsx, styles.css
 | Cursor | Dot + ring (no trail); lerp ring, hover scale |
 | Nav (desktop) | Hover-only Hobbies dropdown, non-clickable label |
 | Nav (mobile) | Slide-in drawer (`.mob-overlay`), separate from desktop `ul.nav-menu` |
-| Resume page | Hidden; uncomment in `App.jsx` + `Navbar.jsx` to restore |
+| Language | TypeScript 5 (`.tsx` pages/components, `.ts` hooks); `npm run typecheck` = `tsc --noEmit`. tsconfig is pragmatic (`strict: false`, `noImplicitAny: false`); hooks + prop-taking components are explicitly typed |
+| Resume page | Hidden; uncomment in `App.tsx` + `Navbar.tsx` to restore |
 | Deployment | Vercel, auto-deploys on `git push` to main |
 | Scroll lock | Set on both `html` and `body` (iOS-safe) |
 | Image orientation | `image-orientation: from-image` globally in `base.css` |
@@ -98,6 +99,7 @@ Files: ChessV2.jsx, styles.css
 
 | Date | Change |
 |---|---|
+| 2026-07-11 | Migrated source to TypeScript: renamed 32 `.jsx`→`.tsx` and 3 hooks `.js`→`.ts` (git mv), added `tsconfig.json` + `vite-env.d.ts` + `typecheck` script, typed hooks/Lightbox/ClickableExpandableImage/Navbar/Layout/Contact/ChessStats/Running, wired `typescript-eslint`, removed unused `prop-types`; pinned TypeScript to 5.x (typescript-eslint does not yet support TS 7) |
 | 2026-06-21 | ChessV2: interactive chart with Y/X axes, gridlines, crosshair tooltip; opening hover tooltips + win%; rating_diff badge on game rows; dbt last-run timestamp |
 | 2026-06-21 | ChessV2: enhanced dashboard -- W/L/D donut chart, activity heatmap (90-day), stacked opening bars, dual-line rating+accuracy chart, outcome + date-range filters |
 | 2026-06-21 | ChessV2: live stats dashboard at /hobbies/chess (tabs for blitz/bullet/daily, stat cards, rating chart, recent games); old Chess page moved to /hobbies/chess/more |

@@ -9,10 +9,10 @@ const TOPICS = [
 
 function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
-  const [errors, setErrors]     = useState({})
+  const [errors, setErrors]     = useState<Record<string, string>>({})
   const [submitError, setSubmitError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [selectedTopic, setSelectedTopic] = useState(null)
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null)
   const navigate = useNavigate()
 
   const activePlaceholder = selectedTopic
@@ -20,7 +20,7 @@ function Contact() {
     : 'What you are reaching out about, plus any links or timing that help.'
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors: Record<string, string> = {}
     if (!formData.name || formData.name.trim().length < 2) {
       newErrors.name = 'Use at least 2 characters.'
     }
