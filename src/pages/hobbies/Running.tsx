@@ -655,198 +655,304 @@ function buildTrendCaption(metric, delta, days, unit, count) {
 }
 
 function TrendChart({ runs, selectedId, onSelect, unit = 'km' }) {
-  const [metric, setMetric] = useState('pace')
-  const [hover, setHover] = useState(null)
+  const [activeMetrics, setActiveMetrics] = useState<Set<string>>(new Set(['pace']))
+  const [hoverRunId, setHoverRunId] = useState<string | null>(null)
   const W = 720, H = 320
   const ML = 46, MR = 20, MT = 24, MB = 40
   const CW = W - ML - MR, CH = H - MT - MB
 
-  const active = TREND_METRICS.find(m => m.id === metric) ?? TREND_METRICS[0]
+  const isMulti = activeMetrics.size > 1
 
-  const { pts, chrono } = useMemo(() => {
-    const sorted = [...runs].sort(
-      (a, b) => new Date(a.run_start).getTime() - new Date(b.run_start).getTime(),
-    )
-    const points = sorted
-      .map(r => ({
-        run_id: r.run_id,
-        t: new Date(r.run_start).getTime(),
-        date: r.run_date,
-        y: metricValue(r, metric, unit),
-      }))
-      .filter(p => p.y != null && !Number.isNaN(p.t))
-    return { pts: points, chrono: sorted }
-  }, [runs, metric, unit])
+  const toggleMetric = useCallback((id: string) => {
+    setActiveMetrics(prev => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        if (next.size > 1) next.delete(id) // always keep at least one active
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }, [])
 
-  const cumul = useMemo(() => {
-    if (metric !== 'distance') return null
-    let sum = 0
-    return chrono
-      .filter(r => r.distance_km > 0 && r.run_start)
-      .map(r => {
-        sum += kmToUnit(r.distance_km, unit)
-        return { t: new Date(r.run_start).getTime(), c: sum }
+  const chrono = useMemo(() =>
+    [...runs].sort((a, b) => new Date(a.run_start).getTime() - new Date(b.run_start).getTime()),
+    [runs])
+
+  // Per-series computed data: points + min/max for normalization
+  const seriesData = useMemo(() =>
+    TREND_METRICS
+      .filter(m => activeMetrics.has(m.id))
+      .map(m => {
+        const pts = chrono
+          .map(r => ({
+            run_id: r.run_id,
+            t: new Date(r.run_start).getTime(),
+            date: r.run_date,
+            y: metricValue(r, m.id, unit),
+          }))
+          .filter(p => p.y != null && !Number.isNaN(p.t))
+        if (pts.length < 2) return null
+        const ys = pts.map(p => p.y)
+        const yMin = Math.min(...ys), yMax = Math.max(...ys)
+        const ySpan = (yMax - yMin) || 1
+        return { metric: m, pts, yMin, yMax, ySpan }
       })
-  }, [chrono, metric, unit])
+      .filter(Boolean),
+    [chrono, activeMetrics, unit])
 
-  if (pts.length < 2) return null
+  if (seriesData.length === 0) return null
 
-  const ts = pts.map(p => p.t)
-  const ys = pts.map(p => p.y)
-  const tMin = Math.min(...ts), tMax = Math.max(...ts)
+  // Shared time axis
+  const allTs = seriesData.flatMap(s => s.pts.map(p => p.t))
+  const tMin = Math.min(...allTs), tMax = Math.max(...allTs)
   const tSpan = (tMax - tMin) || 1
-  let yLo = Math.min(...ys), yHi = Math.max(...ys)
-  const pad = ((yHi - yLo) || 1) * 0.12
-  yLo -= pad; yHi += pad
-  const ySpan = (yHi - yLo) || 1
-
-  const toX = t => ML + ((t - tMin) / tSpan) * CW
-  const toY = v => MT + CH - ((v - yLo) / ySpan) * CH
-
-  const linePath = 'M' + pts.map(p => `${toX(p.t).toFixed(1)},${toY(p.y).toFixed(1)}`).join('L')
-
-  const n = pts.length
-  const tm = ts.reduce((s, v) => s + v, 0) / n
-  const ym = ys.reduce((s, v) => s + v, 0) / n
-  let num = 0, den = 0
-  for (let i = 0; i < n; i++) { num += (ts[i] - tm) * (ys[i] - ym); den += (ts[i] - tm) ** 2 }
-  const slope = den ? num / den : 0
-  const fitStart = ym + slope * (tMin - tm)
-  const fitEnd = ym + slope * (tMax - tm)
-  const trendDelta = fitEnd - fitStart
   const days = Math.max(1, Math.round(tSpan / 86400000))
 
-  let cumulPath = null
-  if (cumul && cumul.length > 1) {
-    const cMax = Math.max(...cumul.map(c => c.c)) || 1
-    const cToY = c => MT + CH - (c / cMax) * CH
-    cumulPath =
-      `M${toX(cumul[0].t).toFixed(1)},${(MT + CH).toFixed(1)}L` +
-      cumul.map(c => `${toX(c.t).toFixed(1)},${cToY(c.c).toFixed(1)}`).join('L') +
-      `L${toX(cumul[cumul.length - 1].t).toFixed(1)},${(MT + CH).toFixed(1)}Z`
-  }
+  const toX = (t: number) => ML + ((t - tMin) / tSpan) * CW
+  // Each series is normalized to its own range (same formula for single and multi)
+  const toY = (v: number, yMin: number, ySpan: number) =>
+    MT + CH - ((v - yMin) / ySpan) * CH
 
-  const yTicks = [yLo + ySpan * 0.06, yLo + ySpan / 2, yHi - ySpan * 0.06]
-  const caption = buildTrendCaption(active, trendDelta, days, unit, pts.length)
+  // Single-metric extras: trendline, cumulative area, Y axis labels, caption
+  const solo = !isMulti ? seriesData[0] : null
 
-  const bestId = useMemo(() => {
-    if (!pts.length) return null
-    if (active.better === 'lower') return pts.reduce((b, p) => p.y < b.y ? p : b).run_id
-    if (active.better === 'higher') return pts.reduce((b, p) => p.y > b.y ? p : b).run_id
-    return null
-  }, [pts, active])
+  const soloTrend = useMemo(() => {
+    if (!solo) return null
+    const { pts, yMin, ySpan } = solo
+    const ts2 = pts.map(p => p.t), ys = pts.map(p => p.y)
+    const n = pts.length
+    const tm = ts2.reduce((s, v) => s + v, 0) / n
+    const ym = ys.reduce((s, v) => s + v, 0) / n
+    let num = 0, den = 0
+    for (let i = 0; i < n; i++) { num += (ts2[i] - tm) * (ys[i] - ym); den += (ts2[i] - tm) ** 2 }
+    const slope = den ? num / den : 0
+    const fitStart = ym + slope * (tMin - tm)
+    const fitEnd = ym + slope * (tMax - tm)
+    return { fitStart, fitEnd, delta: fitEnd - fitStart, yMin, ySpan }
+  }, [solo, tMin, tMax])
+
+  const cumulPath = useMemo(() => {
+    if (!solo || solo.metric.id !== 'distance') return null
+    let sum = 0
+    const pts2 = chrono
+      .filter(r => r.distance_km > 0 && r.run_start)
+      .map(r => { sum += kmToUnit(r.distance_km, unit); return { t: new Date(r.run_start).getTime(), c: sum } })
+    if (pts2.length < 2) return null
+    const cMax = Math.max(...pts2.map(c => c.c)) || 1
+    const cToY = (c: number) => MT + CH - (c / cMax) * CH
+    return `M${toX(pts2[0].t).toFixed(1)},${(MT + CH).toFixed(1)}L` +
+      pts2.map(c => `${toX(c.t).toFixed(1)},${cToY(c.c).toFixed(1)}`).join('L') +
+      `L${toX(pts2[pts2.length - 1].t).toFixed(1)},${(MT + CH).toFixed(1)}Z`
+  }, [solo, chrono, unit])
+
+  const soloYTicks = solo
+    ? [solo.yMin + solo.ySpan * 0.06, solo.yMin + solo.ySpan / 2, solo.yMax - solo.ySpan * 0.06]
+    : null
+
+  const caption = solo && soloTrend
+    ? buildTrendCaption(solo.metric, soloTrend.delta, days, unit, solo.pts.length)
+    : null
+
+  const bestIds = useMemo(() =>
+    new Map(seriesData.map(s => {
+      if (s.metric.better === 'lower') return [s.metric.id, s.pts.reduce((b, p) => p.y < b.y ? p : b).run_id]
+      if (s.metric.better === 'higher') return [s.metric.id, s.pts.reduce((b, p) => p.y > b.y ? p : b).run_id]
+      return [s.metric.id, null]
+    })),
+    [seriesData])
+
+  // Earliest point across all series for date labels
+  const firstPt = seriesData[0].pts[0]
+  const lastPt = seriesData[0].pts[seriesData[0].pts.length - 1]
+
+  // Hovered run data across all series
+  const hoveredValues = useMemo(() => {
+    if (!hoverRunId) return null
+    const results = seriesData
+      .map(s => {
+        const pt = s.pts.find(p => p.run_id === hoverRunId)
+        if (!pt) return null
+        return { metric: s.metric, pt, y: pt.y, cy: toY(pt.y, s.yMin, s.ySpan) }
+      })
+      .filter(Boolean)
+    if (!results.length) return null
+    const cx = toX(results[0].pt.t)
+    return { cx, date: results[0].pt.date, run_id: hoverRunId, rows: results }
+  }, [hoverRunId, seriesData])
 
   return (
     <div className={`${styles.card} ${styles.scatter}`}>
       <h3 className={styles.scatterTitle}>How my running is trending</h3>
       <p className={styles.scatterDesc}>
-        Every run over time. Pick a metric to see how it is moving. The dashed line is the
+        Every run over time. Select one or more metrics to compare. The dashed line is the
         overall trend. Click any point to load that run above.
       </p>
 
       <div className={styles.trendChips}>
         {TREND_METRICS.map(m => {
-          const isActive = metric === m.id
+          const isActive = activeMetrics.has(m.id)
           return (
             <button key={m.id} type="button"
               className={`${styles.trendChip} ${isActive ? styles.trendChipActive : ''}`}
-              style={isActive ? {
-                borderColor: m.color,
-                color: m.color,
-                background: `${m.color}18`,
-              } : undefined}
-              onClick={() => setMetric(m.id)}>
+              style={isActive ? { borderColor: m.color, color: m.color, background: `${m.color}18` } : undefined}
+              onClick={() => toggleMetric(m.id)}>
               {m.label}
             </button>
           )
         })}
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%' }} onMouseLeave={() => setHover(null)}>
-        {yTicks.map((v, i) => (
+      {isMulti && (
+        <p className={styles.trendNormNote}>
+          Multiple metrics selected, each normalized to its own range so they fit the same scale.
+        </p>
+      )}
+
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%' }} onMouseLeave={() => setHoverRunId(null)}>
+
+        {/* Y axis: real values for single, hidden for multi */}
+        {soloYTicks && solo && soloYTicks.map((v, i) => (
           <g key={i}>
-            <line x1={ML} y1={toY(v)} x2={W - MR} y2={toY(v)}
+            <line x1={ML} y1={toY(v, solo.yMin, solo.ySpan)} x2={W - MR} y2={toY(v, solo.yMin, solo.ySpan)}
               stroke="var(--run-grid)" strokeWidth="1" />
-            <text x={ML - 8} y={toY(v) + 3} fontSize="8" fill="var(--run-axis)"
-              fontFamily="system-ui" textAnchor="end">{metricFmt(active.id, v)}</text>
+            <text x={ML - 8} y={toY(v, solo.yMin, solo.ySpan) + 3} fontSize="8" fill="var(--run-axis)"
+              fontFamily="system-ui" textAnchor="end">{metricFmt(solo.metric.id, v)}</text>
           </g>
         ))}
 
+        {/* Grid lines for multi mode (fixed 3 bands) */}
+        {isMulti && [0.1, 0.5, 0.9].map((pct, i) => (
+          <line key={i} x1={ML} y1={MT + CH * (1 - pct)} x2={W - MR} y2={MT + CH * (1 - pct)}
+            stroke="var(--run-grid)" strokeWidth="1" />
+        ))}
+
+        {/* X date labels */}
         <text x={ML} y={H - 8} fontSize="9" fill="var(--run-axis-label)" fontFamily="system-ui">
-          {fmtDate(pts[0].date, { month: 'short', day: 'numeric' })}
+          {fmtDate(firstPt.date, { month: 'short', day: 'numeric' })}
         </text>
         <text x={W - MR} y={H - 8} fontSize="9" fill="var(--run-axis-label)"
           fontFamily="system-ui" textAnchor="end">
-          {fmtDate(pts[pts.length - 1].date, { month: 'short', day: 'numeric' })}
+          {fmtDate(lastPt.date, { month: 'short', day: 'numeric' })}
         </text>
 
+        {/* Cumulative distance area (solo distance only) */}
         {cumulPath && <path d={cumulPath} fill={`${BLUE}14`} stroke="none" />}
 
-        {pts.length >= 3 && (
-          <line x1={toX(tMin)} y1={toY(fitStart)} x2={toX(tMax)} y2={toY(fitEnd)}
-            stroke={active.color} strokeWidth="1.5" strokeDasharray="5 4" opacity="0.5" />
-        )}
+        {/* Per-series: trendline + line + dots */}
+        {seriesData.map(s => {
+          const { metric: m, pts, yMin, ySpan } = s
+          const linePath = 'M' + pts.map(p =>
+            `${toX(p.t).toFixed(1)},${toY(p.y, yMin, ySpan).toFixed(1)}`).join('L')
 
-        <path d={linePath} fill="none" stroke={active.color} strokeWidth="2.5"
-          strokeLinejoin="round" strokeLinecap="round" opacity="0.9" />
+          // Trendline
+          let fitEl = null
+          if (pts.length >= 3) {
+            const ts2 = pts.map(p => p.t), ys = pts.map(p => p.y)
+            const n = pts.length
+            const tm2 = ts2.reduce((s2, v) => s2 + v, 0) / n
+            const ym2 = ys.reduce((s2, v) => s2 + v, 0) / n
+            let num = 0, den = 0
+            for (let i = 0; i < n; i++) { num += (ts2[i] - tm2) * (ys[i] - ym2); den += (ts2[i] - tm2) ** 2 }
+            const sl = den ? num / den : 0
+            const fs = ym2 + sl * (tMin - tm2)
+            const fe = ym2 + sl * (tMax - tm2)
+            fitEl = (
+              <line x1={toX(tMin)} y1={toY(fs, yMin, ySpan)} x2={toX(tMax)} y2={toY(fe, yMin, ySpan)}
+                stroke={m.color} strokeWidth="1.5" strokeDasharray="5 4" opacity="0.45" />
+            )
+          }
 
-        {pts.map(p => {
-          const isSel = p.run_id === selectedId
-          const isHov = hover?.run_id === p.run_id
-          const cx = toX(p.t), cy = toY(p.y)
-          const isBest = p.run_id === bestId
-          const showLabel = isSel || isHov
-
-          // Decide label anchor: push above or below depending on space
-          const labelAbove = cy > MT + 36
-          const labelY = labelAbove ? cy - 14 : cy + 22
-          const valStr = `${metricFmt(active.id, p.y)} ${metricUnitLabel(active.id, unit)}`
-          const dateStr = fmtDate(p.date, { month: 'short', day: 'numeric' })
-          // Clamp label X so it never clips past chart edges
-          const labelX = Math.min(Math.max(cx, ML + 26), W - MR - 26)
+          const bestId = bestIds.get(m.id) ?? null
 
           return (
-            <g key={p.run_id} style={{ cursor: 'pointer' }}
-              onClick={() => onSelect(p.run_id)} onMouseEnter={() => setHover(p)}>
-              {/* Larger invisible hit area */}
-              <circle cx={cx} cy={cy} r="14" fill="transparent" />
+            <g key={m.id}>
+              {fitEl}
+              <path d={linePath} fill="none" stroke={m.color} strokeWidth="2.5"
+                strokeLinejoin="round" strokeLinecap="round" opacity="0.9" />
 
-              {/* Selection ring */}
-              {isSel && <circle cx={cx} cy={cy} r="10" fill="none"
-                stroke={active.color} strokeWidth="2" opacity="0.6" />}
+              {pts.map(p => {
+                const isSel = p.run_id === selectedId
+                const isHov = p.run_id === hoverRunId
+                const cx = toX(p.t), cy = toY(p.y, yMin, ySpan)
+                const isBest = p.run_id === bestId
+                const showLabel = !isMulti && (isSel || isHov)
+                const labelAbove = cy > MT + 36
+                const labelY = labelAbove ? cy - 14 : cy + 22
+                const labelX = Math.min(Math.max(cx, ML + 26), W - MR - 26)
 
-              {/* Dot */}
-              <circle cx={cx} cy={cy} r={isSel || isHov ? 6 : 4.5}
-                fill={active.color} opacity={isSel ? 1 : isHov ? 0.95 : 0.8} />
-
-              {/* Best-value badge */}
-              {isBest && !showLabel && (
-                <g pointerEvents="none">
-                  <text x={cx} y={cy - 11} textAnchor="middle" fontSize="8" fontWeight="700"
-                    fill={active.color} fontFamily="system-ui" opacity="0.9">
-                    {active.better === 'lower' ? 'Best' : 'Best'}
-                  </text>
-                </g>
-              )}
-
-              {/* Inline label on hover or selection */}
-              {showLabel && (
-                <g pointerEvents="none">
-                  <text x={labelX} y={labelAbove ? labelY : labelY - 2}
-                    textAnchor="middle" fontSize="10" fontWeight="700"
-                    fill={active.color} fontFamily="system-ui">
-                    {valStr}
-                  </text>
-                  <text x={labelX} y={labelAbove ? labelY - 11 : labelY + 10}
-                    textAnchor="middle" fontSize="8"
-                    fill="var(--run-axis-label)" fontFamily="system-ui">
-                    {dateStr}
-                  </text>
-                </g>
-              )}
+                return (
+                  <g key={p.run_id} style={{ cursor: 'pointer' }}
+                    onClick={() => onSelect(p.run_id)}
+                    onMouseEnter={() => setHoverRunId(p.run_id)}>
+                    <circle cx={cx} cy={cy} r="14" fill="transparent" />
+                    {isSel && <circle cx={cx} cy={cy} r="10" fill="none"
+                      stroke={m.color} strokeWidth="2" opacity="0.6" />}
+                    <circle cx={cx} cy={cy} r={isSel || isHov ? 6 : 4.5}
+                      fill={m.color} opacity={isSel ? 1 : isHov ? 0.95 : 0.8} />
+                    {isBest && !showLabel && (
+                      <text x={cx} y={cy - 11} textAnchor="middle" fontSize="8" fontWeight="700"
+                        fill={m.color} fontFamily="system-ui" opacity="0.9" pointerEvents="none">
+                        Best
+                      </text>
+                    )}
+                    {showLabel && (
+                      <g pointerEvents="none">
+                        <text x={labelX} y={labelAbove ? labelY : labelY - 2}
+                          textAnchor="middle" fontSize="10" fontWeight="700"
+                          fill={m.color} fontFamily="system-ui">
+                          {metricFmt(m.id, p.y)} {metricUnitLabel(m.id, unit)}
+                        </text>
+                        <text x={labelX} y={labelAbove ? labelY - 11 : labelY + 10}
+                          textAnchor="middle" fontSize="8"
+                          fill="var(--run-axis-label)" fontFamily="system-ui">
+                          {fmtDate(p.date, { month: 'short', day: 'numeric' })}
+                        </text>
+                      </g>
+                    )}
+                  </g>
+                )
+              })}
             </g>
           )
         })}
+
+        {/* Multi-mode hover: vertical rule + stacked tooltip */}
+        {isMulti && hoveredValues && (() => {
+          const { cx, date, rows } = hoveredValues
+          const rowH = 16, pad = 8
+          const ttH = pad * 2 + 14 + rowH * rows.length
+          const ttW = 130
+          const tx = Math.min(Math.max(cx, ML + ttW / 2 + 4), W - MR - ttW / 2 - 4)
+          const ty = MT + 4
+          return (
+            <g pointerEvents="none">
+              <line x1={cx} y1={MT} x2={cx} y2={MT + CH}
+                stroke="var(--run-border-hover)" strokeWidth="1" strokeDasharray="3 3" />
+              <rect x={tx - ttW / 2} y={ty} width={ttW} height={ttH} rx="5"
+                fill="var(--run-tooltip-bg)" stroke="var(--run-border)" />
+              <text x={tx} y={ty + pad + 9} textAnchor="middle" fontSize="9"
+                fill="var(--run-tooltip-text)" fontFamily="system-ui" fontWeight="600">
+                {fmtDate(date, { month: 'short', day: 'numeric' })}
+              </text>
+              {rows.map((row, i) => (
+                <g key={row.metric.id}>
+                  <circle cx={tx - ttW / 2 + 12} cy={ty + pad + 14 + rowH * i + rowH / 2}
+                    r="3" fill={row.metric.color} />
+                  <text x={tx - ttW / 2 + 20} y={ty + pad + 14 + rowH * i + rowH / 2 + 3}
+                    fontSize="9" fill="var(--run-tooltip-text)" fontFamily="system-ui">
+                    {row.metric.label}
+                  </text>
+                  <text x={tx + ttW / 2 - 8} y={ty + pad + 14 + rowH * i + rowH / 2 + 3}
+                    fontSize="9" fontWeight="700" fill={row.metric.color}
+                    fontFamily="system-ui" textAnchor="end">
+                    {metricFmt(row.metric.id, row.y)} {metricUnitLabel(row.metric.id, unit)}
+                  </text>
+                </g>
+              ))}
+            </g>
+          )
+        })()}
       </svg>
 
       {caption && <p className={styles.trendCaption}>{caption}</p>}
