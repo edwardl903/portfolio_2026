@@ -508,6 +508,41 @@ html[data-theme="dark"] .page {
   color: var(--run-text-muted);
 }
 
+.trendChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.trendChip {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--run-border);
+  background: transparent;
+  color: var(--run-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.trendChip:hover {
+  border-color: var(--run-border-hover);
+  color: var(--run-text);
+}
+
+.trendChipActive {
+  background: color-mix(in srgb, var(--run-surface) 60%, transparent);
+  font-weight: 700;
+}
+
+.trendCaption {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: var(--run-text-muted);
+}
+
 .filmstrip {
   display: flex;
   gap: 0.75rem;

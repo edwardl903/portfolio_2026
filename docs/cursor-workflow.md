@@ -99,6 +99,7 @@ Files: ChessV2.jsx, styles.css
 
 | Date | Change |
 |---|---|
+| 2026-07-13 | Running page: added `TrendChart` (metric-selector line chart) showing pace, distance, recovery, run HR, sleep, and strain trended over time; time-based X axis, least-squares trendline with adaptive caption, faint cumulative-distance area behind the distance line, points click to select the run in the Stage above (syncs with scatter); new `.trendChips`/`.trendChip`/`.trendCaption` styles |
 | 2026-07-11 | Migrated source to TypeScript: renamed 32 `.jsx`→`.tsx` and 3 hooks `.js`→`.ts` (git mv), added `tsconfig.json` + `vite-env.d.ts` + `typecheck` script, typed hooks/Lightbox/ClickableExpandableImage/Navbar/Layout/Contact/ChessStats/Running, wired `typescript-eslint`, removed unused `prop-types`; pinned TypeScript to 5.x (typescript-eslint does not yet support TS 7) |
 | 2026-06-21 | ChessV2: interactive chart with Y/X axes, gridlines, crosshair tooltip; opening hover tooltips + win%; rating_diff badge on game rows; dbt last-run timestamp |
 | 2026-06-21 | ChessV2: enhanced dashboard -- W/L/D donut chart, activity heatmap (90-day), stacked opening bars, dual-line rating+accuracy chart, outcome + date-range filters |

@@ -573,6 +573,247 @@ function RecoveryScatter({ runs, selectedId, onSelect, unit = 'km' }) {
   )
 }
 
+// ── Trends over time ──────────────────────────────────────────────────────────
+const TREND_METRICS = [
+  { id: 'pace',     label: 'Pace',     color: ORANGE,    better: 'lower' },
+  { id: 'distance', label: 'Distance', color: BLUE,      better: 'higher' },
+  { id: 'recovery', label: 'Recovery', color: GREEN,     better: 'higher' },
+  { id: 'run_hr',   label: 'Run HR',   color: RED,       better: null },
+  { id: 'sleep',    label: 'Sleep',    color: '#818cf8', better: 'higher' },
+  { id: 'strain',   label: 'Strain',   color: '#facc15', better: null },
+]
+
+function metricValue(run, id, unit) {
+  switch (id) {
+    case 'pace':
+      if (run.pace_min_per_km == null || !(run.distance_km > 0)) return null
+      return unit === 'mi' ? run.pace_min_per_km * MI_PACE_FACTOR : run.pace_min_per_km
+    case 'distance':
+      return run.distance_km > 0 ? kmToUnit(run.distance_km, unit) : null
+    case 'recovery':
+      return run.next_day_recovery ?? null
+    case 'run_hr':
+      return run.run_avg_hr ?? null
+    case 'sleep':
+      return run.next_day_sleep_hours != null ? Number(run.next_day_sleep_hours) : null
+    case 'strain':
+      return run.same_day_strain != null ? Number(run.same_day_strain) : null
+    default:
+      return null
+  }
+}
+
+function metricFmt(id, v) {
+  if (v == null) return '--'
+  if (id === 'pace') {
+    // v is already converted to min per selected unit, so format directly.
+    const m = Math.floor(v)
+    const s = Math.round((v - m) * 60)
+    return `${m}:${String(s).padStart(2, '0')}`
+  }
+  if (id === 'distance' || id === 'sleep' || id === 'strain') return v.toFixed(1)
+  return String(Math.round(v))
+}
+
+function metricUnitLabel(id, unit) {
+  switch (id) {
+    case 'pace': return `min/${unit}`
+    case 'distance': return unit
+    case 'recovery': return 'pts'
+    case 'run_hr': return 'bpm'
+    case 'sleep': return 'hrs'
+    default: return ''
+  }
+}
+
+function buildTrendCaption(metric, delta, days, unit, count) {
+  if (count < 3) return null
+  const up = delta > 0
+  const mag = Math.abs(delta)
+  const dir = up ? 'up' : 'down'
+  switch (metric.id) {
+    case 'pace': {
+      const secs = Math.round(mag * 60)
+      if (secs < 2) return `Pace has held steady across ${days} days.`
+      return up
+        ? `Pace drifting up about ${secs}s/${unit} over ${days} days, a touch slower.`
+        : `Pace trending down about ${secs}s/${unit} over ${days} days. Getting faster.`
+    }
+    case 'distance':
+      return `Run distance trending ${dir} about ${mag.toFixed(1)} ${unit} over ${days} days.`
+    case 'recovery':
+      return `Next-day recovery trending ${dir} about ${Math.round(mag)} pts over ${days} days.`
+    case 'sleep':
+      return `Sleep trending ${dir} about ${mag.toFixed(1)} hrs over ${days} days.`
+    case 'run_hr':
+      return `Run avg HR trending ${dir} about ${Math.round(mag)} bpm over ${days} days.`
+    case 'strain':
+      return `Day strain trending ${dir} about ${mag.toFixed(1)} over ${days} days.`
+    default:
+      return null
+  }
+}
+
+function TrendChart({ runs, selectedId, onSelect, unit = 'km' }) {
+  const [metric, setMetric] = useState('pace')
+  const [hover, setHover] = useState(null)
+  const W = 720, H = 320
+  const ML = 46, MR = 20, MT = 24, MB = 40
+  const CW = W - ML - MR, CH = H - MT - MB
+
+  const active = TREND_METRICS.find(m => m.id === metric) ?? TREND_METRICS[0]
+
+  const { pts, chrono } = useMemo(() => {
+    const sorted = [...runs].sort(
+      (a, b) => new Date(a.run_start).getTime() - new Date(b.run_start).getTime(),
+    )
+    const points = sorted
+      .map(r => ({
+        run_id: r.run_id,
+        t: new Date(r.run_start).getTime(),
+        date: r.run_date,
+        y: metricValue(r, metric, unit),
+      }))
+      .filter(p => p.y != null && !Number.isNaN(p.t))
+    return { pts: points, chrono: sorted }
+  }, [runs, metric, unit])
+
+  const cumul = useMemo(() => {
+    if (metric !== 'distance') return null
+    let sum = 0
+    return chrono
+      .filter(r => r.distance_km > 0 && r.run_start)
+      .map(r => {
+        sum += kmToUnit(r.distance_km, unit)
+        return { t: new Date(r.run_start).getTime(), c: sum }
+      })
+  }, [chrono, metric, unit])
+
+  if (pts.length < 2) return null
+
+  const ts = pts.map(p => p.t)
+  const ys = pts.map(p => p.y)
+  const tMin = Math.min(...ts), tMax = Math.max(...ts)
+  const tSpan = (tMax - tMin) || 1
+  let yLo = Math.min(...ys), yHi = Math.max(...ys)
+  const pad = ((yHi - yLo) || 1) * 0.12
+  yLo -= pad; yHi += pad
+  const ySpan = (yHi - yLo) || 1
+
+  const toX = t => ML + ((t - tMin) / tSpan) * CW
+  const toY = v => MT + CH - ((v - yLo) / ySpan) * CH
+
+  const linePath = 'M' + pts.map(p => `${toX(p.t).toFixed(1)},${toY(p.y).toFixed(1)}`).join('L')
+
+  const n = pts.length
+  const tm = ts.reduce((s, v) => s + v, 0) / n
+  const ym = ys.reduce((s, v) => s + v, 0) / n
+  let num = 0, den = 0
+  for (let i = 0; i < n; i++) { num += (ts[i] - tm) * (ys[i] - ym); den += (ts[i] - tm) ** 2 }
+  const slope = den ? num / den : 0
+  const fitStart = ym + slope * (tMin - tm)
+  const fitEnd = ym + slope * (tMax - tm)
+  const trendDelta = fitEnd - fitStart
+  const days = Math.max(1, Math.round(tSpan / 86400000))
+
+  let cumulPath = null
+  if (cumul && cumul.length > 1) {
+    const cMax = Math.max(...cumul.map(c => c.c)) || 1
+    const cToY = c => MT + CH - (c / cMax) * CH
+    cumulPath =
+      `M${toX(cumul[0].t).toFixed(1)},${(MT + CH).toFixed(1)}L` +
+      cumul.map(c => `${toX(c.t).toFixed(1)},${cToY(c.c).toFixed(1)}`).join('L') +
+      `L${toX(cumul[cumul.length - 1].t).toFixed(1)},${(MT + CH).toFixed(1)}Z`
+  }
+
+  const yTicks = [yLo + ySpan * 0.06, yLo + ySpan / 2, yHi - ySpan * 0.06]
+  const caption = buildTrendCaption(active, trendDelta, days, unit, pts.length)
+
+  return (
+    <div className={`${styles.card} ${styles.scatter}`}>
+      <h3 className={styles.scatterTitle}>How my running is trending</h3>
+      <p className={styles.scatterDesc}>
+        Every run over time. Pick a metric to see how it is moving. The dashed line is the
+        overall trend. Click any point to load that run above.
+      </p>
+
+      <div className={styles.trendChips}>
+        {TREND_METRICS.map(m => (
+          <button key={m.id} type="button"
+            className={`${styles.trendChip} ${metric === m.id ? styles.trendChipActive : ''}`}
+            style={metric === m.id ? { borderColor: m.color, color: m.color } : undefined}
+            onClick={() => setMetric(m.id)}>
+            {m.label}
+          </button>
+        ))}
+      </div>
+
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%' }} onMouseLeave={() => setHover(null)}>
+        {yTicks.map((v, i) => (
+          <g key={i}>
+            <line x1={ML} y1={toY(v)} x2={W - MR} y2={toY(v)}
+              stroke="var(--run-grid)" strokeWidth="1" />
+            <text x={ML - 8} y={toY(v) + 3} fontSize="8" fill="var(--run-axis)"
+              fontFamily="system-ui" textAnchor="end">{metricFmt(active.id, v)}</text>
+          </g>
+        ))}
+
+        <text x={ML} y={H - 8} fontSize="9" fill="var(--run-axis-label)" fontFamily="system-ui">
+          {fmtDate(pts[0].date, { month: 'short', day: 'numeric' })}
+        </text>
+        <text x={W - MR} y={H - 8} fontSize="9" fill="var(--run-axis-label)"
+          fontFamily="system-ui" textAnchor="end">
+          {fmtDate(pts[pts.length - 1].date, { month: 'short', day: 'numeric' })}
+        </text>
+
+        {cumulPath && <path d={cumulPath} fill={`${BLUE}14`} stroke="none" />}
+
+        {pts.length >= 3 && (
+          <line x1={toX(tMin)} y1={toY(fitStart)} x2={toX(tMax)} y2={toY(fitEnd)}
+            stroke={active.color} strokeWidth="1.5" strokeDasharray="5 4" opacity="0.5" />
+        )}
+
+        <path d={linePath} fill="none" stroke={active.color} strokeWidth="2.5"
+          strokeLinejoin="round" strokeLinecap="round" opacity="0.9" />
+
+        {pts.map(p => {
+          const isSel = p.run_id === selectedId
+          return (
+            <g key={p.run_id} style={{ cursor: 'pointer' }}
+              onClick={() => onSelect(p.run_id)} onMouseEnter={() => setHover(p)}>
+              {isSel && <circle cx={toX(p.t)} cy={toY(p.y)} r="9" fill="none"
+                stroke={active.color} strokeWidth="2" />}
+              <circle cx={toX(p.t)} cy={toY(p.y)} r={isSel ? 5 : 4}
+                fill={active.color} opacity={isSel ? 1 : 0.85} />
+            </g>
+          )
+        })}
+
+        {hover && (() => {
+          const tx = Math.min(Math.max(toX(hover.t), 60), W - 60)
+          const ty = Math.max(toY(hover.y) - 44, 4)
+          return (
+            <g pointerEvents="none">
+              <rect x={tx - 56} y={ty} width="112" height="36" rx="5"
+                fill="var(--run-tooltip-bg)" stroke="var(--run-border)" />
+              <text x={tx} y={ty + 14} textAnchor="middle" fontSize="9"
+                fill="var(--run-tooltip-text)" fontFamily="system-ui">
+                {fmtDate(hover.date, { month: 'short', day: 'numeric' })}
+              </text>
+              <text x={tx} y={ty + 28} textAnchor="middle" fontSize="11" fontWeight="700"
+                fill={active.color} fontFamily="system-ui">
+                {metricFmt(active.id, hover.y)} {metricUnitLabel(active.id, unit)}
+              </text>
+            </g>
+          )
+        })()}
+      </svg>
+
+      {caption && <p className={styles.trendCaption}>{caption}</p>}
+    </div>
+  )
+}
+
 function PhotoStrip() {
   return (
     <div className={styles.photoGrid}>
@@ -846,6 +1087,7 @@ function Running() {
               </div>
             </div>
 
+            <TrendChart runs={runs} selectedId={selectedId} onSelect={onSelectQuiet} unit={unit} />
             <PhotoStrip />
             <RecoveryScatter runs={runs} selectedId={selectedId} onSelect={onSelectQuiet} unit={unit} />
 
