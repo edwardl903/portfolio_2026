@@ -924,7 +924,7 @@ function Running() {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
-  const [unit, setUnit] = useState('km')
+  const [unit, setUnit] = useState('mi')
 
   useEffect(() => {
     fetch(DATA_URL)
