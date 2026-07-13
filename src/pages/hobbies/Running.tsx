@@ -729,6 +729,13 @@ function TrendChart({ runs, selectedId, onSelect, unit = 'km' }) {
   const yTicks = [yLo + ySpan * 0.06, yLo + ySpan / 2, yHi - ySpan * 0.06]
   const caption = buildTrendCaption(active, trendDelta, days, unit, pts.length)
 
+  const bestId = useMemo(() => {
+    if (!pts.length) return null
+    if (active.better === 'lower') return pts.reduce((b, p) => p.y < b.y ? p : b).run_id
+    if (active.better === 'higher') return pts.reduce((b, p) => p.y > b.y ? p : b).run_id
+    return null
+  }, [pts, active])
+
   return (
     <div className={`${styles.card} ${styles.scatter}`}>
       <h3 className={styles.scatterTitle}>How my running is trending</h3>
@@ -738,14 +745,21 @@ function TrendChart({ runs, selectedId, onSelect, unit = 'km' }) {
       </p>
 
       <div className={styles.trendChips}>
-        {TREND_METRICS.map(m => (
-          <button key={m.id} type="button"
-            className={`${styles.trendChip} ${metric === m.id ? styles.trendChipActive : ''}`}
-            style={metric === m.id ? { borderColor: m.color, color: m.color } : undefined}
-            onClick={() => setMetric(m.id)}>
-            {m.label}
-          </button>
-        ))}
+        {TREND_METRICS.map(m => {
+          const isActive = metric === m.id
+          return (
+            <button key={m.id} type="button"
+              className={`${styles.trendChip} ${isActive ? styles.trendChipActive : ''}`}
+              style={isActive ? {
+                borderColor: m.color,
+                color: m.color,
+                background: `${m.color}18`,
+              } : undefined}
+              onClick={() => setMetric(m.id)}>
+              {m.label}
+            </button>
+          )
+        })}
       </div>
 
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%' }} onMouseLeave={() => setHover(null)}>
@@ -778,35 +792,61 @@ function TrendChart({ runs, selectedId, onSelect, unit = 'km' }) {
 
         {pts.map(p => {
           const isSel = p.run_id === selectedId
+          const isHov = hover?.run_id === p.run_id
+          const cx = toX(p.t), cy = toY(p.y)
+          const isBest = p.run_id === bestId
+          const showLabel = isSel || isHov
+
+          // Decide label anchor: push above or below depending on space
+          const labelAbove = cy > MT + 36
+          const labelY = labelAbove ? cy - 14 : cy + 22
+          const valStr = `${metricFmt(active.id, p.y)} ${metricUnitLabel(active.id, unit)}`
+          const dateStr = fmtDate(p.date, { month: 'short', day: 'numeric' })
+          // Clamp label X so it never clips past chart edges
+          const labelX = Math.min(Math.max(cx, ML + 26), W - MR - 26)
+
           return (
             <g key={p.run_id} style={{ cursor: 'pointer' }}
               onClick={() => onSelect(p.run_id)} onMouseEnter={() => setHover(p)}>
-              {isSel && <circle cx={toX(p.t)} cy={toY(p.y)} r="9" fill="none"
-                stroke={active.color} strokeWidth="2" />}
-              <circle cx={toX(p.t)} cy={toY(p.y)} r={isSel ? 5 : 4}
-                fill={active.color} opacity={isSel ? 1 : 0.85} />
+              {/* Larger invisible hit area */}
+              <circle cx={cx} cy={cy} r="14" fill="transparent" />
+
+              {/* Selection ring */}
+              {isSel && <circle cx={cx} cy={cy} r="10" fill="none"
+                stroke={active.color} strokeWidth="2" opacity="0.6" />}
+
+              {/* Dot */}
+              <circle cx={cx} cy={cy} r={isSel || isHov ? 6 : 4.5}
+                fill={active.color} opacity={isSel ? 1 : isHov ? 0.95 : 0.8} />
+
+              {/* Best-value badge */}
+              {isBest && !showLabel && (
+                <g pointerEvents="none">
+                  <text x={cx} y={cy - 11} textAnchor="middle" fontSize="8" fontWeight="700"
+                    fill={active.color} fontFamily="system-ui" opacity="0.9">
+                    {active.better === 'lower' ? 'Best' : 'Best'}
+                  </text>
+                </g>
+              )}
+
+              {/* Inline label on hover or selection */}
+              {showLabel && (
+                <g pointerEvents="none">
+                  <text x={labelX} y={labelAbove ? labelY : labelY - 2}
+                    textAnchor="middle" fontSize="10" fontWeight="700"
+                    fill={active.color} fontFamily="system-ui">
+                    {valStr}
+                  </text>
+                  <text x={labelX} y={labelAbove ? labelY - 11 : labelY + 10}
+                    textAnchor="middle" fontSize="8"
+                    fill="var(--run-axis-label)" fontFamily="system-ui">
+                    {dateStr}
+                  </text>
+                </g>
+              )}
             </g>
           )
         })}
-
-        {hover && (() => {
-          const tx = Math.min(Math.max(toX(hover.t), 60), W - 60)
-          const ty = Math.max(toY(hover.y) - 44, 4)
-          return (
-            <g pointerEvents="none">
-              <rect x={tx - 56} y={ty} width="112" height="36" rx="5"
-                fill="var(--run-tooltip-bg)" stroke="var(--run-border)" />
-              <text x={tx} y={ty + 14} textAnchor="middle" fontSize="9"
-                fill="var(--run-tooltip-text)" fontFamily="system-ui">
-                {fmtDate(hover.date, { month: 'short', day: 'numeric' })}
-              </text>
-              <text x={tx} y={ty + 28} textAnchor="middle" fontSize="11" fontWeight="700"
-                fill={active.color} fontFamily="system-ui">
-                {metricFmt(active.id, hover.y)} {metricUnitLabel(active.id, unit)}
-              </text>
-            </g>
-          )
-        })()}
       </svg>
 
       {caption && <p className={styles.trendCaption}>{caption}</p>}
