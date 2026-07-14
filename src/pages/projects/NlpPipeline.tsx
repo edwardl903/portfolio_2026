@@ -1,4 +1,5 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function NlpPipeline() {
   return (
@@ -175,6 +176,8 @@ function NlpPipeline() {
               with.
             </p>
           </div>
+
+          <ProjectNav currentId="nlp-pipeline" />
         </div>
       </div>
     </section>

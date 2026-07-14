@@ -1,4 +1,5 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function MovieRecommendations() {
   return (
@@ -192,6 +193,8 @@ function MovieRecommendations() {
               on MAE.
             </p>
           </div>
+
+          <ProjectNav currentId="movie-recommendations" />
         </div>
       </div>
     </section>

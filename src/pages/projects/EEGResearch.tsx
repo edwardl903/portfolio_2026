@@ -1,4 +1,5 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function EEGResearch() {
   return (
@@ -76,6 +77,8 @@ function EEGResearch() {
               and visualization.
             </p>
           </div>
+
+          <ProjectNav currentId="eeg-research" />
         </div>
       </div>
     </section>

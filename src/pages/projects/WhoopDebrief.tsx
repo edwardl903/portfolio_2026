@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function WhoopDebrief() {
   return (
@@ -332,6 +333,7 @@ function WhoopDebrief() {
             </p>
           </div>
 
+          <ProjectNav currentId="whoop-debrief" />
         </div>
       </div>
     </section>

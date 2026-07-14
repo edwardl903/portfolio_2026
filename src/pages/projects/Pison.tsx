@@ -1,4 +1,5 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function Pison() {
   return (
@@ -172,6 +173,8 @@ function Pison() {
               are trying to ship hardware, not a dissertation.
             </p>
           </div>
+
+          <ProjectNav currentId="etl-tools" />
         </div>
       </div>
     </section>

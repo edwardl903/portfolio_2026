@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 const CHESSLYTICS_URL = 'https://www.chesslytics.xyz'
 
@@ -305,6 +306,8 @@ function ChessLytics() {
               <li>Real tests. The tests folder is mostly wishful thinking right now.</li>
             </ul>
           </div>
+
+          <ProjectNav currentId="chesslytics" />
         </div>
       </div>
     </section>

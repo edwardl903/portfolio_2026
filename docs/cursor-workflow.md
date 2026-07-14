@@ -168,3 +168,4 @@ Files: ChessV2.jsx, styles.css
 | 2026-07-07 | Added static privacy policy page at public/whoop-debrief/privacy/index.html for WHOOP OAuth app registration; served at edward-lai.com/whoop-debrief/privacy |
 | 2026-07-13 | Fixed lightbox "go crazy" bug: changed `transition: all` → `transition: opacity, transform` on `.fade-in` sections; added scrollbar-width compensation + switched body overflow lock to `documentElement` in `Lightbox.tsx` |
 | 2026-07-13 | Fixed lightbox mispositioned/off-screen: wrapped Lightbox return in `createPortal(…, document.body)` so position:fixed escapes the scroll-reveal transform containing block |
+| 2026-07-13 | Added circular project navigation: `ProjectNav` component at bottom of all 9 project pages; prev/next with wrapping, keyboard ← → support, center "N / 9 · All projects" link; shared `src/data/projects.ts` order list |

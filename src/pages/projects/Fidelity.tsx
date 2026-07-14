@@ -1,4 +1,5 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function Fidelity() {
   return (
@@ -82,6 +83,8 @@ function Fidelity() {
               every job after.
             </p>
           </div>
+
+          <ProjectNav currentId="fidelity" />
         </div>
       </div>
     </section>

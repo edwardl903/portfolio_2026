@@ -1,4 +1,5 @@
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function SpotiFriend() {
   return (
@@ -94,6 +95,8 @@ function SpotiFriend() {
               just smaller blast radius when I break something.
             </p>
           </div>
+
+          <ProjectNav currentId="spotifriend" />
         </div>
       </div>
     </section>

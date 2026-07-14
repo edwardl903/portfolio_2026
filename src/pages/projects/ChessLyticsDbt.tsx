@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import ClickableExpandableImage from '../../components/ClickableExpandableImage'
+import ProjectNav from '../../components/ProjectNav'
 
 function ChessLyticsDbt() {
   return (
@@ -260,6 +261,8 @@ function ChessLyticsDbt() {
               tables as a fallback reference for head-to-head history.
             </p>
           </div>
+
+          <ProjectNav currentId="chesslytics-dbt" />
         </div>
       </div>
     </section>
