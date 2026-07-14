@@ -13,29 +13,29 @@ function Analytics() {
             to leave the numbers out in the open.
           </p>
         </div>
+      </div>
 
-        <div className="analytics-frame-card">
-          <div className="analytics-frame-bar">
-            <span className="analytics-frame-dot" aria-hidden="true" />
-            <span className="analytics-frame-label">umami.is</span>
-            <div className="analytics-frame-bar-actions">
-              <a
-                href={UMAMI_ANALYTICS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="analytics-frame-open"
-              >
-                Open dashboard <i className="fas fa-external-link-alt" aria-hidden="true" />
-              </a>
-            </div>
+      <div className="analytics-frame-card">
+        <div className="analytics-frame-bar">
+          <span className="analytics-frame-dot" aria-hidden="true" />
+          <span className="analytics-frame-label">umami.is</span>
+          <div className="analytics-frame-bar-actions">
+            <a
+              href={UMAMI_ANALYTICS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="analytics-frame-open"
+            >
+              Open dashboard <i className="fas fa-external-link-alt" aria-hidden="true" />
+            </a>
           </div>
-          <iframe
-            src={UMAMI_ANALYTICS_URL}
-            title="Umami site analytics dashboard"
-            className="analytics-frame"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
         </div>
+        <iframe
+          src={UMAMI_ANALYTICS_URL}
+          title="Umami site analytics dashboard"
+          className="analytics-frame"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
       </div>
     </section>
   )
