@@ -170,3 +170,5 @@ Files: ChessV2.jsx, styles.css
 | 2026-07-13 | Fixed lightbox mispositioned/off-screen: wrapped Lightbox return in `createPortal(…, document.body)` so position:fixed escapes the scroll-reveal transform containing block |
 | 2026-07-13 | Added circular project navigation: `ProjectNav` component at bottom of all 9 project pages; prev/next with wrapping, keyboard ← → support, center "N / 9 · All projects" link; shared `src/data/projects.ts` order list |
 | 2026-07-13 | Analytics page: Umami iframe card now full-width (moved outside `.container`, removed side borders and border-radius) |
+| 2026-07-14 | Skateboarding: added 6 photos (3 action tricks, 2 board shots, 1 dog) -- converted/resized from repo root, placed in `public/static/images/hobbies/skateboarding/`; replaced grid with portrait-friendly slideshow (prev/next, dots, keyboard arrows, click-to-lightbox); full image visible in tall viewport via `object-fit: contain` |
+| 2026-07-14 | Skateboarding: rewrote page copy in Edward's voice (COVID origin, honest about slow progression, cruiser wheels + transportation framing) |
