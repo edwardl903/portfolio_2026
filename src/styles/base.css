@@ -52,10 +52,18 @@ html {
 
 body {
   font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.75;
   background-color: var(--bg);
   color: var(--text-primary);
   min-height: 100vh;
   /* Do NOT set overflow-x: hidden here — it breaks position:fixed on iOS */
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-sans);
 }
 
 #root {

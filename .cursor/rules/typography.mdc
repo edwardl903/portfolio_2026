@@ -1,0 +1,49 @@
+---
+description: Font and typography rules for portfolio_2026. Enforces the approved stack, token usage, and pairing rationale.
+alwaysApply: true
+---
+
+# Typography
+
+## Approved font stack
+
+Three tokens, defined in `src/styles/base.css`. Do not add new fonts without updating both `index.html` (Google Fonts import) and `base.css`.
+
+| Token | Value | Usage |
+|---|---|---|
+| `--font-sans` | `'Inter', system-ui, sans-serif` | All headings (`h1`–`h3`), body copy, nav links, labels, buttons, form fields, tags |
+| `--font-mono` | `ui-monospace, 'SF Mono', Consolas, monospace` | Code blocks, tech references |
+| `--font-heading` | `'Playfair Display', Georgia, serif` | Defined but not currently applied — reserved for future editorial accents if needed |
+
+## Rationale
+
+**Inter** is used for all headings and body text. This keeps every title and section heading visually consistent across the whole site: hero titles, project titles, contact and analytics page titles, hobby page headers, and section h2s all share the same clean weight and proportions. Mixing a serif for some headings and sans for others was producing inconsistency, so the serif was retired from headings.
+
+**Playfair Display** remains loaded (from Google Fonts in `index.html`) and available via `var(--font-heading)` for future use if a specific editorial accent is needed (e.g. a pull-quote or a single stylized element). Do not apply it to headings without discussing with Edward first.
+
+## Rules
+
+- Always use `var(--font-sans)` or `var(--font-mono)`. Never hardcode a font family string in component CSS or inline styles.
+- All headings (`h1`–`h3`) and body text use `--font-sans`. The global rule in `base.css` covers this — no need to repeat it on individual selectors unless overriding.
+- Do not introduce a fourth font. If a pairing change is needed, update the token value and `index.html` import in one commit.
+
+## Approved alternatives (if replacing Inter)
+
+From the [bestfolios top-10 portfolio fonts](https://bestfolios.medium.com/10-great-fonts-for-portfolio-design-2debfe2f1bb9):
+
+| Option | Font | Feel |
+|---|---|---|
+| Current | Inter | Clean, screen-optimized |
+| Alt A | Montserrat | Modern, geometric |
+| Alt B | League Spartan | Bold, contemporary |
+| Alt C | Open Sans | Friendly, approachable |
+
+## Type scale
+
+Do not change sizes without updating `docs/design-system.md`.
+
+- `h1` hero: `clamp(3rem, 7vw, 5.5rem)`, weight 700, line-height 1.05
+- `h2` section: `~2.25rem`, weight 700
+- `h3`: `~1.4rem`
+- Body: `1rem`–`1.05rem`, line-height 1.7–1.8
+- Caption/muted: `0.8rem`–`0.875rem`
