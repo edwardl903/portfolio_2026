@@ -22,4 +22,10 @@ While editing this repo:
 - No em dashes in user-facing copy; keep tone direct, not "AI brochure" tone.
 - When committing: write detailed commit messages that describe what changed, why, and which files were affected. Reference the user prompt intent.
 
+### Copy — banned patterns
+
+- **Stacked negation ("No X, no Y")**: phrases like "No backend, no server costs, fully automated." or "No setup. No config. Just works." are marketing-brochure AI tells. Rewrite as a single positive sentence that says the same thing. Example: "No backend, no server costs, fully automated." → "Runs on a GitHub Actions cron job with no backend or hosting cost."
+- **"It's not X, it's Y" countdown**: stacking multiple negations before a reveal ("It's not the price. It's not the features. It's the trust."). Cut straight to the positive claim.
+- **"Fully automated" / "fully managed"** as standalone kicker phrases: either fold into the preceding sentence or describe what is actually automated.
+
 Keep rules in `.cursor/rules/` short; put detail in `docs/`.

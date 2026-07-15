@@ -173,3 +173,4 @@ Files: ChessV2.jsx, styles.css
 | 2026-07-14 | Skateboarding: added 6 photos (3 action tricks, 2 board shots, 1 dog) -- converted/resized from repo root, placed in `public/static/images/hobbies/skateboarding/`; replaced grid with portrait-friendly slideshow (prev/next, dots, keyboard arrows, click-to-lightbox); full image visible in tall viewport via `object-fit: contain` |
 | 2026-07-14 | Skateboarding: rewrote page copy in Edward's voice (COVID origin, honest about slow progression, cruiser wheels + transportation framing) |
 | 2026-07-14 | Typography: added global `h1, h2, h3 { font-family: var(--font-heading) }` + `body { font-size: 1rem; line-height: 1.75 }` to `base.css`; added `.cursor/rules/typography.mdc` |
+| 2026-07-14 | AI copy audit: replaced stacked-negation "No backend, no server costs, fully automated." phrasing in `WhoopDebrief.tsx` and `Running.tsx`; added the pattern ban to `portfolio-cursor.mdc` and `avoid-ai-writing.mdc` |

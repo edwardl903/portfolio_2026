@@ -21,8 +21,8 @@ function WhoopDebrief() {
             <p className="project-description">
               A personal data pipeline that pulls daily metrics from the WHOOP API and Strava,
               lands raw responses in BigQuery, transforms them with dbt, and serves the results
-              as static JSON to this portfolio. The whole thing runs unattended every morning
-              via GitHub Actions. No backend, no server costs, fully automated.
+              as static JSON to this portfolio. The whole thing runs on a GitHub Actions cron job
+              every morning, so there's no backend to maintain and no hosting cost.
             </p>
             <div className="project-tech">
               <span className="tech-tag">Python</span>

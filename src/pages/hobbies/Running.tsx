@@ -996,8 +996,8 @@ function PipelineFooter({ generatedAt }) {
       <div className="cv2-pipeline-popover" role="tooltip">
         <p>
           Every morning GitHub Actions ingests Strava data into BigQuery, dbt joins it to WHOOP
-          recovery scores, and the result auto-commits here as static JSON. No backend, no server
-          cost, fully automated.
+          recovery scores, and the result auto-commits here as static JSON. Runs on a cron job
+          with no backend or hosting cost.
         </p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <Link to="/projects" className="cv2-pipeline-link">
