@@ -60,7 +60,7 @@ function Chess() {
           {/* Chess Club Photos — full container width */}
           <div className="chess-club-section">
             <h3>Tufts Chess Club</h3>
-            <p>Some photos from four years of running the club. Click any photo to enlarge.</p>
+            <p>Some photos from four years of running the club.</p>
 
             <div className="chess-photos-grid">
               <div className="chess-photo-card">

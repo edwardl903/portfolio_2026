@@ -27,5 +27,6 @@ While editing this repo:
 - **Stacked negation ("No X, no Y")**: phrases like "No backend, no server costs, fully automated." or "No setup. No config. Just works." are marketing-brochure AI tells. Rewrite as a single positive sentence that says the same thing. Example: "No backend, no server costs, fully automated." → "Runs on a GitHub Actions cron job with no backend or hosting cost."
 - **"It's not X, it's Y" countdown**: stacking multiple negations before a reveal ("It's not the price. It's not the features. It's the trust."). Cut straight to the positive claim.
 - **"Fully automated" / "fully managed"** as standalone kicker phrases: either fold into the preceding sentence or describe what is actually automated.
+- **Redundant click/interaction instructions**: "Click any image to open it full screen.", "Click any photo to enlarge.", "Hover to preview." The lightbox or hover affordance is visually indicated. Do not add a prose sentence telling users how to interact with an element that already shows it. Exception: `aria-hidden` UI micro-copy labels inside interactive cards (e.g., `<p aria-hidden="true">click to open</p>`) are fine.
 
 Keep rules in `.cursor/rules/` short; put detail in `docs/`.

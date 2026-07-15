@@ -126,7 +126,7 @@ function ChessLytics() {
           <div className="project-section">
             <h2>Screenshots</h2>
             <p>
-              A few grabs from the live app so you can see what actually ships. Click any image to open it full screen.
+              A few grabs from the live app so you can see what actually ships.
             </p>
             <div className="chesslytics-gallery">
               <div className="chesslytics-gallery-item">
