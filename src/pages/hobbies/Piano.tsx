@@ -11,9 +11,9 @@ function Piano() {
         <div className="hobby-content">
           <div className="hobby-description">
             <h2>Piano</h2>
-            <p>I started at 7, quit after two years, then picked it back up at 13. Having a teacher who actually made it fun changed everything.</p>
+            <p>My path with piano is a little different from most people who stick with it. I had lessons around age 8, had a tough time, and quit pretty fast. Came back in high school and it finally clicked. I didn't start the traditional way either. My first songs were Hall of Fame by The Script, Viva La Vida by Coldplay, and a bunch of movie soundtracks like He's a Pirate and Gravity Falls. That eventually led me to anime OSTs and three YouTube pianists who kind of changed what I thought was possible: Animenz, Theishter, and Kyle Landry. Most of what I play below is their arrangements.</p>
 
-            <p>I played a few retirement home gigs, which were nerve-wracking but good practice for getting comfortable in front of people. These days I play a mix of classical, jazz, anime/game OSTs, and whatever I feel like. I also mess around with improvising sometimes.</p>
+            <p>Nowadays I try to play more by ear than by sheet music, which means more improvising and less drilling. I still love doing duets or putting together little "projects" with people. I've played at some Tufts social events and retirement homes here and there.</p>
 
             <p>Below are some performances from over the years, mostly stuff I filmed because I liked how it turned out.</p>
             
