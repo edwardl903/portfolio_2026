@@ -111,9 +111,8 @@ function WhoopDebrief() {
               </ClickableExpandableImage>
               <div className="diagram-caption">
                 <p>
-                  Ingest runs <code>scripts/fetch.py</code> (WHOOP) and{' '}
-                  <code>scripts/fetch_strava.py</code> (Strava) in parallel. Both write raw
-                  API responses into <code>whoop_raw</code> in BigQuery. The dbt job runs
+                  Ingest runs fetch.py (WHOOP) and fetch_strava.py (Strava) in parallel.
+                  Both write raw API responses into whoop_raw in BigQuery. The dbt job runs
                   after both succeed, builds all models, runs tests, and checks source
                   freshness. If the Strava step fails the WHOOP pipeline still ships.
                 </p>
@@ -125,9 +124,9 @@ function WhoopDebrief() {
           <div className="project-section">
             <h2>Ingest: two APIs, one pattern</h2>
             <p>
-              WHOOP uses OAuth 2.0 with a rotating access token — it invalidates on every
+              WHOOP uses OAuth 2.0 with a rotating access token. It invalidates on every
               use, which is unusual and caused a lot of pain early on. The token refresh
-              logic lives entirely in <code>utils/whoop_client.py</code>. After every
+              logic lives entirely in whoop_client.py. After every
               refresh, the new token is synced back to GitHub Secrets via the GitHub API
               so the next scheduled run has a valid token.
             </p>
@@ -138,10 +137,9 @@ function WhoopDebrief() {
               point. First run loads everything. Every run after that only moves new data.
             </p>
             <p>
-              Every ingest run, successful or not, writes a row to a{' '}
-              <code>pipeline_runs</code> audit table with the run ID, endpoint, row count,
-              and any error message. That table is how I know whether a run actually
-              succeeded versus silently failed.
+              Every ingest run, successful or not, writes a row to a pipeline_runs audit
+              table with the run ID, endpoint, row count, and any error message. That table
+              is how I know whether a run actually succeeded versus silently failed.
             </p>
             <div className="diagram-image-container">
               <ClickableExpandableImage
@@ -195,12 +193,11 @@ function WhoopDebrief() {
               </div>
             </div>
             <p>
-              The most interesting model is <code>int_run_recovery</code>. It joins every
-              Strava run to the WHOOP recovery score recorded the same day the run happened,
-              and also to the recovery score the morning after. The derived column{' '}
-              <code>recovery_delta</code> is just <code>next_day_recovery - same_day_recovery</code>.
-              That single number is what powers the scatter plot on the running page — it
-              answers "did this run help or hurt?"
+              The most interesting model is int_run_recovery. It joins every Strava run to
+              the WHOOP recovery score recorded the same day the run happened, and also to
+              the recovery score the morning after. The derived column recovery_delta is just
+              next_day_recovery minus same_day_recovery. That single number is what powers
+              the scatter plot on the running page. It answers "did this run help or hurt?"
             </p>
           </div>
 
@@ -214,11 +211,11 @@ function WhoopDebrief() {
               recovery score.
             </p>
             <p>
-              I resolved this in <code>int_daily_metrics</code> by normalizing everything
-              to a <code>metric_date</code> derived from the cycle start date, not the
-              calendar day. Then in <code>int_run_recovery</code> I join on that normalized
-              date rather than raw timestamps. It is a small thing, but if I got it wrong
-              every "does this run help" data point would be off by a day.
+              I resolved this in int_daily_metrics by normalizing everything to a metric_date
+              derived from the cycle start date, not the calendar day. Then in
+              int_run_recovery I join on that normalized date rather than raw timestamps.
+              It is a small thing, but if I got it wrong every "does this run help" data
+              point would be off by a day.
             </p>
             <p>
               The recovery bucket labels (Green / Yellow / Red) and sleep quality labels
@@ -231,18 +228,16 @@ function WhoopDebrief() {
           <div className="project-section">
             <h2>Incremental strategy</h2>
             <p>
-              <code>fct_daily</code> and <code>fct_runs</code> are both incremental merge
-              models. The watermark for <code>fct_daily</code> is <code>metric_date</code>.
-              For <code>fct_runs</code> it is <code>run_id</code> plus a 7-day rescan
-              window — if a Strava activity gets enriched after the fact (Strava does this
+              fct_daily and fct_runs are both incremental merge models. The watermark for
+              fct_daily is metric_date. For fct_runs it is run_id plus a 7-day rescan
+              window. If a Strava activity gets enriched after the fact (Strava does this
               for segment data), the next run picks it up.
             </p>
             <p>
-              <code>int_run_recovery</code> is a full rebuild on purpose. It is the join
-              between WHOOP and Strava data, and I want any backfill or correction to
-              cascade through without needing a manual <code>--full-refresh</code>. The
-              mart models that depend on it are incremental, so the cost of rebuilding
-              the intermediate is bounded.
+              int_run_recovery is a full rebuild on purpose. It is the join between WHOOP
+              and Strava data, and I want any backfill or correction to cascade through
+              without needing a manual --full-refresh. The mart models that depend on it
+              are incremental, so the cost of rebuilding the intermediate is bounded.
             </p>
           </div>
 
@@ -250,23 +245,22 @@ function WhoopDebrief() {
           <div className="project-section">
             <h2>Serve layer: static JSON via jsDelivr</h2>
             <p>
-              After the dbt job finishes, a final step runs{' '}
-              <code>scripts/export_runs_json.py</code>. It queries{' '}
-              <code>int_run_recovery</code>, serializes the columns the running page needs
-              (including <code>summary_polyline</code> for GPS routes), and writes the
-              result to <code>data/runs.json</code>. GitHub Actions then commits that file
-              back to the repo with <code>[skip ci]</code> on the message.
+              After the dbt job finishes, a final step runs export_runs_json.py. It queries
+              int_run_recovery, serializes the columns the running page needs (including the
+              summary_polyline for GPS routes), and writes the result to data/runs.json.
+              GitHub Actions then commits that file back to the repo with "[skip ci]" on
+              the message.
             </p>
             <p>
               The portfolio fetches it from jsDelivr's CDN, which mirrors public GitHub
-              repos with a short cache window. Zero backend, zero infrastructure cost.
-              The running page below is reading from that file right now.
+              repos with a short cache window. The running page is reading from that file
+              right now, with no backend involved.
             </p>
             <div className="diagram-image-container">
               <ClickableExpandableImage
                 src="/static/images/projects/whoop-debrief/running-page.png"
                 alt="The running hobby page showing GPS routes, hero stats, and filmstrip"
-                caption="Running page — live output of the pipeline"
+                caption="Running page, live output of the pipeline"
               >
                 <img
                   src="/static/images/projects/whoop-debrief/running-page.png"
@@ -283,21 +277,21 @@ function WhoopDebrief() {
             <h2>Tests and CI</h2>
             <p>
               Schema tests on all primary keys (not_null, unique) and every foreign key
-              join. Source freshness tests warn after 25 hours and error after 49 — so if
+              join.               Source freshness tests warn after 25 hours and error after 49, so if
               the ingest step silently fails, the dbt step still catches it.
             </p>
             <p>
               I also have a custom singular test that asserts no WHOOP cycle has a strain
-              score above the documented maximum of 21, and one that checks{' '}
-              <code>recovery_delta</code> is bounded within a plausible range. Small things,
-              but they have caught real bugs — once when a timezone conversion pushed a
-              cycle date forward by a day, and once when a null came through from the
+              score above the documented maximum of 21, and one that checks recovery_delta
+              is bounded within a plausible range. Small things,
+              but they have caught real bugs. One was a timezone conversion pushing a
+              cycle date forward by a day, another was a null coming through from the
               Strava API on a treadmill run without GPS.
             </p>
             <p>
               dbt docs deploy automatically to GitHub Pages on every push to main via a
-              dedicated <code>dbt-docs.yml</code> workflow. The full lineage graph and
-              column descriptions are always up to date without any manual step.
+              dedicated workflow. The full lineage graph and column descriptions are always
+              up to date without any manual step.
             </p>
           </div>
 
