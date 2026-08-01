@@ -1233,6 +1233,27 @@ function Running() {
               </div>
             </div>
 
+            <div className={styles.replaySection}>
+              <div className={styles.sectionHeader} style={{ marginBottom: '0.75rem' }}>
+                <span className={styles.sectionLabel}>Animated replay</span>
+                <span className={styles.sectionHint}>all runs on a live map</span>
+              </div>
+              <p className={styles.replayDesc}>
+                Every GPS run animated on a map. Filter by year, month, week, or day. Toggle
+                simultaneous or one-by-one playback, sort by pace, distance, or speed, and
+                jump straight to the longest or fastest run.
+              </p>
+              <div className={styles.replayFrame}>
+                <iframe
+                  src="/run-replay.html"
+                  title="Animated run replay"
+                  className={styles.replayIframe}
+                  loading="lazy"
+                  allow="fullscreen"
+                />
+              </div>
+            </div>
+
             <TrendChart runs={runs} selectedId={selectedId} onSelect={onSelectQuiet} unit={unit} />
             <PhotoStrip />
             <RecoveryScatter runs={runs} selectedId={selectedId} onSelect={onSelectQuiet} unit={unit} />

@@ -949,3 +949,33 @@ html[data-theme="dark"] .page {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Replay section ────────────────────────────────────────────────────────── */
+.replaySection {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.replayDesc {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+  color: var(--run-text-muted);
+  max-width: 36rem;
+  line-height: 1.6;
+}
+
+.replayFrame {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--run-border);
+  background: #0d1117;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.replayIframe {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: none;
+}
