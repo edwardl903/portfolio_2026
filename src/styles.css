@@ -760,6 +760,120 @@ html[data-theme="dark"] .hero::before {
     z-index: 4;
 }
 
+/* ── Home intro video section ─────────────────────────────────── */
+/* Full-viewport-height cinematic panel, no padding — video is the content */
+.intro-video-section {
+    width: 100%;
+    background: #0b0a09;
+}
+
+/* Frame fills the section like a Soka-style media panel */
+.intro-video-frame {
+    position: relative;
+    width: 100%;
+    height: 85vh;
+    overflow: hidden;
+    background: #0b0a09;
+    isolation: isolate;
+}
+
+.intro-video-el {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+}
+
+/* Subtle bottom gradient so the page transition to the next section is smooth */
+.intro-video-frame::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 25%;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.45));
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Darkening overlay for play-button legibility; fades when playing */
+.intro-video-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.intro-video-frame.is-playing::after {
+    opacity: 0;
+}
+
+.intro-video-play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 80px;
+    height: 80px;
+    padding-left: 5px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.intro-video-play:hover {
+    transform: scale(1.08);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.intro-video-play-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    animation: introPlayPulse 2.4s ease-out infinite;
+    pointer-events: none;
+}
+
+@keyframes introPlayPulse {
+    0%   { transform: scale(1);    opacity: 0.6; }
+    100% { transform: scale(1.9);  opacity: 0;   }
+}
+
+@media (max-width: 768px) {
+    .intro-video-frame {
+        height: 60vh;
+    }
+
+    .intro-video-play {
+        width: 64px;
+        height: 64px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-video-play-ring {
+        animation: none;
+    }
+}
+
 /* Sections */
 section {
     padding: 8rem 2rem 5rem 2rem;
