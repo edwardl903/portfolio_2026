@@ -15,7 +15,6 @@ function Hobbies() {
   return (
     <div className="hob-page">
       <div className="hob-intro">
-        <p className="hob-eyebrow">Off the clock</p>
         <h1 className="hob-title">Hobbies</h1>
         <p className="hob-lede">
           Here are some of the things I like to do in my personal time.

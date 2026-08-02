@@ -177,3 +177,8 @@ Files: ChessV2.jsx, styles.css
 | 2026-08-01 | Home hero: added forest trail background photo at low opacity (7% light / 13% dark) via `::before` pseudo-element + left-edge vignette `::after` for text contrast; image at `public/static/images/home/forest-bg.png` |
 | 2026-08-01 | (branch `experimental/home-intro-video`) Added `IntroVideo` section below Home hero: centered editorial intro + 16:9 video card with amber glow, custom play button (pulse ring), poster overlay, Playfair italic caption. Expects `public/static/videos/intro.mp4`; poster is placeholder profile pic until a still is exported. |
 | 2026-08-02 | Home hero: eyebrow "Data Analyst" → "Data Enthusiast"; removed Curaleaf bio paragraph from `Home.tsx` |
+| 2026-08-02 | Hobbies page: eyebrow "Off the clock" → "For fun" in `Hobbies.tsx` |
+| 2026-08-02 | Contact eyebrow "Get in touch" → "Contact"; Analytics eyebrow "Open metrics" → "Live traffic" |
+| 2026-08-02 | Removed eyebrow labels on Contact, Analytics, and Hobbies pages (headings only) |
+| 2026-08-02 | Contact: removed subtitle lede under "Let's talk." |
+| 2026-08-02 | Contact topic pills: humorous placeholders on message input when topic selected (CEO job, SF mortgage collab, "hi"); pill labels unchanged |

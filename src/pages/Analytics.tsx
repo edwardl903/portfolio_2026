@@ -5,7 +5,6 @@ function Analytics() {
     <section className="analytics-page" aria-label="Site analytics">
       <div className="container">
         <div className="analytics-header">
-          <p className="analytics-eyebrow">Open metrics</p>
           <h1 className="analytics-title">Site Analytics</h1>
           <p className="analytics-lede">
             Live traffic for this site (privacy-friendly, no cookies,

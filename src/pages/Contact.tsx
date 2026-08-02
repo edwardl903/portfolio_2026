@@ -2,9 +2,17 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const TOPICS = [
-  { id: 'job',   label: 'Job opportunity',  placeholder: 'Tell me about the role and team. Links are helpful.' },
-  { id: 'collab', label: 'Collaboration',   placeholder: 'What are you working on, and what would we build together?' },
-  { id: 'other', label: 'Just saying hi',   placeholder: 'Whatever you want to say.' },
+  {
+    id: 'job',
+    label: 'Job opportunity',
+    placeholder: "I think you'd be perfect as CEO of my company. Here's the job.",
+  },
+  {
+    id: 'collab',
+    label: 'Collaboration',
+    placeholder: 'I have an idea. We leave everything behind, mortgage our houses, and fly to SF to pursue it.',
+  },
+  { id: 'other', label: 'Just saying hi', placeholder: 'hi' },
 ]
 
 function Contact() {
@@ -90,11 +98,7 @@ function Contact() {
 
         {/* Header */}
         <header className="contact-header">
-          <span className="contact-eyebrow" aria-hidden="true">GET IN TOUCH</span>
           <h1 className="contact-title">Let's talk.</h1>
-          <p className="contact-subtitle">
-            Jobs, collaborations, chess challenges, or questions about something on the site. I read everything.
-          </p>
         </header>
 
         {/* Topic selector */}
