@@ -25,7 +25,7 @@ function Contact() {
 
   const activePlaceholder = selectedTopic
     ? TOPICS.find(t => t.id === selectedTopic)?.placeholder
-    : 'What you are reaching out about, plus any links or timing that help.'
+    : 'Pick a topic above.'
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
