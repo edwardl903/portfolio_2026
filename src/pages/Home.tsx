@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import ClickableExpandableImage from '../components/ClickableExpandableImage'
-import IntroVideo from '../components/IntroVideo'
 
 function Home() {
   return (
@@ -33,7 +32,6 @@ function Home() {
           <div className="scroll-arrow"></div>
         </div>
       </section>
-      <IntroVideo />
     </>
   )
 }
