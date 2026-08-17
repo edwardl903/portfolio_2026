@@ -2726,14 +2726,10 @@ section.contact-success-page .container {
     }
 }
 
-/* --- Dropdown Alignment Fix (desktop only) --- */
-@media (min-width: 769px) {
-    .nav-menu > .dropdown {
-        display: inline-flex;
-        position: relative;
-        vertical-align: middle;
-        align-items: center;
-    }
+/* Make every nav list item a flex container so all items align consistently */
+.nav-menu > li {
+    display: flex;
+    align-items: center;
 }
 
 /* Project Detail Pages */

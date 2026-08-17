@@ -185,3 +185,4 @@ Files: ChessV2.jsx, styles.css
 | 2026-08-11 | run-replay.html: replaced embedded RUNS data with runtime fetch from jsDelivr (runs.json); added JS polyline decoder + processRuns(); August+ runs now appear automatically after each pipeline run without manual regeneration |
 | 2026-08-11 | Home: removed IntroVideo section from Home.tsx (component kept in repo for later) |
 | 2026-08-17 | Fix layout shift on Contact page: added `scrollbar-gutter: stable` to `html` in base.css so the scrollbar track is always reserved |
+| 2026-08-17 | Fix Hobbies nav alignment: replaced `display: inline-flex` override on `.dropdown` with uniform `display: flex; align-items: center` on all `.nav-menu > li` |
