@@ -48,6 +48,7 @@ html[data-theme="dark"] {
 
 html {
   overflow-x: hidden; /* prevent horizontal scroll at root level */
+  scrollbar-gutter: stable; /* reserve scrollbar space so layout never shifts when scrollbar appears/disappears */
 }
 
 body {
